@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="420" viewBox="0 0 1400 420">
+  <defs>
+    <!-- Dégradé du ruban -->
+    <linearGradient id="ribbonGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2e7d6b"/>
+      <stop offset="100%" stop-color="#7a8b86"/>
+    </linearGradient>
+    <!-- Ombre douce -->
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" />
+    </filter>
+    <!-- Cartes jalons -->
+    <linearGradient id="cardGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e9f5f1"/>
+      <stop offset="100%" stop-color="#d7ebe6"/>
+    </linearGradient>
+    <!-- Grain subtil -->
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" stitchTiles="stitch" seed="2" result="turb"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0 0.05 0"/>
+      </feComponentTransfer>
+      <feBlend mode="multiply" in2="SourceGraphic"/>
+    </filter>
+    <!-- Points d’ancrage -->
+    <radialGradient id="dotGrad" cx="50%" cy="35%">
+      <stop offset="0%" stop-color="#7fd3b9"/>
+      <stop offset="100%" stop-color="#2e7d6b"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Fond -->
+  <rect width="1400" height="420" fill="#fbfcfb"/>
+
+  <!-- Vague décorative -->
+  <path d="M0,360 C180,330 260,350 420,330 C640,300 820,360 1040,340 C1180,328 1300,330 1400,340"
+        fill="none" stroke="#eff5f2" stroke-width="36" />
+
+  <!-- Ruban (au lieu d'une route noire) -->
+  <path d="M20,300
+           C 240,200 380,240 520,210
+           C 700,170 820,230 940,200
+           C 1080,160 1220,185 1380,180"
+        fill="none" stroke="url(#ribbonGrad)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Ombre -->
+  <path d="M20,300
+           C 240,200 380,240 520,210
+           C 700,170 820,230 940,200
+           C 1080,160 1220,185 1380,180"
+        fill="none" stroke="#0b13110d" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" filter="url(#soft)"/>
+
+  <!-- Jalons : hexagones arrondis -->
+  <!-- 2017 -->
+  <g transform="translate(120,180)">
+    <path d="M0,30 L48,0 L120,0 L168,30 L168,90 L120,120 L48,120 L0,90 Z"
+          fill="url(#cardGrad)" stroke="#2e7d6b" stroke-opacity=".25" stroke-width="2" filter="url(#grain)" />
+    <text x="84" y="54" text-anchor="middle" font-size="26" font-family="Manrope, system-ui, sans-serif" fill="#13312a" font-weight="700">2017</text>
+    <text x="84" y="90" text-anchor="middle" font-size="18" font-family="Manrope, system-ui, sans-serif" fill="#2c3b37">Transformers</text>
+  </g>
+
+  <!-- 2021 -->
+  <g transform="translate(470,120)">
+    <path d="M0,30 L48,0 L120,0 L168,30 L168,90 L120,120 L48,120 L0,90 Z"
+          fill="url(#cardGrad)" stroke="#2e7d6b" stroke-opacity=".25" stroke-width="2" filter="url(#grain)" />
+    <text x="84" y="54" text-anchor="middle" font-size="26" font-family="Manrope, system-ui, sans-serif" fill="#13312a" font-weight="700">2021</text>
+    <text x="84" y="90" text-anchor="middle" font-size="18" font-family="Manrope, system-ui, sans-serif" fill="#2c3b37">Mixture of Experts (MoE)</text>
+  </g>
+
+  <!-- 2023 -->
+  <g transform="translate(815,150)">
+    <path d="M0,30 L48,0 L120,0 L168,30 L168,90 L120,120 L48,120 L0,90 Z"
+          fill="url(#cardGrad)" stroke="#2e7d6b" stroke-opacity=".25" stroke-width="2" filter="url(#grain)" />
+    <text x="84" y="54" text-anchor="middle" font-size="26" font-family="Manrope, system-ui, sans-serif" fill="#13312a" font-weight="700">2023</text>
+    <text x="84" y="90" text-anchor="middle" font-size="18" font-family="Manrope, system-ui, sans-serif" fill="#2c3b37">Mamba</text>
+  </g>
+
+  <!-- 2025 -->
+  <g transform="translate(1155,120)">
+    <path d="M0,30 L48,0 L120,0 L168,30 L168,90 L120,120 L48,120 L0,90 Z"
+          fill="url(#cardGrad)" stroke="#2e7d6b" stroke-opacity=".25" stroke-width="2" filter="url(#grain)" />
+    <text x="84" y="54" text-anchor="middle" font-size="26" font-family="Manrope, system-ui, sans-serif" fill="#13312a" font-weight="700">2025</text>
+    <text x="84" y="90" text-anchor="middle" font-size="18" font-family="Manrope, system-ui, sans-serif" fill="#2c3b37">Mixture of Recursion (MoR)</text>
+  </g>
+
+  <!-- Points d’ancrage -->
+  <circle cx="210" cy="240" r="7" fill="url(#dotGrad)"/>
+  <circle cx="560" cy="210" r="7" fill="url(#dotGrad)"/>
+  <circle cx="905" cy="200" r="7" fill="url(#dotGrad)"/>
+  <circle cx="1245" cy="180" r="7" fill="url(#dotGrad)"/>
+
+  <!-- Légende -->
+  <text x="40" y="400" font-family="Manrope, system-ui, sans-serif" font-size="14" fill="#6b7b76">Roadmap des architectures de LLM </text>
+</svg>
