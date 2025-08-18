@@ -91,5 +91,5 @@
   <circle cx="1245" cy="180" r="7" fill="url(#dotGrad)"/>
 
   <!-- Légende -->
-  <text x="40" y="400" font-family="Manrope, system-ui, sans-serif" font-size="14" fill="#6b7b76">Roadmap des architectures de LLM · thème vert-gris</text>
+  <text x="40" y="400" font-family="Manrope, system-ui, sans-serif" font-size="14" fill="#6b7b76">Roadmap des architectures de LLM </text>
 </svg>

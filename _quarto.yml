@@ -28,8 +28,7 @@ website:
     right:
       - text: "Fait avec Quarto"
         href: https://quarto.org
-  # (Facultatif – mettez votre URL publique pour de bons canoniques)
-  # site-url: https://<username>.github.io/<repo>/
+  site-url: https://maryleneh.github.io/Types_LLM/
 
 format:
   html:
