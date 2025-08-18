@@ -14,7 +14,7 @@ listing:
 
 <br></br>
 
-![](assets/roadmap/roadmap-minimal.svg){fig-alt="Roadmap LLM minimaliste (2017–2025)" width=100%}
+![](assets/roadmap-minimal.svg){fig-alt="Roadmap LLM minimaliste (2017–2025)" width=100%}
 
 <br></br>
 
