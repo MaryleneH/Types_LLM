@@ -1,4 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Manrope:wght@300;400;500;600;700&display=swap');
+
 /*-- scss:defaults --*/
+$font-family-sans-serif: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
+$font-family-base: $font-family-sans-serif; // compat Bootstrap
+$headings-font-family: 'Sora', $font-family-sans-serif;
+$headings-font-weight: 700;
+$headings-line-height: 1.15;
+$font-family-monospace: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+
+/*-- scss:rules --*/
+h1 { letter-spacing: -0.02em; }
+h2 { letter-spacing: -0.01em; }
+
 $primary:   #2e7d6b;   // vert profond
 $secondary: #7a8b86;   // gris-vert
 $body-bg:   #f6f8f7;

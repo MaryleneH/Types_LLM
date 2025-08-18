@@ -5,7 +5,7 @@ lang: fr
 freeze: auto
 
 website:
-  title: "Atlas des LLM"
+  title: "Les Types de LLM"
   description: "Chronologie & blog des architectures de LLM"
   favicon: assets/favicon.svg
   navbar:
