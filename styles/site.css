@@ -1,0 +1,39 @@
+/* Cartes / vignettes pour listings et blog */
+.quarto-grid-item .card,
+.quarto-listing .card {
+  border-radius: 12px;
+  border: 1px solid rgba(46, 125, 107, 0.15);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(6px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .quarto-grid-item .card,
+  .quarto-listing .card {
+    background: rgba(15,26,23,0.6);
+  }
+}
+
+.quarto-grid-item .card:hover,
+.quarto-listing .card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.25);
+  border-color: rgba(127,211,185,0.6);
+}
+
+.card .card-img-top,
+.card .listing-image,
+.quarto-grid-item .thumbnail-image {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* Liens & navbar */
+a { transition: color 150ms ease, opacity 150ms ease; }
+.navbar { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.navbar-brand img { height: 28px; }
+
+/* Petits détails ergonomiques */
+.listing-title a { text-decoration: none; }
+.listing-title a:hover { text-decoration: underline; }

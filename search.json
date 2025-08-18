@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "roadmap/index.html",
+    "href": "roadmap/index.html",
+    "title": "Roadmap des architectures",
+    "section": "",
+    "text": "La progression des architectures que je vais apprendre.\n\n\n\n\n\n\n\n\n\n\n\n\n2017 — Transformers\n\n\nLes bases de l’attention et l’architecture qui a tout changé.\n\n\n\n\n\n\n\n\n\n\n2021 — Mixture of Experts (MoE)\n\n\nRoutage des tokens vers des experts pour scaler efficacement.\n\n\n\n\n\n\n\n\n\n\n2023 — Mamba\n\n\nModèles séquentiels à états (SSM) orientés efficacité.\n\n\n\n\n\n\n\n\n\n\n2025 — Mixture of Recursion\n\n\nCombiner des mécanismes récursifs pour une expressivité accrue.\n\n\n\n\n\nAucun article correspondant"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Atlas des LLM",
+    "section": "",
+    "text": "Atlas des LLM\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage.\nDécouvrir la roadmap » Lire le blog »"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "À propos",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "blog/index.html",
+    "href": "blog/index.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Aucun article correspondant"
+  }
+]
