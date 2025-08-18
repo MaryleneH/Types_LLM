@@ -1,8 +1,8 @@
 # --- Sorties Quarto (pas de versioning du site généré) ---
 public/
 _site/
-.quarto/           
-_freeze/          
+.quarto/
+_freeze/
 
 # --- Systèmes & éditeurs ---
 .DS_Store
@@ -21,3 +21,5 @@ __pycache__/
 
 # --- Node / tooling éventuel ---
 node_modules/
+
+/.quarto/

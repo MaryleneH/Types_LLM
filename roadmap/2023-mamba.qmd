@@ -1,7 +1,7 @@
 ---
 title: "2023 — Mamba"
 description: "Modèles séquentiels à états (SSM) orientés efficacité."
-image: null
+mage: assets/placeholder-card.svg
 ---
 
 <!-- Contenu à venir -->

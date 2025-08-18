@@ -1,7 +1,7 @@
 ---
 title: "2021 — Mixture of Experts (MoE)"
 description: "Routage des tokens vers des experts pour scaler efficacement."
-image: null
+mage: assets/placeholder-card.svg
 ---
 
 <!-- Contenu à venir -->

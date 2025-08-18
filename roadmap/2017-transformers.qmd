@@ -1,7 +1,7 @@
 ---
 title: "2017 — Transformers"
 description: "Les bases de l’attention et l’architecture qui a tout changé."
-image: null
+mage: assets/placeholder-card.svg
 ---
 
 <!-- Contenu à venir -->
