@@ -1,3 +1,49 @@
+/* Masque l'icône par défaut mais garde sa place */
+.quarto-color-scheme-toggle .bi {
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  visibility: hidden;
+}
+
+/* Icône personnalisée avec animation */
+.quarto-color-scheme-toggle::after {
+  font-family: "bootstrap-icons";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.2rem;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.4s ease, color 0.4s ease;
+  animation: pop-in 0.4s ease;
+  color: inherit;
+}
+
+/* Affiche une icône moon-stars par-dessus */
+.quarto-color-scheme-toggle::after {
+  font-family: "bootstrap-icons";
+  content: "\f496"; /* moon-stars */
+  font-size: 1.2rem;
+  display: inline-block;
+  position: relative;
+  top: 2px;
+  color: inherit;
+}
+
+/* Animation d’entrée */
+@keyframes pop-in {
+  0% {
+    transform: scale(0.5) rotate(-90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
 /* Cartes / vignettes pour listings et blog */
 .quarto-grid-item .card,
 .quarto-listing .card {
