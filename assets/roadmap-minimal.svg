@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="300" viewBox="0 0 1400 300" role="img" aria-labelledby="t d">
+  <title id="t">Roadmap des architectures de LLM (version minimaliste)</title>
+  <desc id="d">Frise horizontale avec 4 jalons : 2017 Transformers, 2021 Mixture of Experts, 2023 Mamba, 2025 Mixture of Recursion.</desc>
+
+  <style>
+    :root{
+      --line:  #2e7d6b;   /* vert (clair) */
+      --text:  #1f2523;
+      --muted: #7a8b86;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root{
+        --line:  #7fd3b9; /* vert clair (sombre) */
+        --text:  #e3e9e6;
+        --muted: #9ab3ad;
+      }
+    }
+    text{ font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; fill: var(--text); }
+    .label{ fill: var(--muted); font-size: 15px; }
+    .year{ font-weight: 700; font-size: 18px; }
+  </style>
+
+  <!-- ligne fluide (timeline) -->
+  <path d="M40,180
+           C 320,130 520,220 720,170
+           C 930,120 1130,200 1360,180"
+        fill="none" stroke="var(--line)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- jalons : points -->
+  <g fill="var(--line)">
+    <circle cx="180" cy="165" r="7"/>
+    <circle cx="520" cy="205" r="7"/>
+    <circle cx="860" cy="175" r="7"/>
+    <circle cx="1200" cy="185" r="7"/>
+  </g>
+
+  <!-- textes : année au-dessus, libellé en dessous -->
+  <g text-anchor="middle">
+    <g transform="translate(180,165)">
+      <text class="year" y="-18">2017</text>
+      <text class="label" y="30">Transformers</text>
+    </g>
+    <g transform="translate(520,205)">
+      <text class="year" y="-18">2021</text>
+      <text class="label" y="30">Mixture of Experts (MoE)</text>
+    </g>
+    <g transform="translate(860,175)">
+      <text class="year" y="-18">2023</text>
+      <text class="label" y="30">Mamba</text>
+    </g>
+    <g transform="translate(1200,185)">
+      <text class="year" y="-18">2025</text>
+      <text class="label" y="30">Mixture of Recursion (MoR)</text>
+    </g>
+  </g>
+</svg>
