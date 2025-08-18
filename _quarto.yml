@@ -7,7 +7,7 @@ lang: fr
 freeze: auto
 
 website:
-  title: "Les Types de LLM"
+  title: "LLM / Agents"
   description: "Chronologie & blog des architectures de LLM"
   favicon: assets/favicon.svg
   navbar:

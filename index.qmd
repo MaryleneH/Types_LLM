@@ -1,6 +1,6 @@
 ---
-title: "Les types de LLM"
-description: "Panorama des architectures de modèles de langage"
+title: "Les LLM et leur mise en production"
+description: "Recueil des prises de notes : modèles de langage / agents"
 page-layout: full
 title-block-banner: true
 ---
@@ -11,4 +11,14 @@ title-block-banner: true
 Un espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.
 
 [Découvrir la roadmap »](roadmap/index.qmd){.btn .btn-primary} [Lire le blog »](blog/index.qmd){.btn .btn-secondary}
+:::
+
+<br></br>
+
+::: hero
+# LLMOps
+
+Un espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.
+
+[Intérêt des LLMs »](roadmap/index.qmd){.btn .btn-primary} [Points d'attention »](roadmap/index.qmd){.btn .btn-primary} [Lire le blog »](blog/index.qmd){.btn .btn-secondary}
 :::
