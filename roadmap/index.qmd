@@ -12,4 +12,10 @@ listing:
     - 2025-mixture-of-recursion.qmd
 ---
 
+<br></br>
+
+![](../assets/roadmap/roadmap-llm.svg){fig-alt="Frise des architectures de LLM (2017–2025)" width="100%"}
+
+<br></br>
+
 La progression des architectures que je vais apprendre.
