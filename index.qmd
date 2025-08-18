@@ -1,0 +1,16 @@
+---
+title: "Atlas des LLM"
+description: "Panorama des architectures de modèles de langage"
+page-layout: full
+title-block-banner: true
+---
+
+::: {.hero}
+# Atlas des LLM
+
+Un espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage.
+
+[Découvrir la roadmap »](roadmap/index.qmd){.btn .btn-primary}
+[Lire le blog »](blog/index.qmd){.btn .btn-secondary}
+:::
+

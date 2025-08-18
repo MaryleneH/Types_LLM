@@ -1,0 +1,45 @@
+project:
+  type: website
+
+lang: fr
+freeze: auto
+
+website:
+  title: "Atlas des LLM"
+  description: "Chronologie & blog des architectures de LLM"
+  favicon: assets/favicon.svg
+  navbar:
+    logo: assets/logo.svg
+    right:
+      - text: "Accueil"
+        href: index.qmd
+      - text: "Roadmap"
+        href: roadmap/index.qmd
+      - text: "Blog"
+        href: blog/index.qmd
+      - text: "À propos"
+        href: about.qmd
+      - text: "Contact"
+        href: contact.qmd
+  page-footer:
+    left: "© 2025 — Votre Nom"
+    right:
+      - text: "Fait avec Quarto"
+        href: https://quarto.org
+  # (Facultatif – mettez votre URL publique pour de bons canoniques)
+  # site-url: https://<username>.github.io/<repo>/
+
+format:
+  html:
+    theme:
+      light: [cosmo, styles/theme_light.scss]
+      dark:  [cosmo, styles/theme_dark.scss]
+    css: styles/site.css
+    toc: true
+    smooth-scroll: true
+    grid:
+      body-width: 1000px
+    code-copy: true
+    highlight-style: a11y
+
+editor: visual

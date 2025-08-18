@@ -1,0 +1,7 @@
+---
+title: "2025 — Mixture of Recursion"
+description: "Combiner des mécanismes récursifs pour une expressivité accrue."
+image: null
+---
+
+<!-- Contenu à venir -->

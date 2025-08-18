@@ -1,0 +1,15 @@
+---
+title: "Roadmap des architectures"
+listing:
+  type: grid
+  grid-columns: 2
+  image-height: 9rem
+  fields: [image, title, description]
+  contents:
+    - 2017-transformers.qmd
+    - 2021-moe.qmd
+    - 2023-mamba.qmd
+    - 2025-mixture-of-recursion.qmd
+---
+
+La progression des architectures que je vais apprendre.

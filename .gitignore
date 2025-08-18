@@ -1,0 +1,23 @@
+# --- Sorties Quarto (pas de versioning du site généré) ---
+public/
+_site/
+.quarto/           
+_freeze/          
+
+# --- Systèmes & éditeurs ---
+.DS_Store
+Thumbs.db
+
+# --- Python / Notebooks ---
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+.env
+
+# --- R ---
+.Rhistory
+.RData
+.Rproj.user/
+
+# --- Node / tooling éventuel ---
+node_modules/
