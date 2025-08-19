@@ -7,6 +7,12 @@ format:
     smooth-scroll: true
 ---
 
+<br></br>
+
+![](llmops-workflow.svg){fig-align="center"}
+
+<br></br>
+
 ::: {.llmops}
 
 ::: {.llmops-card}
