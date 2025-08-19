@@ -1,0 +1,36 @@
+---
+title: "LLMOps — Run"
+lang: fr
+format:
+  html:
+    toc: true
+    toc-location: left
+    smooth-scroll: true
+    css: llmops.css
+---
+
+[⟵ Retour à LLMOps](cycle.qmd)
+
+# Monitoring {#monitoring}
+- Latence, taux d’erreur, coût par requête
+- Taux de refus/safety, timeouts, saturation
+
+# Observabilité {#observabilite}
+- Traces des prompts/contexte (avec masquage)
+- Journaux de retrieval et diagnostics
+- Dashboards et alertes
+
+# Sécurité {#securite}
+- Contrôles d’entrée/sortie (prompt injection, secrets)
+- RBAC, journalisation, conformité (RGPD)
+- Gestion des clés et des secrets
+
+# Coûts {#couts}
+- Budgets, quotas, droits par équipe/projet
+- Mise en cache, distillation, modèles plus petits
+- Optimisations (batching, streaming)
+
+# Déploiement {#deploiement}
+- Environnements (dev / staging / prod)
+- Stratégies (blue/green, canary)
+- Rollback, versionning prompts/modèles

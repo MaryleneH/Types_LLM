@@ -1,0 +1,32 @@
+---
+title: "LLMOps — Plan"
+lang: fr
+format:
+  html:
+    toc: true
+    toc-location: left
+    smooth-scroll: true
+    css: llmops.css
+---
+
+[⟵ Retour à LLMOps](cycle.qmd)
+
+# Trouver les cas d’usage {#cas-usage}
+- Recenser les irritants métier et les tâches répétitives
+- Prioriser par impact attendu et faisabilité (donnée, conformité, risques)
+- Définir une métrique de succès simple et mesurable
+
+## ROI {#roi}
+- Hypothèses de gain (temps, qualité, satisfaction)
+- Coût total (infra, LLM, données, humains)
+- Méthode d’estimation (baseline → pilote → prod)
+
+## Risques {#risques}
+- Hallucinations, biais, confidentialité, conformité (RGPD)
+- Risques opérationnels (latence, coûts variables)
+- Mesures de mitigation (garde-fous, évaluation continue)
+
+## Données {#donnees}
+- Inventaire des sources (docs, bases, APIs)
+- Qualité, droits d’usage, rétention
+- Stratégie d’accès (RAG, cache, anonymisation)

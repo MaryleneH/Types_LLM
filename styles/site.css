@@ -83,3 +83,298 @@ a { transition: color 150ms ease, opacity 150ms ease; }
 /* Petits détails ergonomiques */
 .listing-title a { text-decoration: none; }
 .listing-title a:hover { text-decoration: underline; }
+
+/* ===== LLMOps — camaïeu vert-gris, design sobre & moderne ===== */
+:root{
+  /* Layout */
+  --llmops-radius: 12px;             /* arrondi discret des cards (avant 16px) */
+  --llmops-gap: clamp(14px, 1.4vw, 22px);
+  --llmops-pad: clamp(16px, 2vw, 26px);
+
+  /* Palette vert-gris douce */
+  --sage-050: #f4f8f6;
+  --sage-100: #eef4f1;
+  --sage-150: #e6f2ee;
+  --sage-300: #cfe6d8;
+  --sage-400: #b7d4c4;
+  --sage-500: #8fb6a2;
+  --sage-600: #6f9e8c;
+  --sage-700: #567d70;
+  --ink-800:  #2f3432;
+
+  /* Couleurs texte / surfaces */
+  --card-bg: linear-gradient(180deg, #ffffff, var(--sage-100));
+  --card-border: color-mix(in srgb, var(--sage-700) 12%, transparent);
+  --card-shadow: 0 1px 2px rgba(0,0,0,.06), 0 4px 10px rgba(0,0,0,.06);
+  --card-shadow-hover: 0 6px 18px rgba(0,0,0,.12);
+
+  /* Titres (pas de gros dégradé, look plus pro) */
+  --heading-fg: var(--ink-800);
+  --heading-fg-dark: #eaf4ef;
+
+  /* Chips */
+  --chip-radius: 6px;                 /* arrondi léger */
+  --chip-bg: color-mix(in srgb, #ffffff 86%, var(--sage-150) 14%);
+  --chip-bg-hover: color-mix(in srgb, #ffffff 78%, var(--sage-300) 22%);
+  --chip-border: color-mix(in srgb, var(--sage-700) 16%, transparent); /* contour très léger */
+  --chip-fg: var(--ink-800);
+}
+
+/* Grille responsive : 1→3 colonnes */
+.llmops{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--llmops-gap);
+  align-items: stretch;
+  margin-block: clamp(10px, 1.2vw, 18px) clamp(24px, 3vw, 48px);
+}
+
+/* ===== Cards ===== */
+.llmops-card{
+  position: relative; /* pour le lien étiré */
+  padding: var(--llmops-pad);
+  border-radius: var(--llmops-radius);
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--ink-800);
+  box-shadow: var(--card-shadow);
+  transition:
+    transform .22s cubic-bezier(.2,.8,.2,1),
+    box-shadow .22s cubic-bezier(.2,.8,.2,1),
+    border-color .22s ease-in-out,
+    background .22s ease-in-out;
+}
+.llmops-card:hover{
+  transform: translateY(-4px);
+  box-shadow: var(--card-shadow-hover);
+  border-color: color-mix(in srgb, var(--sage-700) 20%, transparent);
+}
+@media (hover:hover){ .llmops-card{ cursor: pointer; } }
+
+/* Titres */
+.llmops-card h3{
+  margin: 0 0 .5rem 0;
+  font-weight: 800;
+  letter-spacing: .2px;
+  line-height: 1.15;
+  color: var(--heading-fg);
+}
+
+/* Liste + note EN */
+.llmops-card ul{ margin: .25rem 0 0 1.1rem; }
+.llmops-card li{ margin: .25rem 0; }
+.llmops-en{ opacity:.78; font-size:.96em; }
+
+/* ===== Chips (mots-clés boutons) ===== */
+.llmops-chips{
+  margin-top: .9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  position: relative;
+  z-index: 2; /* au-dessus du lien étiré */
+}
+.chip{
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: .4ch;
+  padding: .42rem .64rem;
+  border-radius: var(--chip-radius);
+  border: 1px solid var(--chip-border);
+  background: var(--chip-bg);
+  color: var(--chip-fg);
+  font-weight: 600;
+  font-size: .9rem;
+  line-height: 1;
+  text-decoration: none;
+  box-shadow: 0 1px 0 rgba(0,0,0,.03), 0 1px 2px rgba(0,0,0,.04);
+  transition: background .15s ease, border-color .15s ease, transform .06s ease, box-shadow .15s ease;
+}
+.chip:hover{
+  background: var(--chip-bg-hover);
+  border-color: color-mix(in srgb, var(--sage-700) 26%, transparent);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,.10);
+}
+.chip:active{ transform: translateY(0); }
+.chip:focus-visible{
+  outline: none;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--sage-500) 32%, transparent),
+    0 1px 2px rgba(0,0,0,.10);
+}
+
+/* Lien étiré : toute la card cliquable, sans bloquer les chips */
+.llmops-stretched{
+  position: absolute;
+  inset: 0;
+  z-index: 1;   /* derrière les chips */
+  border-radius: inherit;
+  display: block;
+  text-decoration: none;
+  color: transparent;
+  background: transparent;
+}
+.llmops-stretched:focus{
+  outline: none;
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--sage-500) 40%, transparent),
+    0 0 0 8px color-mix(in srgb, var(--sage-300) 40%, transparent);
+  border-radius: inherit;
+}
+
+/* ===== Dark mode ===== */
+html[data-bs-theme="dark"] .llmops-card{
+  color: #eaf4ef;
+  background: linear-gradient(180deg, #151a18, #101513);
+  border-color: color-mix(in srgb, var(--sage-500) 22%, transparent);
+  box-shadow: 0 1px 2px rgba(0,0,0,.28), 0 6px 16px rgba(0,0,0,.30);
+}
+html[data-bs-theme="dark"] .llmops-card:hover{
+  border-color: color-mix(in srgb, var(--sage-500) 30%, transparent);
+  box-shadow: 0 10px 24px rgba(0,0,0,.42);
+}
+html[data-bs-theme="dark"] .llmops-card h3{
+  color: var(--heading-fg-dark);
+}
+
+/* Chips en dark mode : sans bordure marquée, contraste doux */
+html[data-bs-theme="dark"] .chip{
+  background: color-mix(in srgb, var(--sage-700) 28%, #0e1211 72%);
+  border-color: color-mix(in srgb, var(--sage-400) 18%, transparent);
+  color: #eaf4ef;
+  box-shadow: 0 1px 2px rgba(0,0,0,.28) inset, 0 1px 2px rgba(0,0,0,.12);
+}
+html[data-bs-theme="dark"] .chip:hover{
+  background: color-mix(in srgb, var(--sage-600) 34%, #0e1211 66%);
+  border-color: color-mix(in srgb, var(--sage-400) 26%, transparent);
+}
+
+/* Accessibilité : réduire l’animation si demandé */
+@media (prefers-reduced-motion: reduce){
+  .llmops-card{ transition: box-shadow .2s ease; }
+  .llmops-card:hover{ transform: none; }
+}
+
+
+/* --- Chips : variante foncée + espacement vertical (overrides) --- */
+:root{
+  /* arrondi plus discret et couleurs plus sombres */
+  --chip-radius: 5px;
+  --chip-bg: color-mix(in srgb, var(--sage-700) 88%, #ffffff 12%);   /* vert-gris foncé */
+  --chip-bg-hover: color-mix(in srgb, var(--sage-700) 76%, #ffffff 24%);
+  --chip-border: color-mix(in srgb, var(--sage-700) 20%, transparent); /* contour très léger */
+  --chip-fg: #f5fbf8;  /* texte clair */
+}
+
+/* Espacement vertical réel entre les lignes de chips */
+.llmops-chips{
+  margin-top: 1rem;
+  margin-bottom: .35rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .8rem .6rem;   /* row-gap, column-gap */
+}
+
+/* Boutons mot-clé (chips) plus sobres et sombres */
+.chip{
+  position: relative;
+  z-index: 2;  /* au-dessus du lien étiré */
+  display: inline-flex;
+  align-items: center;
+  padding: .44rem .66rem;
+  border-radius: var(--chip-radius);
+  border: 1px solid var(--chip-border);
+  background: var(--chip-bg);
+  color: var(--chip-fg);
+  font-weight: 600;
+  font-size: .9rem;
+  line-height: 1.1;
+  text-decoration: none;
+  box-shadow: 0 1px 0 rgba(0,0,0,.03), 0 1px 2px rgba(0,0,0,.05);
+  transition: background .15s ease, border-color .15s ease, transform .06s ease, box-shadow .15s ease;
+}
+.chip:hover{
+  background: var(--chip-bg-hover);
+  border-color: color-mix(in srgb, var(--sage-700) 28%, transparent);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,.10);
+}
+.chip:active{ transform: translateY(0); }
+.chip:focus-visible{
+  outline: none;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--sage-500) 30%, transparent),
+    0 1px 2px rgba(0,0,0,.10);
+}
+
+/* Dark mode : chips un peu plus profonds mais lisibles */
+html[data-bs-theme="dark"] .chip{
+  background: color-mix(in srgb, var(--sage-700) 55%, #0e1211 45%);
+  border-color: color-mix(in srgb, var(--sage-500) 30%, transparent);
+  color: #eaf4ef;
+  box-shadow: 0 1px 2px rgba(0,0,0,.28) inset, 0 1px 2px rgba(0,0,0,.12);
+}
+html[data-bs-theme="dark"] .chip:hover{
+  background: color-mix(in srgb, var(--sage-600) 58%, #0e1211 42%);
+  border-color: color-mix(in srgb, var(--sage-400) 28%, transparent);
+}
+
+/* ===== Espacement haut/bas autour des chips (robuste) ===== */
+:root{
+  --chip-col-gap: .6rem;   /* espace horizontal entre chips */
+  --chip-row-gap: .9rem;   /* espace vertical entre lignes */
+  --chips-block-pad: .8rem; /* espace AU-DESSUS et AU-DESSOUS du groupe */
+}
+
+/* Conteneur de chips : padding + marges pour forcer l’espace */
+.llmops-card .llmops-chips{
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+
+  /* espace autour du bloc */
+  padding-top: var(--chips-block-pad);
+  padding-bottom: var(--chips-block-pad);
+  margin-top: var(--chips-block-pad);
+  margin-bottom: var(--chips-block-pad);
+
+  /* empêche l’effondrement de marges avec les éléments voisins */
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+}
+
+/* Espacement entre chips (sans utiliser gap) */
+.llmops-card .llmops-chips > .chip{
+  margin: 0 var(--chip-col-gap) var(--chip-row-gap) 0;
+}
+
+/* Style foncé des chips (inchangé) */
+.chip{
+  background: color-mix(in srgb, var(--sage-700) 85%, #ffffff 15%);
+  border: 1px solid color-mix(in srgb, var(--sage-700) 18%, transparent);
+  color: #f5fbf8;
+}
+.chip:hover{
+  background: color-mix(in srgb, var(--sage-700) 70%, #ffffff 30%);
+  border-color: color-mix(in srgb, var(--sage-700) 26%, transparent);
+}
+
+/* Dark mode */
+html[data-bs-theme="dark"] .chip{
+  background: color-mix(in srgb, var(--sage-700) 55%, #0e1211 45%);
+  border-color: color-mix(in srgb, var(--sage-500) 30%, transparent);
+  color: #eaf4ef;
+}
+html[data-bs-theme="dark"] .chip:hover{
+  background: color-mix(in srgb, var(--sage-600) 58%, #0e1211 42%);
+  border-color: color-mix(in srgb, var(--sage-400) 28%, transparent);
+}
+
+/* Le lien étiré reste derrière les chips */
+.llmops-stretched{ z-index: 1; }

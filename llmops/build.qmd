@@ -1,0 +1,42 @@
+---
+title: "LLMOps — Build"
+lang: fr
+format:
+  html:
+    toc: true
+    toc-location: left
+    smooth-scroll: true
+    css: llmops.css
+---
+
+[⟵ Retour à LLMOps](cycle.qmd)
+
+# Choisir le LLM {#choose-llm}
+- Critères : langue, contexte, coûts, perfs, contraintes légales
+- Ouvert (OSS) vs hébergé (API) vs self-host
+- Benchmarks ciblés (pas de score “général” sans contexte)
+
+# Fine-tuning {#fine-tuning}
+- Quand l’utiliser (style, nouveaux formats, robustesse)
+- SFT, LoRA/QLoRA, jeux d’exemples, garde-fous
+- Suivi des dérives et versionning des modèles
+
+# RAG {#rag}
+- Pipeline d’ingestion (chunking, embeddings, index)
+- Stratégies de retrieval (hybride, rerankers)
+- Observabilité des requêtes et des réponses
+
+# Prompting {#prompt}
+- Instructions, rôles, schémas de sortie
+- Few-shot, chain-of-thought (sans fuite d’infos)
+- Templates et variables d’app
+
+# Évaluation {#evaluation}
+- Golden sets, métriques (exact match, faithfulness, utilité)
+- Éval offline/online, human-in-the-loop
+- Tests régression et canaris
+
+# Architecture applicative {#architecture}
+- Orchestration (API, workers, queues)
+- Caches, garde-fous, limites de taux
+- Secrets, monitoring, CI/CD
