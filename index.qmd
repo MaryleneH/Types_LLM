@@ -20,5 +20,5 @@ Un espace pour explorer les grandes familles d’architectures de LLM et suivre 
 
 Un espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.
 
-[Intérêt des LLMs »](roadmap/index.qmd){.btn .btn-primary} [Points d'attention »](roadmap/index.qmd){.btn .btn-primary} [Lire le blog »](blog/index.qmd){.btn .btn-secondary}
+[Cycle LLMOps »](llmops/cycle.qmd){.btn .btn-primary} [Points d'attention »](roadmap/index.qmd){.btn .btn-primary} [Lire le blog »](blog/index.qmd){.btn .btn-secondary}
 :::
