@@ -1,0 +1,30 @@
+---
+title: "LLMOps — Plan • Build • Run"
+page-layout: full
+format:
+  html:
+    toc: false
+    smooth-scroll: true
+    css: llmops.css
+---
+
+::: {.llmops}
+
+::: {.llmops-card}
+### 🧭 Plan
+- 1/ Trouver les cas d'usage _(Identify a single problem to solve)_{.llmops-en}
+:::
+
+::: {.llmops-card}
+### 🏗️ Build
+- 2/ Choose the LLM  
+- 3/ Customize the LLM  
+- 4/ Set up the application's architecture
+:::
+
+::: {.llmops-card}
+### 🚀 Run
+<!-- Ajouter ici les points d'exploitation / monitoring / sécurité -->
+:::
+
+:::
