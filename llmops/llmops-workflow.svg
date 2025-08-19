@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
-  <title id="title">Workflow LLMOps — Plan  •  Build  •  Run</title>
-  <desc id="desc">Infographie  présentant trois étapes reliées par des flèches : Plan, Build, Run. Chaque carte est cliquable.</desc>
+  <title id="title">Workflow LLMOps — Plan • Build • Run</title>
+  <desc id="desc">Infographie présentant trois étapes reliées par des flèches : Plan, Build, Run. Chaque carte est cliquable.</desc>
 
   <style>
     a { cursor: pointer; }
@@ -87,7 +87,7 @@
 
   <!-- Header -->
   <g transform="translate(72,60)">
-    <text x="0" y="0" fill="#D7F2E7" font-family="Inter, Segoe UI, Roboto, Helvetica, Arial" font-size="32" font-weight="700" letter-spacing="1.2">Workflow LLOMPS</text>
+    <text x="0" y="0" fill="#D7F2E7" font-family="Inter, Segoe UI, Roboto, Helvetica, Arial" font-size="32" font-weight="700" letter-spacing="1.2">Workflow LLMOps</text>
     <text x="0" y="36" fill="#A9CFC5" font-family="Inter, Segoe UI, Roboto, Helvetica, Arial" font-size="16" letter-spacing="1">plan • build • run</text>
     <rect x="-2" y="48" width="220" height="4" rx="2" fill="url(#accent)" filter="url(#glow)"/>
   </g>
@@ -121,15 +121,15 @@
         </g>
         <g transform="translate(130,230)">
           <circle cx="0" cy="-4" r="4" fill="url(#accent)"/>
-          <text x="14" y="0">Plan de livraison & KPIs</text>
+          <text x="14" y="0">Plan de livraison et KPIs</text>
         </g>
       </g>
     </g>
   </a>
 
-  <!-- Connector 1 -->
+  <!-- Connector 1 (abaissé) -->
   <g transform="translate(0,0)">
-    <path d="M420,330 C500,330 540,330 600,330" fill="none" stroke="url(#strokeAccent)" stroke-width="4" marker-end="url(#arrow)"/>
+    <path d="M420,440 C500,440 540,440 600,440" fill="none" stroke="url(#strokeAccent)" stroke-width="4" marker-end="url(#arrow)"/>
   </g>
 
   <!-- Step 2: BUILD (cliquable) -->
@@ -157,15 +157,15 @@
         </g>
         <g transform="translate(130,230)">
           <circle cx="0" cy="-4" r="4" fill="url(#accent)"/>
-          <text x="14" y="0">Artefacts versionnés & docs</text>
+          <text x="14" y="0">Artefacts versionnés et docs</text>
         </g>
       </g>
     </g>
   </a>
 
-  <!-- Connector 2 -->
+  <!-- Connector 2 (abaissé) -->
   <g transform="translate(0,0)">
-    <path d="M770,330 C850,330 890,330 950,330" fill="none" stroke="url(#strokeAccent)" stroke-width="4" marker-end="url(#arrow)"/>
+    <path d="M770,440 C850,440 890,440 950,440" fill="none" stroke="url(#strokeAccent)" stroke-width="4" marker-end="url(#arrow)"/>
   </g>
 
   <!-- Step 3: RUN (cliquable) -->
