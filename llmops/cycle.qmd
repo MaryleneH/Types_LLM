@@ -7,59 +7,49 @@ format:
     smooth-scroll: true
 ---
 
+
+
+![](llmops-workflow.svg){style="max-width: 820px; width: 60%;" fig-align="center"}
+
+
 <br></br>
 
-![](llmops-workflow.svg){fig-align="center"}
-
-<br></br>
-
-::: {.llmops}
-
-::: {.llmops-card}
+::::::::: llmops
+:::: llmops-card
 ### 🧭 Plan
-- 1/ Trouver les cas d'usage _[(Identify a single problem to solve)]{.llmops-en}_
 
-::: {.llmops-chips}
-[Cas d’usage](plan.qmd#cas-usage){.chip}
-[ROI](plan.qmd#roi){.chip}
-[Risques](plan.qmd#risques){.chip}
-[Données](plan.qmd#donnees){.chip}
+-   1/ Trouver les cas d'usage [*(Identify a single problem to solve)*]{.llmops-en}
+
+::: llmops-chips
+[Cas d’usage](plan.qmd#cas-usage){.chip} [ROI](plan.qmd#roi){.chip} [Risques](plan.qmd#risques){.chip} [Données](plan.qmd#donnees){.chip}
 :::
 
 [Aller à Plan](plan.qmd){.llmops-stretched aria-label="Ouvrir la page Plan"}
-:::
+::::
 
-::: {.llmops-card}
+:::: llmops-card
 ### 🏗️ Build
-- 2/ Choose the LLM  
-- 3/ Customize the LLM  
-- 4/ Set up the application's architecture
 
-::: {.llmops-chips}
-[Choisir le LLM](build.qmd#choose-llm){.chip}
-[Fine-tuning](build.qmd#fine-tuning){.chip}
-[RAG](build.qmd#rag){.chip}
-[Prompting](build.qmd#prompt){.chip}
-[Évaluation](build.qmd#evaluation){.chip}
-[Architecture](build.qmd#architecture){.chip}
+-   2/ Choose the LLM\
+-   3/ Customize the LLM\
+-   4/ Set up the application's architecture
+
+::: llmops-chips
+[Choisir le LLM](build.qmd#choose-llm){.chip} [Fine-tuning](build.qmd#fine-tuning){.chip} [RAG](build.qmd#rag){.chip} [Prompting](build.qmd#prompt){.chip} [Évaluation](build.qmd#evaluation){.chip} [Architecture](build.qmd#architecture){.chip}
 :::
 
 [Aller à Build](build.qmd){.llmops-stretched aria-label="Ouvrir la page Build"}
-:::
+::::
 
-::: {.llmops-card}
+:::: llmops-card
 ### 🚀 Run
+
 <!-- Ajoute ici tes points d'exploitation / monitoring / sécurité -->
 
-::: {.llmops-chips}
-[Monitoring](run.qmd#monitoring){.chip}
-[Observabilité](run.qmd#observabilite){.chip}
-[Sécurité](run.qmd#securite){.chip}
-[Coûts](run.qmd#couts){.chip}
-[Déploiement](run.qmd#deploiement){.chip}
+::: llmops-chips
+[Monitoring](run.qmd#monitoring){.chip} [Observabilité](run.qmd#observabilite){.chip} [Sécurité](run.qmd#securite){.chip} [Coûts](run.qmd#couts){.chip} [Déploiement](run.qmd#deploiement){.chip}
 :::
 
 [Aller à Run](run.qmd){.llmops-stretched aria-label="Ouvrir la page Run"}
-:::
-
-:::
+::::
+:::::::::
