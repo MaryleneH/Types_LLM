@@ -5,14 +5,15 @@ format:
   html:
     toc: false
     smooth-scroll: true
-    css: llmops.css
 ---
 
 ::: {.llmops}
 
 ::: {.llmops-card}
 ### 🧭 Plan
-- 1/ Trouver les cas d'usage _(Identify a single problem to solve)_{.llmops-en}
+- 1/ Trouver les cas d'usage _[(Identify a single problem to solve)]{.llmops-en}_
+
+[Aller à Plan](llmops/plan.qmd){.llmops-stretched}
 :::
 
 ::: {.llmops-card}
@@ -20,11 +21,15 @@ format:
 - 2/ Choose the LLM  
 - 3/ Customize the LLM  
 - 4/ Set up the application's architecture
+
+[Aller à Build](llmops/build.qmd){.llmops-stretched}
 :::
 
 ::: {.llmops-card}
 ### 🚀 Run
 <!-- Ajouter ici les points d'exploitation / monitoring / sécurité -->
+
+[Aller à Run](llmops/run.qmd){.llmops-stretched}
 :::
 
 :::
