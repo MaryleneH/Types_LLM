@@ -11,7 +11,42 @@
     "href": "index.html",
     "title": "Les LLM et leur mise en production",
     "section": "",
-    "text": "Les Types de LLM\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.\nDécouvrir la roadmap » Lire le blog »\n\n\n\nLLMOps\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.\nIntérêt des LLMs » Points d’attention » Lire le blog »"
+    "text": "Les Types de LLM\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.\nDécouvrir la roadmap » Lire le blog »\n\n\n\nLLMOps\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.\nCycle LLMOps » Points d’attention » Lire le blog »"
+  },
+  {
+    "objectID": "llmops/build.html",
+    "href": "llmops/build.html",
+    "title": "LLMOps — Build",
+    "section": "",
+    "text": "⟵ Retour à LLMOps\n\nChoisir le LLM\n\nCritères : langue, contexte, coûts, perfs, contraintes légales\nOuvert (OSS) vs hébergé (API) vs self-host\nBenchmarks ciblés (pas de score “général” sans contexte)\n\n\n\nFine-tuning\n\nQuand l’utiliser (style, nouveaux formats, robustesse)\nSFT, LoRA/QLoRA, jeux d’exemples, garde-fous\nSuivi des dérives et versionning des modèles\n\n\n\nRAG\n\nPipeline d’ingestion (chunking, embeddings, index)\nStratégies de retrieval (hybride, rerankers)\nObservabilité des requêtes et des réponses\n\n\n\nPrompting\n\nInstructions, rôles, schémas de sortie\nFew-shot, chain-of-thought (sans fuite d’infos)\nTemplates et variables d’app\n\n\n\nÉvaluation\n\nGolden sets, métriques (exact match, faithfulness, utilité)\nÉval offline/online, human-in-the-loop\nTests régression et canaris\n\n\n\nArchitecture applicative\n\nOrchestration (API, workers, queues)\nCaches, garde-fous, limites de taux\nSecrets, monitoring, CI/CD"
+  },
+  {
+    "objectID": "llmops/plan.html",
+    "href": "llmops/plan.html",
+    "title": "LLMOps — Plan",
+    "section": "",
+    "text": "⟵ Retour à LLMOps"
+  },
+  {
+    "objectID": "llmops/plan.html#roi",
+    "href": "llmops/plan.html#roi",
+    "title": "LLMOps — Plan",
+    "section": "ROI",
+    "text": "ROI\n\nHypothèses de gain (temps, qualité, satisfaction)\nCoût total (infra, LLM, données, humains)\nMéthode d’estimation (baseline → pilote → prod)"
+  },
+  {
+    "objectID": "llmops/plan.html#risques",
+    "href": "llmops/plan.html#risques",
+    "title": "LLMOps — Plan",
+    "section": "Risques",
+    "text": "Risques\n\nHallucinations, biais, confidentialité, conformité (RGPD)\nRisques opérationnels (latence, coûts variables)\nMesures de mitigation (garde-fous, évaluation continue)"
+  },
+  {
+    "objectID": "llmops/plan.html#donnees",
+    "href": "llmops/plan.html#donnees",
+    "title": "LLMOps — Plan",
+    "section": "Données",
+    "text": "Données\n\nInventaire des sources (docs, bases, APIs)\nQualité, droits d’usage, rétention\nStratégie d’accès (RAG, cache, anonymisation)"
   },
   {
     "objectID": "about.html",
@@ -26,5 +61,19 @@
     "title": "Blog",
     "section": "",
     "text": "Aucun article correspondant"
+  },
+  {
+    "objectID": "llmops/cycle.html",
+    "href": "llmops/cycle.html",
+    "title": "LLMOps — Plan • Build • Run",
+    "section": "",
+    "text": "🧭 Plan\n\n1/ Trouver les cas d’usage (Identify a single problem to solve)\n\n\nCas d’usage ROI Risques Données\n\nAller à Plan\n\n\n🏗️ Build\n\n2/ Choose the LLM\n\n3/ Customize the LLM\n\n4/ Set up the application’s architecture\n\n\nChoisir le LLM Fine-tuning RAG Prompting Évaluation Architecture\n\nAller à Build\n\n\n🚀 Run\n\n\nMonitoring Observabilité Sécurité Coûts Déploiement\n\nAller à Run"
+  },
+  {
+    "objectID": "llmops/run.html",
+    "href": "llmops/run.html",
+    "title": "LLMOps — Run",
+    "section": "",
+    "text": "⟵ Retour à LLMOps\n\nMonitoring\n\nLatence, taux d’erreur, coût par requête\nTaux de refus/safety, timeouts, saturation\n\n\n\nObservabilité\n\nTraces des prompts/contexte (avec masquage)\nJournaux de retrieval et diagnostics\nDashboards et alertes\n\n\n\nSécurité\n\nContrôles d’entrée/sortie (prompt injection, secrets)\nRBAC, journalisation, conformité (RGPD)\nGestion des clés et des secrets\n\n\n\nCoûts\n\nBudgets, quotas, droits par équipe/projet\nMise en cache, distillation, modèles plus petits\nOptimisations (batching, streaming)\n\n\n\nDéploiement\n\nEnvironnements (dev / staging / prod)\nStratégies (blue/green, canary)\nRollback, versionning prompts/modèles"
   }
 ]
