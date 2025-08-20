@@ -4,7 +4,7 @@
     "href": "roadmap/index.html",
     "title": "Roadmap des architectures",
     "section": "",
-    "text": "La progression des architectures que je vais apprendre.\n\n\n\n\n\n\n\n\n\n\n\n\n2017 — Transformers\n\n\nLes bases de l’attention et l’architecture qui a tout changé.\n\n\n\n\n\n\n\n\n\n\n2021 — Mixture of Experts (MoE)\n\n\nRoutage des tokens vers des experts pour scaler efficacement.\n\n\n\n\n\n\n\n\n\n\n2023 — Mamba\n\n\nModèles séquentiels à états (SSM) orientés efficacité.\n\n\n\n\n\n\n\n\n\n\n2025 — Mixture of Recursion\n\n\nCombiner des mécanismes récursifs pour une expressivité accrue.\n\n\n\n\n\nAucun article correspondant"
+    "text": "La progression des chapitres que je vais apprendre.4 architectures clés qui ont façonnées les LLMs.\n\nLes Transformers ont joué un rôle fondamental. Ils sont partout –&gt; brique à maîtriser\nMixture of Experts (MoE) route chaque token vers quelques experts pour gagner en capacité à coût de calcul maîtrisé\nMamba — un modèle à espace d’état — traite de très longs contextes avec une complexité linéaire sans attention\nMixture of Recursion (MoR) introduit une profondeur récursive par token avec un KV caching (mémoire d’attention) sélectif\n\nÀ chaque étape, je compilerai ici, expérimentations et retours d’expérience issus de mes propres essais\n\n\n\n\n\n\n\n\n\n\n\n\n2017 — Transformers\n\n\nLes bases de l’attention et l’architecture qui a tout changé.\n\n\n\n\n\n\n\n\n\n\n2021 — Mixture of Experts (MoE)\n\n\nRoutage des tokens vers des experts pour scaler efficacement.\n\n\n\n\n\n\n\n\n\n\n2023 — Mamba\n\n\nModèles séquentiels à états (SSM) orientés efficacité.\n\n\n\n\n\n\n\n\n\n\n2025 — Mixture of Recursion\n\n\nCombiner des mécanismes récursifs pour une expressivité accrue.\n\n\n\n\n\nAucun article correspondant"
   },
   {
     "objectID": "index.html",
@@ -75,5 +75,12 @@
     "title": "LLMOps — Run",
     "section": "",
     "text": "⟵ Retour à LLMOps\n\nMonitoring\n\nLatence, taux d’erreur, coût par requête\nTaux de refus/safety, timeouts, saturation\n\n\n\nObservabilité\n\nTraces des prompts/contexte (avec masquage)\nJournaux de retrieval et diagnostics\nDashboards et alertes\n\n\n\nSécurité\n\nContrôles d’entrée/sortie (prompt injection, secrets)\nRBAC, journalisation, conformité (RGPD)\nGestion des clés et des secrets\n\n\n\nCoûts\n\nBudgets, quotas, droits par équipe/projet\nMise en cache, distillation, modèles plus petits\nOptimisations (batching, streaming)\n\n\n\nDéploiement\n\nEnvironnements (dev / staging / prod)\nStratégies (blue/green, canary)\nRollback, versionning prompts/modèles"
+  },
+  {
+    "objectID": "roadmap/2025-mixture-of-recursion.html",
+    "href": "roadmap/2025-mixture-of-recursion.html",
+    "title": "2025 — Mixture of Recursion",
+    "section": "",
+    "text": "&lt;– Contenu à venir –&gt;\n_(Différence d’esprit avec MoE : MoE augmente la “largeur” (quelques experts par token), MoR augmente la “profondeur dans le temps” (quelques passes supplémentaires pour les tokens difficiles)._"
   }
 ]
