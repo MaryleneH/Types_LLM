@@ -363,7 +363,7 @@ html[data-bs-theme="dark"] .llmops-card .llmops-chips > .chip:hover{
 }
 
 /* Optionnel: légèrement plus petit sur mobile très étroit */
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   .navbar .navbar-brand > img,
   .navbar .navbar-brand > .navbar-logo,
   .navbar .navbar-brand > svg {
@@ -373,7 +373,7 @@ html[data-bs-theme="dark"] .llmops-card .llmops-chips > .chip:hover{
 }
 
 /* === Boutons empilés + espace vertical sur mobile (≤576px) ============== */
-@media (max-width: 576px) {
+@media (max-width: 768px) {
 
   /* 1) Les conteneurs courants de boutons passent en colonne */
   .quarto-title-banner .buttons,
@@ -411,5 +411,5 @@ html[data-bs-theme="dark"] .llmops-card .llmops-chips > .chip:hover{
   .btn-toolbar .btn:not(:last-child) {
     margin-bottom: 12px;
   }
-}
+
 
