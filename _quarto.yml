@@ -9,7 +9,7 @@ freeze: auto
 website:
   title: "LLM / Agents"
   description: "Chronologie & blog des architectures de LLM"
-  favicon: assets/favicon.svg
+  favicon: assets/favicon-32.png
   navbar:
     logo: assets/logo.svg
     right:

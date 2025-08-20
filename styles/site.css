@@ -372,26 +372,37 @@ html[data-bs-theme="dark"] .llmops-card .llmops-chips > .chip:hover{
   }
 }
 
-/* === Boutons : espace vertical sur mobile (≤576px) ===================== */
+/* === Boutons empilés + espace vertical sur mobile (≤576px) ============== */
 @media (max-width: 576px) {
-  /* Conteneurs courants de Quarto/Bootstrap pour les boutons */
+
+  /* 1) Les conteneurs courants de boutons passent en colonne */
   .quarto-title-banner .buttons,
-  .buttons,
-  .btn-group,
-  .btn-toolbar {
-    display: flex;               /* forcer un flux vertical */
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;                   /* espace entre les boutons */
+  .quarto-title .buttons,
+  .btn-toolbar,
+  .btn-group {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
   }
 
-  /* Les boutons prennent toute la largeur sur mobile */
-  .quarto-title-banner .buttons .btn,
-  .buttons .btn,
-  .btn-group .btn,
-  .btn-toolbar .btn {
-    width: 100%;
+  /* 2) Chaque bouton prend toute la largeur + marge basse régulière */
+  .quarto-title-banner .buttons > .btn,
+  .quarto-title .buttons > .btn,
+  .btn-toolbar > .btn,
+  .btn-group > .btn,
+  .btn {
+    width: 100% !important;
+    margin: 0 0 12px 0 !important;  /* espace vertical */
   }
+
+  /* 3) Nettoyage des règles Bootstrap de .btn-group qui collent les boutons */
+  .btn-group > .btn + .btn { margin-left: 0 !important; }
+
+  /* 4) Si tu utilises les utilitaires Bootstrap me-*/ms-*, on neutralise à droite/gauche */
+  .btn[class*="me-"] { margin-right: 0 !important; }
+  .btn[class*="ms-"] { margin-left: 0 !important; }
+}
+
 
   /* Fallback si le navigateur ne supporte pas gap sur flex */
   .quarto-title-banner .buttons .btn:not(:last-child),
