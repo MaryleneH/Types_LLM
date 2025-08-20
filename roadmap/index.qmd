@@ -14,8 +14,15 @@ listing:
 
 <br></br>
 
-![](roadmap-llm.svg){fig-alt="Roadmap LLM minimaliste (2017–2025)" width=100%}
+![](roadmap-llm.svg){fig-alt="Roadmap LLM minimaliste (2017–2025)" width="100%"}
 
 <br></br>
 
-La progression des architectures que je vais apprendre.
+La progression des chapitres que je vais apprendre.4 architectures clés qui ont façonnées les LLMs. 
+
+-   Les **Transformers** ont joué un rôle fondamental. Ils sont partout --> brique à maîtriser
+-   **Mixture of Experts (MoE)** route chaque token vers quelques experts pour gagner en capacité à coût de calcul maîtrisé
+-   **Mamba** — un modèle à espace d’état — traite de très longs contextes avec une complexité linéaire sans attention
+-   **Mixture of Recursion (MoR)** introduit une profondeur récursive par token avec un KV caching (mémoire d’attention) sélectif
+
+À chaque étape, je compilerai ici, expérimentations et retours d’expérience issus de mes propres essais

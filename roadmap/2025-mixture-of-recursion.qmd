@@ -4,4 +4,6 @@ description: "Combiner des mécanismes récursifs pour une expressivité accrue.
 mage: assets/placeholder-card.svg
 ---
 
-<!-- Contenu à venir -->
+\<-- Contenu à venir --\>
+
+\_(Différence d’esprit avec **MoE** : MoE augmente la “largeur” (quelques experts par token), MoR augmente la “profondeur dans le temps” (quelques passes supplémentaires pour les tokens difficiles).\_
