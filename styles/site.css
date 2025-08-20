@@ -1,3 +1,15 @@
+/* Taille du logo dans la navbar (desktop + mobile) */
+.navbar .navbar-brand img,
+.navbar-brand img.navbar-logo {
+  height: clamp(44px, 7vw, 72px);
+  width: auto;
+}
+
+/* Optionnel : un peu plus d’air autour du logo */
+.navbar .navbar-brand {
+  gap: 0.5rem;
+}
+
 /* Masque l'icône par défaut mais garde sa place */
 .quarto-color-scheme-toggle .bi {
   display: inline-block;
@@ -337,3 +349,56 @@ html[data-bs-theme="dark"] .llmops-card .llmops-chips > .chip:hover{
   background: color-mix(in srgb, var(--sage-600) 58%, #0e1211 42%);
   border-color: color-mix(in srgb, var(--sage-400) 28%, transparent);
 }
+
+
+/* === Logo navbar SEULEMENT (pas la navbar) ============================== */
+
+.navbar .navbar-brand > img,
+.navbar .navbar-brand > .navbar-logo,
+.navbar .navbar-brand > svg {
+  height: 52px !important;     /* ajuster ici : 40–56px au choix */
+  max-height: 52px !important; /* utile si un max-height traîne ailleurs */
+  width: auto !important;
+  vertical-align: middle;
+}
+
+/* Optionnel: légèrement plus petit sur mobile très étroit */
+@media (max-width: 576px) {
+  .navbar .navbar-brand > img,
+  .navbar .navbar-brand > .navbar-logo,
+  .navbar .navbar-brand > svg {
+    height: 44px !important;
+    max-height: 44px !important;
+  }
+}
+
+/* === Boutons : espace vertical sur mobile (≤576px) ===================== */
+@media (max-width: 576px) {
+  /* Conteneurs courants de Quarto/Bootstrap pour les boutons */
+  .quarto-title-banner .buttons,
+  .buttons,
+  .btn-group,
+  .btn-toolbar {
+    display: flex;               /* forcer un flux vertical */
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;                   /* espace entre les boutons */
+  }
+
+  /* Les boutons prennent toute la largeur sur mobile */
+  .quarto-title-banner .buttons .btn,
+  .buttons .btn,
+  .btn-group .btn,
+  .btn-toolbar .btn {
+    width: 100%;
+  }
+
+  /* Fallback si le navigateur ne supporte pas gap sur flex */
+  .quarto-title-banner .buttons .btn:not(:last-child),
+  .buttons .btn:not(:last-child),
+  .btn-group .btn:not(:last-child),
+  .btn-toolbar .btn:not(:last-child) {
+    margin-bottom: 12px;
+  }
+}
+
