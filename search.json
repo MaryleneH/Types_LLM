@@ -1,5 +1,82 @@
 [
   {
+    "objectID": "llmops/run.html",
+    "href": "llmops/run.html",
+    "title": "LLMOps — Run",
+    "section": "",
+    "text": "⟵ Retour à LLMOps\n\nMonitoring\n\nLatence, taux d’erreur, coût par requête\nTaux de refus/safety, timeouts, saturation\n\n\n\nObservabilité\n\nTraces des prompts/contexte (avec masquage)\nJournaux de retrieval et diagnostics\nDashboards et alertes\n\n\n\nSécurité\n\nContrôles d’entrée/sortie (prompt injection, secrets)\nRBAC, journalisation, conformité (RGPD)\nGestion des clés et des secrets\n\n\n\nCoûts\n\nBudgets, quotas, droits par équipe/projet\nMise en cache, distillation, modèles plus petits\nOptimisations (batching, streaming)\n\n\n\nDéploiement\n\nEnvironnements (dev / staging / prod)\nStratégies (blue/green, canary)\nRollback, versionning prompts/modèles"
+  },
+  {
+    "objectID": "llmops/cycle.html",
+    "href": "llmops/cycle.html",
+    "title": "LLMOps — Plan • Build • Run",
+    "section": "",
+    "text": "🧭 Plan\n\n1/ Trouver les cas d’usage (Identify a single problem to solve)\n\n\nCas d’usage ROI Risques Données\n\nAller à Plan\n\n\n🏗️ Build\n\n2/ Choose the LLM\n\n3/ Customize the LLM\n\n4/ Set up the application’s architecture\n\n\nChoisir le LLM Fine-tuning RAG Prompting Évaluation Architecture\n\nAller à Build\n\n\n🚀 Run\n\n\nMonitoring Observabilité Sécurité Coûts Déploiement\n\nAller à Run"
+  },
+  {
+    "objectID": "blog/posts/2025-11-22-taxinomie-agents.html",
+    "href": "blog/posts/2025-11-22-taxinomie-agents.html",
+    "title": "Comprendre la taxinomie des Agentic Systems",
+    "section": "",
+    "text": "Depuis quelques jours, je suis (tant bien que mal 😊) le cours 5-Day AI Agents Intensive Course Kaggle/Google (Google, 2025), qui propose une vision structurée — et franchement éclairante — de la montée en complexité des systèmes agentiques.\nCe billet est autant un résumé qu’un retour personnel : une manière de fixer ce que j’ai appris, de mettre en perspective les concepts, et d’éclairer ma propre démarche de développement d’agents.\nLe document source propose une taxinomie en cinq niveaux, du plus simple (un modèle isolé) au plus avancé (un système capable de s’auto-évoluer). Les illustrations du PDF — notamment la pyramide de la page 14 présentant les niveaux de 0 à 4 — donnent une bonne intuition : plus on monte, plus on augmente la capacité d’un système à raisonner, agir, s’adapter et orchestrer d’autres agents.\n\n\n\n\n\n\n\nflowchart LR\n    classDef level0 fill:#f2f2f2,stroke:#333,stroke-width:1px;\n    classDef level1 fill:#d9e8ff,stroke:#1a4ea0,stroke-width:1px;\n    classDef level2 fill:#c7f5d9,stroke:#0d7a34,stroke-width:1px;\n    classDef level3 fill:#ffe7c4,stroke:#cc7a00,stroke-width:1px;\n    classDef level4 fill:#f7c7da,stroke:#a0134a,stroke-width:1px;\n\n    L0[\"Niveau 0&lt;br/&gt;Core Reasoning System\"]:::level0\n    L1[\"Niveau 1&lt;br/&gt;Connected Problem Solver\"]:::level1\n    L2[\"Niveau 2&lt;br/&gt;Strategic Problem Solver\"]:::level2\n    L3[\"Niveau 3&lt;br/&gt;Collaborative Multi-Agent System\"]:::level3\n    L4[\"Niveau 4&lt;br/&gt;Self-Evolving System\"]:::level4\n\n    L0 --&gt; L1 --&gt; L2 --&gt; L3 --&gt; L4"
+  },
+  {
+    "objectID": "blog/posts/2025-11-22-taxinomie-agents.html#pyramide-des-niveaux-agentiques",
+    "href": "blog/posts/2025-11-22-taxinomie-agents.html#pyramide-des-niveaux-agentiques",
+    "title": "Comprendre la taxinomie des Agentic Systems",
+    "section": "",
+    "text": "flowchart LR\n    classDef level0 fill:#f2f2f2,stroke:#333,stroke-width:1px;\n    classDef level1 fill:#d9e8ff,stroke:#1a4ea0,stroke-width:1px;\n    classDef level2 fill:#c7f5d9,stroke:#0d7a34,stroke-width:1px;\n    classDef level3 fill:#ffe7c4,stroke:#cc7a00,stroke-width:1px;\n    classDef level4 fill:#f7c7da,stroke:#a0134a,stroke-width:1px;\n\n    L0[\"Niveau 0&lt;br/&gt;Core Reasoning System\"]:::level0\n    L1[\"Niveau 1&lt;br/&gt;Connected Problem Solver\"]:::level1\n    L2[\"Niveau 2&lt;br/&gt;Strategic Problem Solver\"]:::level2\n    L3[\"Niveau 3&lt;br/&gt;Collaborative Multi-Agent System\"]:::level3\n    L4[\"Niveau 4&lt;br/&gt;Self-Evolving System\"]:::level4\n\n    L0 --&gt; L1 --&gt; L2 --&gt; L3 --&gt; L4"
+  },
+  {
+    "objectID": "blog/posts/2025-11-22-taxinomie-agents.html#définir-lobjectif-de-lagent",
+    "href": "blog/posts/2025-11-22-taxinomie-agents.html#définir-lobjectif-de-lagent",
+    "title": "Comprendre la taxinomie des Agentic Systems",
+    "section": "1. Définir l’objectif de l’agent",
+    "text": "1. Définir l’objectif de l’agent\nQuel résultat ? Quel périmètre ? Quel niveau viser ?"
+  },
+  {
+    "objectID": "blog/posts/2025-11-22-taxinomie-agents.html#choisir-le-modèle",
+    "href": "blog/posts/2025-11-22-taxinomie-agents.html#choisir-le-modèle",
+    "title": "Comprendre la taxinomie des Agentic Systems",
+    "section": "2. Choisir le modèle",
+    "text": "2. Choisir le modèle\nPas forcément le plus gros : coût, latence, capacité de raisonnement, capacité à utiliser des outils."
+  },
+  {
+    "objectID": "blog/posts/2025-11-22-taxinomie-agents.html#ajouter-des-outils",
+    "href": "blog/posts/2025-11-22-taxinomie-agents.html#ajouter-des-outils",
+    "title": "Comprendre la taxinomie des Agentic Systems",
+    "section": "3. Ajouter des outils",
+    "text": "3. Ajouter des outils\nOutils d’information (RAG, SQL…), d’action (API, code execution), ou HITL."
+  },
+  {
+    "objectID": "blog/posts/2025-11-22-taxinomie-agents.html#concevoir-lorchestration",
+    "href": "blog/posts/2025-11-22-taxinomie-agents.html#concevoir-lorchestration",
+    "title": "Comprendre la taxinomie des Agentic Systems",
+    "section": "4. Concevoir l’orchestration",
+    "text": "4. Concevoir l’orchestration\nLe Think → Act → Observe doit être géré proprement."
+  },
+  {
+    "objectID": "blog/posts/2025-11-22-taxinomie-agents.html#instrumenter-et-évaluer",
+    "href": "blog/posts/2025-11-22-taxinomie-agents.html#instrumenter-et-évaluer",
+    "title": "Comprendre la taxinomie des Agentic Systems",
+    "section": "5. Instrumenter et évaluer",
+    "text": "5. Instrumenter et évaluer\nTraces, évaluation, LM-judge, logique de test."
+  },
+  {
+    "objectID": "blog/posts/2025-11-22-taxinomie-agents.html#déployer-et-sécuriser",
+    "href": "blog/posts/2025-11-22-taxinomie-agents.html#déployer-et-sécuriser",
+    "title": "Comprendre la taxinomie des Agentic Systems",
+    "section": "6. Déployer et sécuriser",
+    "text": "6. Déployer et sécuriser\nAuthentification, autorisation, garde-fous, supervision."
+  },
+  {
+    "objectID": "roadmap/2025-mixture-of-recursion.html",
+    "href": "roadmap/2025-mixture-of-recursion.html",
+    "title": "2025 — Mixture of Recursion",
+    "section": "",
+    "text": "&lt;– Contenu à venir –&gt;\n_(Différence d’esprit avec MoE : MoE augmente la “largeur” (quelques experts par token), MoR augmente la “profondeur dans le temps” (quelques passes supplémentaires pour les tokens difficiles)._"
+  },
+  {
     "objectID": "roadmap/index.html",
     "href": "roadmap/index.html",
     "title": "Roadmap des architectures",
@@ -14,11 +91,18 @@
     "text": "Les Types de LLM\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.\nDécouvrir la roadmap » Lire le blog »\n\n\n\nLLMOps\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.\nCycle LLMOps » Points d’attention » Lire le blog »"
   },
   {
-    "objectID": "llmops/build.html",
-    "href": "llmops/build.html",
-    "title": "LLMOps — Build",
+    "objectID": "blog/index.html",
+    "href": "blog/index.html",
+    "title": "Blog",
     "section": "",
-    "text": "⟵ Retour à LLMOps\n\nChoisir le LLM\n\nCritères : langue, contexte, coûts, perfs, contraintes légales\nOuvert (OSS) vs hébergé (API) vs self-host\nBenchmarks ciblés (pas de score “général” sans contexte)\n\n\n\nFine-tuning\n\nQuand l’utiliser (style, nouveaux formats, robustesse)\nSFT, LoRA/QLoRA, jeux d’exemples, garde-fous\nSuivi des dérives et versionning des modèles\n\n\n\nRAG\n\nPipeline d’ingestion (chunking, embeddings, index)\nStratégies de retrieval (hybride, rerankers)\nObservabilité des requêtes et des réponses\n\n\n\nPrompting\n\nInstructions, rôles, schémas de sortie\nFew-shot, chain-of-thought (sans fuite d’infos)\nTemplates et variables d’app\n\n\n\nÉvaluation\n\nGolden sets, métriques (exact match, faithfulness, utilité)\nÉval offline/online, human-in-the-loop\nTests régression et canaris\n\n\n\nArchitecture applicative\n\nOrchestration (API, workers, queues)\nCaches, garde-fous, limites de taux\nSecrets, monitoring, CI/CD"
+    "text": "Comprendre la taxinomie des Agentic Systems\n\n\n\nagentic-systems\n\nIA\n\ncours\n\n\n\nRetour pédagogique et personnel sur les niveaux d’agents présentés dans le cours Introduction to Agents.\n\n\n\n22 nov. 2025\n\n\n\n\n\n\nAucun article correspondant"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "À propos",
+    "section": "",
+    "text": "About this site"
   },
   {
     "objectID": "llmops/plan.html",
@@ -49,38 +133,10 @@
     "text": "Données\n\nInventaire des sources (docs, bases, APIs)\nQualité, droits d’usage, rétention\nStratégie d’accès (RAG, cache, anonymisation)"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "À propos",
+    "objectID": "llmops/build.html",
+    "href": "llmops/build.html",
+    "title": "LLMOps — Build",
     "section": "",
-    "text": "About this site"
-  },
-  {
-    "objectID": "blog/index.html",
-    "href": "blog/index.html",
-    "title": "Blog",
-    "section": "",
-    "text": "Aucun article correspondant"
-  },
-  {
-    "objectID": "llmops/cycle.html",
-    "href": "llmops/cycle.html",
-    "title": "LLMOps — Plan • Build • Run",
-    "section": "",
-    "text": "🧭 Plan\n\n1/ Trouver les cas d’usage (Identify a single problem to solve)\n\n\nCas d’usage ROI Risques Données\n\nAller à Plan\n\n\n🏗️ Build\n\n2/ Choose the LLM\n\n3/ Customize the LLM\n\n4/ Set up the application’s architecture\n\n\nChoisir le LLM Fine-tuning RAG Prompting Évaluation Architecture\n\nAller à Build\n\n\n🚀 Run\n\n\nMonitoring Observabilité Sécurité Coûts Déploiement\n\nAller à Run"
-  },
-  {
-    "objectID": "llmops/run.html",
-    "href": "llmops/run.html",
-    "title": "LLMOps — Run",
-    "section": "",
-    "text": "⟵ Retour à LLMOps\n\nMonitoring\n\nLatence, taux d’erreur, coût par requête\nTaux de refus/safety, timeouts, saturation\n\n\n\nObservabilité\n\nTraces des prompts/contexte (avec masquage)\nJournaux de retrieval et diagnostics\nDashboards et alertes\n\n\n\nSécurité\n\nContrôles d’entrée/sortie (prompt injection, secrets)\nRBAC, journalisation, conformité (RGPD)\nGestion des clés et des secrets\n\n\n\nCoûts\n\nBudgets, quotas, droits par équipe/projet\nMise en cache, distillation, modèles plus petits\nOptimisations (batching, streaming)\n\n\n\nDéploiement\n\nEnvironnements (dev / staging / prod)\nStratégies (blue/green, canary)\nRollback, versionning prompts/modèles"
-  },
-  {
-    "objectID": "roadmap/2025-mixture-of-recursion.html",
-    "href": "roadmap/2025-mixture-of-recursion.html",
-    "title": "2025 — Mixture of Recursion",
-    "section": "",
-    "text": "&lt;– Contenu à venir –&gt;\n_(Différence d’esprit avec MoE : MoE augmente la “largeur” (quelques experts par token), MoR augmente la “profondeur dans le temps” (quelques passes supplémentaires pour les tokens difficiles)._"
+    "text": "⟵ Retour à LLMOps\n\nChoisir le LLM\n\nCritères : langue, contexte, coûts, perfs, contraintes légales\nOuvert (OSS) vs hébergé (API) vs self-host\nBenchmarks ciblés (pas de score “général” sans contexte)\n\n\n\nFine-tuning\n\nQuand l’utiliser (style, nouveaux formats, robustesse)\nSFT, LoRA/QLoRA, jeux d’exemples, garde-fous\nSuivi des dérives et versionning des modèles\n\n\n\nRAG\n\nPipeline d’ingestion (chunking, embeddings, index)\nStratégies de retrieval (hybride, rerankers)\nObservabilité des requêtes et des réponses\n\n\n\nPrompting\n\nInstructions, rôles, schémas de sortie\nFew-shot, chain-of-thought (sans fuite d’infos)\nTemplates et variables d’app\n\n\n\nÉvaluation\n\nGolden sets, métriques (exact match, faithfulness, utilité)\nÉval offline/online, human-in-the-loop\nTests régression et canaris\n\n\n\nArchitecture applicative\n\nOrchestration (API, workers, queues)\nCaches, garde-fous, limites de taux\nSecrets, monitoring, CI/CD"
   }
 ]

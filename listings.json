@@ -10,6 +10,8 @@
   },
   {
     "listing": "/blog/index.html",
-    "items": []
+    "items": [
+      "/blog/posts/2025-11-22-taxinomie-agents.html"
+    ]
   }
 ]

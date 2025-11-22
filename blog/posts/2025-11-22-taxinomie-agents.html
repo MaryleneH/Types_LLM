@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Routage des tokens vers des experts pour scaler efficacement.">
+<meta name="description" content="Retour pédagogique et personnel sur les niveaux d’agents présentés dans le cours Introduction to Agents.">
 
-<title>2021 — Mixture of Experts (MoE) – LLM / Agents</title>
+<title>Comprendre la taxinomie des Agentic Systems – LLM / Agents</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,29 +24,29 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../assets/favicon-32.png" rel="icon" type="image/png">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-722e4ac3ef8bd88f2cdaa8fd88a7f5f5.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-36af4f8608bdac7521dab8129f3aa089.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-722e4ac3ef8bd88f2cdaa8fd88a7f5f5.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-3bad14c77576326e1a2b81460117c822.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-169ef448a7410bfd90b463eed8957cf4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-3bad14c77576326e1a2b81460117c822.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/favicon-32.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-722e4ac3ef8bd88f2cdaa8fd88a7f5f5.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-36af4f8608bdac7521dab8129f3aa089.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-722e4ac3ef8bd88f2cdaa8fd88a7f5f5.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-3bad14c77576326e1a2b81460117c822.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-169ef448a7410bfd90b463eed8957cf4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-3bad14c77576326e1a2b81460117c822.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -75,10 +75,13 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 
-<link rel="stylesheet" href="../styles/site.css">
+<link rel="stylesheet" href="../../styles/site.css">
 </head>
 
 <body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -259,11 +262,11 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../assets/logo.svg" alt="" class="navbar-logo light-content">
-    <img src="../assets/logo.svg" alt="" class="navbar-logo dark-content">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/logo.svg" alt="" class="navbar-logo light-content">
+    <img src="../../assets/logo.svg" alt="" class="navbar-logo dark-content">
     </a>
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">LLM / Agents</span>
     </a>
   </div>
@@ -274,23 +277,23 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Accueil</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../roadmap/index.html"> 
+    <a class="nav-link" href="../../roadmap/index.html"> 
 <span class="menu-text">Roadmap</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../blog/index.html"> 
+    <a class="nav-link" href="../../blog/index.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">À propos</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../contact.html"> 
+    <a class="nav-link" href="../../contact.html"> 
 <span class="menu-text">Contact</span></a>
   </li>  
 </ul>
@@ -305,8 +308,34 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sommaire</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#pyramide-des-niveaux-agentiques" id="toc-pyramide-des-niveaux-agentiques" class="nav-link" data-scroll-target="#pyramide-des-niveaux-agentiques">Pyramide des niveaux agentiques</a></li>
+  </ul></li>
+  <li><a href="#niveau-0-le-core-reasoning-system" id="toc-niveau-0-le-core-reasoning-system" class="nav-link" data-scroll-target="#niveau-0-le-core-reasoning-system">Niveau 0 — Le <em>Core Reasoning System</em></a></li>
+  <li><a href="#niveau-1-le-connected-problem-solver" id="toc-niveau-1-le-connected-problem-solver" class="nav-link" data-scroll-target="#niveau-1-le-connected-problem-solver">Niveau 1 — Le <em>Connected Problem Solver</em></a></li>
+  <li><a href="#niveau-2-le-strategic-problem-solver" id="toc-niveau-2-le-strategic-problem-solver" class="nav-link" data-scroll-target="#niveau-2-le-strategic-problem-solver">Niveau 2 — Le <em>Strategic Problem Solver</em></a></li>
+  <li><a href="#niveau-3-le-collaborative-multi-agent-system" id="toc-niveau-3-le-collaborative-multi-agent-system" class="nav-link" data-scroll-target="#niveau-3-le-collaborative-multi-agent-system">Niveau 3 — Le <em>Collaborative Multi-Agent System</em></a></li>
+  <li><a href="#niveau-4-le-self-evolving-system" id="toc-niveau-4-le-self-evolving-system" class="nav-link" data-scroll-target="#niveau-4-le-self-evolving-system">Niveau 4 — Le <em>Self-Evolving System</em></a></li>
+  <li><a href="#pourquoi-ces-niveaux-sont-utiles-pour-un-développeur-aujourdhui" id="toc-pourquoi-ces-niveaux-sont-utiles-pour-un-développeur-aujourdhui" class="nav-link" data-scroll-target="#pourquoi-ces-niveaux-sont-utiles-pour-un-développeur-aujourdhui">Pourquoi ces niveaux sont utiles pour un développeur aujourd’hui</a></li>
+  <li><a href="#ce-que-jen-retire-pour-mes-propres-projets" id="toc-ce-que-jen-retire-pour-mes-propres-projets" class="nav-link" data-scroll-target="#ce-que-jen-retire-pour-mes-propres-projets">Ce que j’en retire pour mes propres projets</a></li>
+  <li><a href="#comment-commencer-à-construire-un-agent" id="toc-comment-commencer-à-construire-un-agent" class="nav-link" data-scroll-target="#comment-commencer-à-construire-un-agent">Comment commencer à construire un agent</a>
+  <ul class="collapse">
+  <li><a href="#définir-lobjectif-de-lagent" id="toc-définir-lobjectif-de-lagent" class="nav-link" data-scroll-target="#définir-lobjectif-de-lagent">1. Définir l’objectif de l’agent</a></li>
+  <li><a href="#choisir-le-modèle" id="toc-choisir-le-modèle" class="nav-link" data-scroll-target="#choisir-le-modèle">2. Choisir le modèle</a></li>
+  <li><a href="#ajouter-des-outils" id="toc-ajouter-des-outils" class="nav-link" data-scroll-target="#ajouter-des-outils">3. Ajouter des outils</a></li>
+  <li><a href="#concevoir-lorchestration" id="toc-concevoir-lorchestration" class="nav-link" data-scroll-target="#concevoir-lorchestration">4. Concevoir l’orchestration</a></li>
+  <li><a href="#instrumenter-et-évaluer" id="toc-instrumenter-et-évaluer" class="nav-link" data-scroll-target="#instrumenter-et-évaluer">5. Instrumenter et évaluer</a></li>
+  <li><a href="#déployer-et-sécuriser" id="toc-déployer-et-sécuriser" class="nav-link" data-scroll-target="#déployer-et-sécuriser">6. Déployer et sécuriser</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -314,12 +343,17 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">2021 — Mixture of Experts (MoE)</h1>
-</div>
+<h1 class="title">Comprendre la taxinomie des Agentic Systems</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">agentic-systems</div>
+    <div class="quarto-category">IA</div>
+    <div class="quarto-category">cours</div>
+  </div>
+  </div>
 
 <div>
   <div class="description">
-    Routage des tokens vers des experts pour scaler efficacement.
+    Retour pédagogique et personnel sur les niveaux d’agents présentés dans le cours Introduction to Agents.
   </div>
 </div>
 
@@ -327,6 +361,12 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Date de publication</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">22 novembre 2025</p>
+    </div>
+  </div>
   
     
   </div>
@@ -336,9 +376,156 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<!-- Contenu à venir -->
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Depuis quelques jours, je suis (tant bien que mal 😊) le cours <a href="https://www.kaggle.com/learn-guide/5-day-agents"><strong><em>5-Day AI Agents Intensive Course Kaggle/Google</em></strong></a> (Google, 2025), qui propose une vision structurée — et franchement éclairante — de la montée en complexité des systèmes agentiques.<br>
+Ce billet est autant un résumé qu’un retour personnel : une manière de fixer ce que j’ai appris, de mettre en perspective les concepts, et d’éclairer ma propre démarche de développement d’agents.</p>
+<p>Le document source propose une <strong>taxinomie en cinq niveaux</strong>, du plus simple (un modèle isolé) au plus avancé (un système capable de s’auto-évoluer). Les illustrations du PDF — notamment la pyramide de la page 14 présentant les niveaux de 0 à 4 — donnent une bonne intuition : plus on monte, plus on augmente la capacité d’un système à raisonner, agir, s’adapter et orchestrer d’autres agents.</p>
+<section id="pyramide-des-niveaux-agentiques" class="level2">
+<h2 class="anchored" data-anchor-id="pyramide-des-niveaux-agentiques">Pyramide des niveaux agentiques</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    classDef level0 fill:#f2f2f2,stroke:#333,stroke-width:1px;
+    classDef level1 fill:#d9e8ff,stroke:#1a4ea0,stroke-width:1px;
+    classDef level2 fill:#c7f5d9,stroke:#0d7a34,stroke-width:1px;
+    classDef level3 fill:#ffe7c4,stroke:#cc7a00,stroke-width:1px;
+    classDef level4 fill:#f7c7da,stroke:#a0134a,stroke-width:1px;
+
+    L0["Niveau 0&lt;br/&gt;Core Reasoning System"]:::level0
+    L1["Niveau 1&lt;br/&gt;Connected Problem Solver"]:::level1
+    L2["Niveau 2&lt;br/&gt;Strategic Problem Solver"]:::level2
+    L3["Niveau 3&lt;br/&gt;Collaborative Multi-Agent System"]:::level3
+    L4["Niveau 4&lt;br/&gt;Self-Evolving System"]:::level4
+
+    L0 --&gt; L1 --&gt; L2 --&gt; L3 --&gt; L4
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="niveau-0-le-core-reasoning-system" class="level1">
+<h1>Niveau 0 — Le <em>Core Reasoning System</em></h1>
+<p>Le niveau 0 représente la brique la plus brute :<br>
+un <strong>modèle de langage isolé</strong>, sans mémoire, sans outils, sans perception du monde réel.<br>
+Il raisonne uniquement depuis son corpus pré-entraîné.</p>
+<p>Cela signifie que :</p>
+<ul>
+<li>il peut expliquer très bien les règles du baseball,<br>
+</li>
+<li>mais pas vous donner le score du match d’hier.</li>
+</ul>
+<p>Autrement dit, c’est une <strong>intelligence statique</strong>.<br>
+Un cerveau brillant, mais enfermé dans une bibliothèque sans porte de sortie.</p>
+</section>
+<section id="niveau-1-le-connected-problem-solver" class="level1">
+<h1>Niveau 1 — Le <em>Connected Problem Solver</em></h1>
+<p>Le niveau 1 introduit une rupture majeure : l’accès aux <strong>outils</strong>.<br>
+Recherche web, RAG, API, base de données, exécution de code… l’agent peut enfin interagir avec le monde.</p>
+<p>Le cycle <em>Think → Act → Observe</em> apparaît ici dans toute sa pertinence :<br>
+- <em>Think</em> : le modèle décide quel outil utiliser,<br>
+- <em>Act</em> : l’outil est exécuté,<br>
+- <em>Observe</em> : l’agent analyse le résultat et poursuit.</p>
+<p>Un <strong>agent véritable</strong> émerge. Ce niveau correspond selon moi à 80 % des besoins concrets en entreprise aujourd’hui.</p>
+</section>
+<section id="niveau-2-le-strategic-problem-solver" class="level1">
+<h1>Niveau 2 — Le <em>Strategic Problem Solver</em></h1>
+<p>Le niveau 2 amène l’agent dans une nouvelle dimension :<br>
+il ne résout plus des tâches ponctuelles, <strong>il planifie</strong>.</p>
+<p>L’agent devient stratège :</p>
+<ol type="1">
+<li>il découpe le problème,<br>
+</li>
+<li>il décide dans quel ordre avancer,<br>
+</li>
+<li>il fabrique des appels d’API de plus en plus affinés au fur et à mesure qu’il observe les résultats.</li>
+</ol>
+<p>C’est le niveau des assistants vraiment utiles au quotidien.</p>
+</section>
+<section id="niveau-3-le-collaborative-multi-agent-system" class="level1">
+<h1>Niveau 3 — Le <em>Collaborative Multi-Agent System</em></h1>
+<p>Le niveau 3, c’est l’idée que <strong>plusieurs agents spécialisés collaborent</strong>, souvent sous la direction d’un agent coordinateur.<br>
+Le document donne l’exemple d’un <em>Project Manager Agent</em> qui délègue à un agent marketing, un agent web, un agent de recherche, etc.</p>
+<p>Le point clé :<br>
+<strong>les agents deviennent des outils les uns pour les autres.</strong></p>
+<p>Pour un développeur, cela signifie : modularité, robustesse, réutilisabilité et orchestration de processus entiers.</p>
+</section>
+<section id="niveau-4-le-self-evolving-system" class="level1">
+<h1>Niveau 4 — Le <em>Self-Evolving System</em></h1>
+<p>Au niveau 4, l’agent devient capable <strong>d’identifier un manque et de créer un nouvel outil ou un nouvel agent</strong> pour y répondre.</p>
+<p>Par exemple : un agent constate qu’aucun outil ne permet de suivre un buzz sur les réseaux sociaux… alors il en génère un nouveau automatiquement.</p>
+<p>C’est une logique de <strong>méta-raisonnement</strong>.</p>
+<hr>
+</section>
+<section id="pourquoi-ces-niveaux-sont-utiles-pour-un-développeur-aujourdhui" class="level1">
+<h1>Pourquoi ces niveaux sont utiles pour un développeur aujourd’hui</h1>
+<p>Cette taxinomie change la manière d’aborder le développement agentique :</p>
+<ul>
+<li>Elle <strong>clarifie les ambitions</strong>.</li>
+<li>Elle fournit un <strong>vocabulaire commun</strong>.</li>
+<li>Elle sert de <strong>grille de maturité</strong>.</li>
+<li>Elle pousse à réfléchir en termes d’<strong>orchestration</strong>, pas seulement de prompting.</li>
+<li>Elle aide à évaluer la <strong>responsabilité et la sécurité</strong>.</li>
+</ul>
+</section>
+<section id="ce-que-jen-retire-pour-mes-propres-projets" class="level1">
+<h1>Ce que j’en retire pour mes propres projets</h1>
+<p>Dans mes expérimentations, cette classification m’a aidé à :</p>
+<ul>
+<li>mieux <strong>décomposer mes agents</strong>,<br>
+</li>
+<li>identifier que mes besoins actuels sont niveau 1 et 2,<br>
+</li>
+<li>comprendre que mes limites venaient souvent de l’<strong>ingénierie du contexte</strong>,<br>
+</li>
+<li>imaginer une transition vers du multi-agents (niveau 3).</li>
+</ul>
+<p>Elle permet aussi de relativiser : les niveaux 1 et 2 couvrent déjà énormément de cas utiles.</p>
+</section>
+<section id="comment-commencer-à-construire-un-agent" class="level1">
+<h1>Comment commencer à construire un agent</h1>
+<section id="définir-lobjectif-de-lagent" class="level2">
+<h2 class="anchored" data-anchor-id="définir-lobjectif-de-lagent">1. Définir l’objectif de l’agent</h2>
+<p>Quel résultat ? Quel périmètre ? Quel niveau viser ?</p>
+</section>
+<section id="choisir-le-modèle" class="level2">
+<h2 class="anchored" data-anchor-id="choisir-le-modèle">2. Choisir le modèle</h2>
+<p>Pas forcément le plus gros : coût, latence, capacité de raisonnement, capacité à utiliser des outils.</p>
+</section>
+<section id="ajouter-des-outils" class="level2">
+<h2 class="anchored" data-anchor-id="ajouter-des-outils">3. Ajouter des outils</h2>
+<p>Outils d’information (RAG, SQL…), d’action (API, code execution), ou HITL.</p>
+</section>
+<section id="concevoir-lorchestration" class="level2">
+<h2 class="anchored" data-anchor-id="concevoir-lorchestration">4. Concevoir l’orchestration</h2>
+<p>Le <em>Think → Act → Observe</em> doit être géré proprement.</p>
+</section>
+<section id="instrumenter-et-évaluer" class="level2">
+<h2 class="anchored" data-anchor-id="instrumenter-et-évaluer">5. Instrumenter et évaluer</h2>
+<p>Traces, évaluation, LM-judge, logique de test.</p>
+</section>
+<section id="déployer-et-sécuriser" class="level2">
+<h2 class="anchored" data-anchor-id="déployer-et-sécuriser">6. Déployer et sécuriser</h2>
+<p>Authentification, autorisation, garde-fous, supervision.</p>
+<hr>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>Ce cours et cette taxinomie m’ont aidé à structurer ma compréhension des agents. L’idée essentielle :</p>
+<blockquote class="blockquote">
+<p><strong>Un agent n’est pas un modèle : c’est un système autonome construit autour d’un modèle.</strong></p>
+</blockquote>
+<p>Cette structuration en niveaux offre une boussole pour concevoir, améliorer et raisonner sur ces systèmes.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -778,5 +965,5 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
