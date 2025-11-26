@@ -1,9 +1,9 @@
 ---
 title: "Comprendre la taxinomie des Agentic Systems"
-description: "Retour pédagogique et personnel sur les niveaux d’agents présentés dans le cours Introduction to Agents."
-image: ../../images/blog/taxinomie_blog.png     
+description: "Retour pédagogique et personnel sur les niveaux d’agents présentés dans le cours Introduction to Agents."   
 date: 2025-11-22
-categories: [agentic-systems, IA, cours]   
+categories: [agentic-systems, IA, cours] 
+image: ../../images/blog/taxinomie_blog.png  
 format:
   html:
     toc: true
