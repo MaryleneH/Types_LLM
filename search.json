@@ -1,10 +1,24 @@
 [
   {
-    "objectID": "llmops/run.html",
-    "href": "llmops/run.html",
-    "title": "LLMOps — Run",
+    "objectID": "blog/index.html",
+    "href": "blog/index.html",
+    "title": "Blog",
     "section": "",
-    "text": "⟵ Retour à LLMOps\n\nMonitoring\n\nLatence, taux d’erreur, coût par requête\nTaux de refus/safety, timeouts, saturation\n\n\n\nObservabilité\n\nTraces des prompts/contexte (avec masquage)\nJournaux de retrieval et diagnostics\nDashboards et alertes\n\n\n\nSécurité\n\nContrôles d’entrée/sortie (prompt injection, secrets)\nRBAC, journalisation, conformité (RGPD)\nGestion des clés et des secrets\n\n\n\nCoûts\n\nBudgets, quotas, droits par équipe/projet\nMise en cache, distillation, modèles plus petits\nOptimisations (batching, streaming)\n\n\n\nDéploiement\n\nEnvironnements (dev / staging / prod)\nStratégies (blue/green, canary)\nRollback, versionning prompts/modèles"
+    "text": "Comprendre la taxinomie des Agentic Systems\n\n\n\nagentic-systems\n\nIA\n\ncours\n\n\n\nRetour pédagogique et personnel sur les niveaux d’agents présentés dans le cours Introduction to Agents.\n\n\n\n22 nov. 2025\n\n\n\n\n\n\nAucun article correspondant"
+  },
+  {
+    "objectID": "roadmap/2025-mixture-of-recursion.html",
+    "href": "roadmap/2025-mixture-of-recursion.html",
+    "title": "2025 — Mixture of Recursion",
+    "section": "",
+    "text": "&lt;– Contenu à venir –&gt;\n_(Différence d’esprit avec MoE : MoE augmente la “largeur” (quelques experts par token), MoR augmente la “profondeur dans le temps” (quelques passes supplémentaires pour les tokens difficiles)._"
+  },
+  {
+    "objectID": "llmops/build.html",
+    "href": "llmops/build.html",
+    "title": "LLMOps — Build",
+    "section": "",
+    "text": "⟵ Retour à LLMOps\n\nChoisir le LLM\n\nCritères : langue, contexte, coûts, perfs, contraintes légales\nOuvert (OSS) vs hébergé (API) vs self-host\nBenchmarks ciblés (pas de score “général” sans contexte)\n\n\n\nFine-tuning\n\nQuand l’utiliser (style, nouveaux formats, robustesse)\nSFT, LoRA/QLoRA, jeux d’exemples, garde-fous\nSuivi des dérives et versionning des modèles\n\n\n\nRAG\n\nPipeline d’ingestion (chunking, embeddings, index)\nStratégies de retrieval (hybride, rerankers)\nObservabilité des requêtes et des réponses\n\n\n\nPrompting\n\nInstructions, rôles, schémas de sortie\nFew-shot, chain-of-thought (sans fuite d’infos)\nTemplates et variables d’app\n\n\n\nÉvaluation\n\nGolden sets, métriques (exact match, faithfulness, utilité)\nÉval offline/online, human-in-the-loop\nTests régression et canaris\n\n\n\nArchitecture applicative\n\nOrchestration (API, workers, queues)\nCaches, garde-fous, limites de taux\nSecrets, monitoring, CI/CD"
   },
   {
     "objectID": "llmops/cycle.html",
@@ -12,6 +26,62 @@
     "title": "LLMOps — Plan • Build • Run",
     "section": "",
     "text": "🧭 Plan\n\n1/ Trouver les cas d’usage (Identify a single problem to solve)\n\n\nCas d’usage ROI Risques Données\n\nAller à Plan\n\n\n🏗️ Build\n\n2/ Choose the LLM\n\n3/ Customize the LLM\n\n4/ Set up the application’s architecture\n\n\nChoisir le LLM Fine-tuning RAG Prompting Évaluation Architecture\n\nAller à Build\n\n\n🚀 Run\n\n\nMonitoring Observabilité Sécurité Coûts Déploiement\n\nAller à Run"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "À propos",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "llmops/plan.html",
+    "href": "llmops/plan.html",
+    "title": "LLMOps — Plan",
+    "section": "",
+    "text": "⟵ Retour à LLMOps"
+  },
+  {
+    "objectID": "llmops/plan.html#roi",
+    "href": "llmops/plan.html#roi",
+    "title": "LLMOps — Plan",
+    "section": "ROI",
+    "text": "ROI\n\nHypothèses de gain (temps, qualité, satisfaction)\nCoût total (infra, LLM, données, humains)\nMéthode d’estimation (baseline → pilote → prod)"
+  },
+  {
+    "objectID": "llmops/plan.html#risques",
+    "href": "llmops/plan.html#risques",
+    "title": "LLMOps — Plan",
+    "section": "Risques",
+    "text": "Risques\n\nHallucinations, biais, confidentialité, conformité (RGPD)\nRisques opérationnels (latence, coûts variables)\nMesures de mitigation (garde-fous, évaluation continue)"
+  },
+  {
+    "objectID": "llmops/plan.html#donnees",
+    "href": "llmops/plan.html#donnees",
+    "title": "LLMOps — Plan",
+    "section": "Données",
+    "text": "Données\n\nInventaire des sources (docs, bases, APIs)\nQualité, droits d’usage, rétention\nStratégie d’accès (RAG, cache, anonymisation)"
+  },
+  {
+    "objectID": "llmops/run.html",
+    "href": "llmops/run.html",
+    "title": "LLMOps — Run",
+    "section": "",
+    "text": "⟵ Retour à LLMOps\n\nMonitoring\n\nLatence, taux d’erreur, coût par requête\nTaux de refus/safety, timeouts, saturation\n\n\n\nObservabilité\n\nTraces des prompts/contexte (avec masquage)\nJournaux de retrieval et diagnostics\nDashboards et alertes\n\n\n\nSécurité\n\nContrôles d’entrée/sortie (prompt injection, secrets)\nRBAC, journalisation, conformité (RGPD)\nGestion des clés et des secrets\n\n\n\nCoûts\n\nBudgets, quotas, droits par équipe/projet\nMise en cache, distillation, modèles plus petits\nOptimisations (batching, streaming)\n\n\n\nDéploiement\n\nEnvironnements (dev / staging / prod)\nStratégies (blue/green, canary)\nRollback, versionning prompts/modèles"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Les LLM et leur mise en production",
+    "section": "",
+    "text": "Les Types de LLM\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.\nDécouvrir la roadmap » Lire le blog »\n\n\n\nLLMOps\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.\nCycle LLMOps » Points d’attention » Lire le blog »"
+  },
+  {
+    "objectID": "roadmap/index.html",
+    "href": "roadmap/index.html",
+    "title": "Roadmap des architectures",
+    "section": "",
+    "text": "La progression des chapitres que je vais apprendre.4 architectures clés qui ont façonnées les LLMs.\n\nLes Transformers ont joué un rôle fondamental. Ils sont partout –&gt; brique à maîtriser\nMixture of Experts (MoE) route chaque token vers quelques experts pour gagner en capacité à coût de calcul maîtrisé\nMamba — un modèle à espace d’état — traite de très longs contextes avec une complexité linéaire sans attention\nMixture of Recursion (MoR) introduit une profondeur récursive par token avec un KV caching (mémoire d’attention) sélectif\n\nÀ chaque étape, je compilerai ici, expérimentations et retours d’expérience issus de mes propres essais\n\n\n\n\n\n\n\n\n\n\n\n\n2017 — Transformers\n\n\nLes bases de l’attention et l’architecture qui a tout changé.\n\n\n\n\n\n\n\n\n\n\n2021 — Mixture of Experts (MoE)\n\n\nRoutage des tokens vers des experts pour scaler efficacement.\n\n\n\n\n\n\n\n\n\n\n2023 — Mamba\n\n\nModèles séquentiels à états (SSM) orientés efficacité.\n\n\n\n\n\n\n\n\n\n\n2025 — Mixture of Recursion\n\n\nCombiner des mécanismes récursifs pour une expressivité accrue.\n\n\n\n\n\nAucun article correspondant"
   },
   {
     "objectID": "blog/posts/2025-11-22-taxinomie-agents.html",
@@ -68,75 +138,5 @@
     "title": "Comprendre la taxinomie des Agentic Systems",
     "section": "6. Déployer et sécuriser",
     "text": "6. Déployer et sécuriser\nAuthentification, autorisation, garde-fous, supervision."
-  },
-  {
-    "objectID": "roadmap/2025-mixture-of-recursion.html",
-    "href": "roadmap/2025-mixture-of-recursion.html",
-    "title": "2025 — Mixture of Recursion",
-    "section": "",
-    "text": "&lt;– Contenu à venir –&gt;\n_(Différence d’esprit avec MoE : MoE augmente la “largeur” (quelques experts par token), MoR augmente la “profondeur dans le temps” (quelques passes supplémentaires pour les tokens difficiles)._"
-  },
-  {
-    "objectID": "roadmap/index.html",
-    "href": "roadmap/index.html",
-    "title": "Roadmap des architectures",
-    "section": "",
-    "text": "La progression des chapitres que je vais apprendre.4 architectures clés qui ont façonnées les LLMs.\n\nLes Transformers ont joué un rôle fondamental. Ils sont partout –&gt; brique à maîtriser\nMixture of Experts (MoE) route chaque token vers quelques experts pour gagner en capacité à coût de calcul maîtrisé\nMamba — un modèle à espace d’état — traite de très longs contextes avec une complexité linéaire sans attention\nMixture of Recursion (MoR) introduit une profondeur récursive par token avec un KV caching (mémoire d’attention) sélectif\n\nÀ chaque étape, je compilerai ici, expérimentations et retours d’expérience issus de mes propres essais\n\n\n\n\n\n\n\n\n\n\n\n\n2017 — Transformers\n\n\nLes bases de l’attention et l’architecture qui a tout changé.\n\n\n\n\n\n\n\n\n\n\n2021 — Mixture of Experts (MoE)\n\n\nRoutage des tokens vers des experts pour scaler efficacement.\n\n\n\n\n\n\n\n\n\n\n2023 — Mamba\n\n\nModèles séquentiels à états (SSM) orientés efficacité.\n\n\n\n\n\n\n\n\n\n\n2025 — Mixture of Recursion\n\n\nCombiner des mécanismes récursifs pour une expressivité accrue.\n\n\n\n\n\nAucun article correspondant"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Les LLM et leur mise en production",
-    "section": "",
-    "text": "Les Types de LLM\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.\nDécouvrir la roadmap » Lire le blog »\n\n\n\nLLMOps\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.\nCycle LLMOps » Points d’attention » Lire le blog »"
-  },
-  {
-    "objectID": "blog/index.html",
-    "href": "blog/index.html",
-    "title": "Blog",
-    "section": "",
-    "text": "Comprendre la taxinomie des Agentic Systems\n\n\n\nagentic-systems\n\nIA\n\ncours\n\n\n\nRetour pédagogique et personnel sur les niveaux d’agents présentés dans le cours Introduction to Agents.\n\n\n\n22 nov. 2025\n\n\n\n\n\n\nAucun article correspondant"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "À propos",
-    "section": "",
-    "text": "About this site"
-  },
-  {
-    "objectID": "llmops/plan.html",
-    "href": "llmops/plan.html",
-    "title": "LLMOps — Plan",
-    "section": "",
-    "text": "⟵ Retour à LLMOps"
-  },
-  {
-    "objectID": "llmops/plan.html#roi",
-    "href": "llmops/plan.html#roi",
-    "title": "LLMOps — Plan",
-    "section": "ROI",
-    "text": "ROI\n\nHypothèses de gain (temps, qualité, satisfaction)\nCoût total (infra, LLM, données, humains)\nMéthode d’estimation (baseline → pilote → prod)"
-  },
-  {
-    "objectID": "llmops/plan.html#risques",
-    "href": "llmops/plan.html#risques",
-    "title": "LLMOps — Plan",
-    "section": "Risques",
-    "text": "Risques\n\nHallucinations, biais, confidentialité, conformité (RGPD)\nRisques opérationnels (latence, coûts variables)\nMesures de mitigation (garde-fous, évaluation continue)"
-  },
-  {
-    "objectID": "llmops/plan.html#donnees",
-    "href": "llmops/plan.html#donnees",
-    "title": "LLMOps — Plan",
-    "section": "Données",
-    "text": "Données\n\nInventaire des sources (docs, bases, APIs)\nQualité, droits d’usage, rétention\nStratégie d’accès (RAG, cache, anonymisation)"
-  },
-  {
-    "objectID": "llmops/build.html",
-    "href": "llmops/build.html",
-    "title": "LLMOps — Build",
-    "section": "",
-    "text": "⟵ Retour à LLMOps\n\nChoisir le LLM\n\nCritères : langue, contexte, coûts, perfs, contraintes légales\nOuvert (OSS) vs hébergé (API) vs self-host\nBenchmarks ciblés (pas de score “général” sans contexte)\n\n\n\nFine-tuning\n\nQuand l’utiliser (style, nouveaux formats, robustesse)\nSFT, LoRA/QLoRA, jeux d’exemples, garde-fous\nSuivi des dérives et versionning des modèles\n\n\n\nRAG\n\nPipeline d’ingestion (chunking, embeddings, index)\nStratégies de retrieval (hybride, rerankers)\nObservabilité des requêtes et des réponses\n\n\n\nPrompting\n\nInstructions, rôles, schémas de sortie\nFew-shot, chain-of-thought (sans fuite d’infos)\nTemplates et variables d’app\n\n\n\nÉvaluation\n\nGolden sets, métriques (exact match, faithfulness, utilité)\nÉval offline/online, human-in-the-loop\nTests régression et canaris\n\n\n\nArchitecture applicative\n\nOrchestration (API, workers, queues)\nCaches, garde-fous, limites de taux\nSecrets, monitoring, CI/CD"
   }
 ]
