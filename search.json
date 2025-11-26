@@ -84,57 +84,57 @@
     "text": "La progression des chapitres que je vais apprendre.4 architectures clés qui ont façonnées les LLMs.\n\nLes Transformers ont joué un rôle fondamental. Ils sont partout –&gt; brique à maîtriser\nMixture of Experts (MoE) route chaque token vers quelques experts pour gagner en capacité à coût de calcul maîtrisé\nMamba — un modèle à espace d’état — traite de très longs contextes avec une complexité linéaire sans attention\nMixture of Recursion (MoR) introduit une profondeur récursive par token avec un KV caching (mémoire d’attention) sélectif\n\nÀ chaque étape, je compilerai ici, expérimentations et retours d’expérience issus de mes propres essais\n\n\n\n\n\n\n\n\n\n\n\n\n2017 — Transformers\n\n\nLes bases de l’attention et l’architecture qui a tout changé.\n\n\n\n\n\n\n\n\n\n\n2021 — Mixture of Experts (MoE)\n\n\nRoutage des tokens vers des experts pour scaler efficacement.\n\n\n\n\n\n\n\n\n\n\n2023 — Mamba\n\n\nModèles séquentiels à états (SSM) orientés efficacité.\n\n\n\n\n\n\n\n\n\n\n2025 — Mixture of Recursion\n\n\nCombiner des mécanismes récursifs pour une expressivité accrue.\n\n\n\n\n\nAucun article correspondant"
   },
   {
-    "objectID": "blog/posts/2025-11-22-taxinomie-agents.html",
-    "href": "blog/posts/2025-11-22-taxinomie-agents.html",
+    "objectID": "blog/posts/2025-11-22-taxinomie.html",
+    "href": "blog/posts/2025-11-22-taxinomie.html",
     "title": "Comprendre la taxinomie des Agentic Systems",
     "section": "",
     "text": "Depuis quelques jours, je suis (tant bien que mal 😊) le cours 5-Day AI Agents Intensive Course Kaggle/Google (Google, 2025), qui propose une vision structurée — et franchement éclairante — de la montée en complexité des systèmes agentiques.\nCe billet est autant un résumé qu’un retour personnel : une manière de fixer ce que j’ai appris, de mettre en perspective les concepts, et d’éclairer ma propre démarche de développement d’agents.\nLe document source propose une taxinomie en cinq niveaux, du plus simple (un modèle isolé) au plus avancé (un système capable de s’auto-évoluer). Les illustrations du PDF — notamment la pyramide de la page 14 présentant les niveaux de 0 à 4 — donnent une bonne intuition : plus on monte, plus on augmente la capacité d’un système à raisonner, agir, s’adapter et orchestrer d’autres agents.\n\n\n\n\n\n\n\nflowchart LR\n    classDef level0 fill:#f2f2f2,stroke:#333,stroke-width:1px;\n    classDef level1 fill:#d9e8ff,stroke:#1a4ea0,stroke-width:1px;\n    classDef level2 fill:#c7f5d9,stroke:#0d7a34,stroke-width:1px;\n    classDef level3 fill:#ffe7c4,stroke:#cc7a00,stroke-width:1px;\n    classDef level4 fill:#f7c7da,stroke:#a0134a,stroke-width:1px;\n\n    L0[\"Niveau 0&lt;br/&gt;Core Reasoning System\"]:::level0\n    L1[\"Niveau 1&lt;br/&gt;Connected Problem Solver\"]:::level1\n    L2[\"Niveau 2&lt;br/&gt;Strategic Problem Solver\"]:::level2\n    L3[\"Niveau 3&lt;br/&gt;Collaborative Multi-Agent System\"]:::level3\n    L4[\"Niveau 4&lt;br/&gt;Self-Evolving System\"]:::level4\n\n    L0 --&gt; L1 --&gt; L2 --&gt; L3 --&gt; L4"
   },
   {
-    "objectID": "blog/posts/2025-11-22-taxinomie-agents.html#pyramide-des-niveaux-agentiques",
-    "href": "blog/posts/2025-11-22-taxinomie-agents.html#pyramide-des-niveaux-agentiques",
+    "objectID": "blog/posts/2025-11-22-taxinomie.html#pyramide-des-niveaux-agentiques",
+    "href": "blog/posts/2025-11-22-taxinomie.html#pyramide-des-niveaux-agentiques",
     "title": "Comprendre la taxinomie des Agentic Systems",
     "section": "",
     "text": "flowchart LR\n    classDef level0 fill:#f2f2f2,stroke:#333,stroke-width:1px;\n    classDef level1 fill:#d9e8ff,stroke:#1a4ea0,stroke-width:1px;\n    classDef level2 fill:#c7f5d9,stroke:#0d7a34,stroke-width:1px;\n    classDef level3 fill:#ffe7c4,stroke:#cc7a00,stroke-width:1px;\n    classDef level4 fill:#f7c7da,stroke:#a0134a,stroke-width:1px;\n\n    L0[\"Niveau 0&lt;br/&gt;Core Reasoning System\"]:::level0\n    L1[\"Niveau 1&lt;br/&gt;Connected Problem Solver\"]:::level1\n    L2[\"Niveau 2&lt;br/&gt;Strategic Problem Solver\"]:::level2\n    L3[\"Niveau 3&lt;br/&gt;Collaborative Multi-Agent System\"]:::level3\n    L4[\"Niveau 4&lt;br/&gt;Self-Evolving System\"]:::level4\n\n    L0 --&gt; L1 --&gt; L2 --&gt; L3 --&gt; L4"
   },
   {
-    "objectID": "blog/posts/2025-11-22-taxinomie-agents.html#définir-lobjectif-de-lagent",
-    "href": "blog/posts/2025-11-22-taxinomie-agents.html#définir-lobjectif-de-lagent",
+    "objectID": "blog/posts/2025-11-22-taxinomie.html#définir-lobjectif-de-lagent",
+    "href": "blog/posts/2025-11-22-taxinomie.html#définir-lobjectif-de-lagent",
     "title": "Comprendre la taxinomie des Agentic Systems",
     "section": "1. Définir l’objectif de l’agent",
     "text": "1. Définir l’objectif de l’agent\nQuel résultat ? Quel périmètre ? Quel niveau viser ?"
   },
   {
-    "objectID": "blog/posts/2025-11-22-taxinomie-agents.html#choisir-le-modèle",
-    "href": "blog/posts/2025-11-22-taxinomie-agents.html#choisir-le-modèle",
+    "objectID": "blog/posts/2025-11-22-taxinomie.html#choisir-le-modèle",
+    "href": "blog/posts/2025-11-22-taxinomie.html#choisir-le-modèle",
     "title": "Comprendre la taxinomie des Agentic Systems",
     "section": "2. Choisir le modèle",
     "text": "2. Choisir le modèle\nPas forcément le plus gros : coût, latence, capacité de raisonnement, capacité à utiliser des outils."
   },
   {
-    "objectID": "blog/posts/2025-11-22-taxinomie-agents.html#ajouter-des-outils",
-    "href": "blog/posts/2025-11-22-taxinomie-agents.html#ajouter-des-outils",
+    "objectID": "blog/posts/2025-11-22-taxinomie.html#ajouter-des-outils",
+    "href": "blog/posts/2025-11-22-taxinomie.html#ajouter-des-outils",
     "title": "Comprendre la taxinomie des Agentic Systems",
     "section": "3. Ajouter des outils",
     "text": "3. Ajouter des outils\nOutils d’information (RAG, SQL…), d’action (API, code execution), ou HITL."
   },
   {
-    "objectID": "blog/posts/2025-11-22-taxinomie-agents.html#concevoir-lorchestration",
-    "href": "blog/posts/2025-11-22-taxinomie-agents.html#concevoir-lorchestration",
+    "objectID": "blog/posts/2025-11-22-taxinomie.html#concevoir-lorchestration",
+    "href": "blog/posts/2025-11-22-taxinomie.html#concevoir-lorchestration",
     "title": "Comprendre la taxinomie des Agentic Systems",
     "section": "4. Concevoir l’orchestration",
     "text": "4. Concevoir l’orchestration\nLe Think → Act → Observe doit être géré proprement."
   },
   {
-    "objectID": "blog/posts/2025-11-22-taxinomie-agents.html#instrumenter-et-évaluer",
-    "href": "blog/posts/2025-11-22-taxinomie-agents.html#instrumenter-et-évaluer",
+    "objectID": "blog/posts/2025-11-22-taxinomie.html#instrumenter-et-évaluer",
+    "href": "blog/posts/2025-11-22-taxinomie.html#instrumenter-et-évaluer",
     "title": "Comprendre la taxinomie des Agentic Systems",
     "section": "5. Instrumenter et évaluer",
     "text": "5. Instrumenter et évaluer\nTraces, évaluation, LM-judge, logique de test."
   },
   {
-    "objectID": "blog/posts/2025-11-22-taxinomie-agents.html#déployer-et-sécuriser",
-    "href": "blog/posts/2025-11-22-taxinomie-agents.html#déployer-et-sécuriser",
+    "objectID": "blog/posts/2025-11-22-taxinomie.html#déployer-et-sécuriser",
+    "href": "blog/posts/2025-11-22-taxinomie.html#déployer-et-sécuriser",
     "title": "Comprendre la taxinomie des Agentic Systems",
     "section": "6. Déployer et sécuriser",
     "text": "6. Déployer et sécuriser\nAuthentification, autorisation, garde-fous, supervision."
