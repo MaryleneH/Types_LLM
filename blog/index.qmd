@@ -6,7 +6,7 @@ listing:
   contents:
     - posts/**
   sort: "date desc"
-  grid-columns: 2
+  grid-columns: 1
   image-height: 10rem
   fields: [image, title, description, date, categories]
 ---
