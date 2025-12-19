@@ -3,6 +3,7 @@ title: "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)"
 description: "Un chatbot Shiny simple pour aider une auteure de New Romance : titres, pitch, blurb… avec un seul tool-calling (Datamuse)."
 date: 2025-12-19
 categories: [R, agentic-systems, shiny, ellmer, new-romance]
+image: ../../images/blog/agent_romance.png  
 format:
   html:
     toc: true
