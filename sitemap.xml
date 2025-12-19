@@ -1,59 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://maryleneh.github.io/Types_LLM/blog/index.html</loc>
-    <lastmod>2025-11-26T19:34:10.304Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maryleneh.github.io/Types_LLM/roadmap/2021-moe.html</loc>
-    <lastmod>2025-11-26T18:58:48.561Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maryleneh.github.io/Types_LLM/roadmap/2025-mixture-of-recursion.html</loc>
-    <lastmod>2025-11-26T18:58:48.561Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maryleneh.github.io/Types_LLM/roadmap/2017-transformers.html</loc>
-    <lastmod>2025-11-26T18:58:48.561Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maryleneh.github.io/Types_LLM/contact.html</loc>
-    <lastmod>2025-11-26T18:58:48.557Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maryleneh.github.io/Types_LLM/llmops/build.html</loc>
-    <lastmod>2025-11-26T18:58:48.557Z</lastmod>
+    <loc>https://maryleneh.github.io/Types_LLM/llmops/plan.html</loc>
+    <lastmod>2025-12-19T19:58:24.771Z</lastmod>
   </url>
   <url>
     <loc>https://maryleneh.github.io/Types_LLM/llmops/cycle.html</loc>
-    <lastmod>2025-11-26T18:58:48.557Z</lastmod>
+    <lastmod>2025-12-19T19:58:24.771Z</lastmod>
   </url>
   <url>
-    <loc>https://maryleneh.github.io/Types_LLM/about.html</loc>
-    <lastmod>2025-11-26T18:58:48.557Z</lastmod>
+    <loc>https://maryleneh.github.io/Types_LLM/blog/posts/2025-12-19-agent-romance.html</loc>
+    <lastmod>2025-12-19T23:04:19.931Z</lastmod>
   </url>
   <url>
-    <loc>https://maryleneh.github.io/Types_LLM/llmops/plan.html</loc>
-    <lastmod>2025-11-26T18:58:48.561Z</lastmod>
+    <loc>https://maryleneh.github.io/Types_LLM/blog/index.html</loc>
+    <lastmod>2025-12-19T19:58:24.763Z</lastmod>
   </url>
   <url>
-    <loc>https://maryleneh.github.io/Types_LLM/llmops/run.html</loc>
-    <lastmod>2025-11-26T18:58:48.561Z</lastmod>
+    <loc>https://maryleneh.github.io/Types_LLM/contact.html</loc>
+    <lastmod>2025-12-19T19:58:24.763Z</lastmod>
   </url>
   <url>
-    <loc>https://maryleneh.github.io/Types_LLM/index.html</loc>
-    <lastmod>2025-11-26T19:27:17.536Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maryleneh.github.io/Types_LLM/roadmap/2023-mamba.html</loc>
-    <lastmod>2025-11-26T18:58:48.561Z</lastmod>
+    <loc>https://maryleneh.github.io/Types_LLM/roadmap/2021-moe.html</loc>
+    <lastmod>2025-12-19T19:58:24.771Z</lastmod>
   </url>
   <url>
     <loc>https://maryleneh.github.io/Types_LLM/roadmap/index.html</loc>
-    <lastmod>2025-11-26T18:58:48.561Z</lastmod>
+    <lastmod>2025-12-19T19:58:24.771Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maryleneh.github.io/Types_LLM/index.html</loc>
+    <lastmod>2025-12-19T19:58:24.771Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maryleneh.github.io/Types_LLM/roadmap/2017-transformers.html</loc>
+    <lastmod>2025-12-19T19:58:24.771Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maryleneh.github.io/Types_LLM/roadmap/2023-mamba.html</loc>
+    <lastmod>2025-12-19T19:58:24.771Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maryleneh.github.io/Types_LLM/roadmap/2025-mixture-of-recursion.html</loc>
+    <lastmod>2025-12-19T19:58:24.771Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maryleneh.github.io/Types_LLM/about.html</loc>
+    <lastmod>2025-12-19T19:58:24.759Z</lastmod>
   </url>
   <url>
     <loc>https://maryleneh.github.io/Types_LLM/blog/posts/2025-11-22-taxinomie.html</loc>
-    <lastmod>2025-11-26T19:17:41.905Z</lastmod>
+    <lastmod>2025-12-19T22:41:58.795Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maryleneh.github.io/Types_LLM/llmops/run.html</loc>
+    <lastmod>2025-12-19T19:58:24.771Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maryleneh.github.io/Types_LLM/llmops/build.html</loc>
+    <lastmod>2025-12-19T19:58:24.771Z</lastmod>
   </url>
 </urlset>

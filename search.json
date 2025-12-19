@@ -1,40 +1,5 @@
 [
   {
-    "objectID": "blog/index.html",
-    "href": "blog/index.html",
-    "title": "Blog",
-    "section": "",
-    "text": "Comprendre la taxinomie des Agentic Systems\n\n\n\nagentic-systems\n\nIA\n\ncours\n\n\n\nRetour pédagogique et personnel sur les niveaux d’agents présentés dans le cours Introduction to Agents.\n\n\n\n22 nov. 2025\n\n\n\n\n\n\nAucun article correspondant"
-  },
-  {
-    "objectID": "roadmap/2025-mixture-of-recursion.html",
-    "href": "roadmap/2025-mixture-of-recursion.html",
-    "title": "2025 — Mixture of Recursion",
-    "section": "",
-    "text": "&lt;– Contenu à venir –&gt;\n_(Différence d’esprit avec MoE : MoE augmente la “largeur” (quelques experts par token), MoR augmente la “profondeur dans le temps” (quelques passes supplémentaires pour les tokens difficiles)._"
-  },
-  {
-    "objectID": "llmops/build.html",
-    "href": "llmops/build.html",
-    "title": "LLMOps — Build",
-    "section": "",
-    "text": "⟵ Retour à LLMOps\n\nChoisir le LLM\n\nCritères : langue, contexte, coûts, perfs, contraintes légales\nOuvert (OSS) vs hébergé (API) vs self-host\nBenchmarks ciblés (pas de score “général” sans contexte)\n\n\n\nFine-tuning\n\nQuand l’utiliser (style, nouveaux formats, robustesse)\nSFT, LoRA/QLoRA, jeux d’exemples, garde-fous\nSuivi des dérives et versionning des modèles\n\n\n\nRAG\n\nPipeline d’ingestion (chunking, embeddings, index)\nStratégies de retrieval (hybride, rerankers)\nObservabilité des requêtes et des réponses\n\n\n\nPrompting\n\nInstructions, rôles, schémas de sortie\nFew-shot, chain-of-thought (sans fuite d’infos)\nTemplates et variables d’app\n\n\n\nÉvaluation\n\nGolden sets, métriques (exact match, faithfulness, utilité)\nÉval offline/online, human-in-the-loop\nTests régression et canaris\n\n\n\nArchitecture applicative\n\nOrchestration (API, workers, queues)\nCaches, garde-fous, limites de taux\nSecrets, monitoring, CI/CD"
-  },
-  {
-    "objectID": "llmops/cycle.html",
-    "href": "llmops/cycle.html",
-    "title": "LLMOps — Plan • Build • Run",
-    "section": "",
-    "text": "🧭 Plan\n\n1/ Trouver les cas d’usage (Identify a single problem to solve)\n\n\nCas d’usage ROI Risques Données\n\nAller à Plan\n\n\n🏗️ Build\n\n2/ Choose the LLM\n\n3/ Customize the LLM\n\n4/ Set up the application’s architecture\n\n\nChoisir le LLM Fine-tuning RAG Prompting Évaluation Architecture\n\nAller à Build\n\n\n🚀 Run\n\n\nMonitoring Observabilité Sécurité Coûts Déploiement\n\nAller à Run"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "À propos",
-    "section": "",
-    "text": "About this site"
-  },
-  {
     "objectID": "llmops/plan.html",
     "href": "llmops/plan.html",
     "title": "LLMOps — Plan",
@@ -63,11 +28,88 @@
     "text": "Données\n\nInventaire des sources (docs, bases, APIs)\nQualité, droits d’usage, rétention\nStratégie d’accès (RAG, cache, anonymisation)"
   },
   {
-    "objectID": "llmops/run.html",
-    "href": "llmops/run.html",
-    "title": "LLMOps — Run",
+    "objectID": "llmops/cycle.html",
+    "href": "llmops/cycle.html",
+    "title": "LLMOps — Plan • Build • Run",
     "section": "",
-    "text": "⟵ Retour à LLMOps\n\nMonitoring\n\nLatence, taux d’erreur, coût par requête\nTaux de refus/safety, timeouts, saturation\n\n\n\nObservabilité\n\nTraces des prompts/contexte (avec masquage)\nJournaux de retrieval et diagnostics\nDashboards et alertes\n\n\n\nSécurité\n\nContrôles d’entrée/sortie (prompt injection, secrets)\nRBAC, journalisation, conformité (RGPD)\nGestion des clés et des secrets\n\n\n\nCoûts\n\nBudgets, quotas, droits par équipe/projet\nMise en cache, distillation, modèles plus petits\nOptimisations (batching, streaming)\n\n\n\nDéploiement\n\nEnvironnements (dev / staging / prod)\nStratégies (blue/green, canary)\nRollback, versionning prompts/modèles"
+    "text": "🧭 Plan\n\n1/ Trouver les cas d’usage (Identify a single problem to solve)\n\n\nCas d’usage ROI Risques Données\n\nAller à Plan\n\n\n🏗️ Build\n\n2/ Choose the LLM\n\n3/ Customize the LLM\n\n4/ Set up the application’s architecture\n\n\nChoisir le LLM Fine-tuning RAG Prompting Évaluation Architecture\n\nAller à Build\n\n\n🚀 Run\n\n\nMonitoring Observabilité Sécurité Coûts Déploiement\n\nAller à Run"
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html",
+    "href": "blog/posts/2025-12-19-agent-romance.html",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "",
+    "text": "Je voulais une assistante éditoriale en R pour une auteure de New Romance, capable d’aider à :\n\nproposer des titres\naméliorer un pitch\nécrire une quatrième de couverture\ntrouver des accroches / idées de scènes\nenrichir le vocabulaire (synonymes, champs lexicaux, rimes…)\n\nPour rendre l’exemple concret, j’ai voulu rester simple et j’ai ajouté un “tool” : une fonction R qui interroge Datamuse (API de suggestions de mots). L’agent peut décider d’appeler ce tool (ou non) quand il a besoin d’idées de vocabulaire.\nCeci est simplement un test, je l’ai montré pour exemple à une vraie utilisatrice mais je ne suis pas allée jusqu’à déployer une application Shiny."
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html#lidée",
+    "href": "blog/posts/2025-12-19-agent-romance.html#lidée",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "",
+    "text": "Je voulais une assistante éditoriale en R pour une auteure de New Romance, capable d’aider à :\n\nproposer des titres\naméliorer un pitch\nécrire une quatrième de couverture\ntrouver des accroches / idées de scènes\nenrichir le vocabulaire (synonymes, champs lexicaux, rimes…)\n\nPour rendre l’exemple concret, j’ai voulu rester simple et j’ai ajouté un “tool” : une fonction R qui interroge Datamuse (API de suggestions de mots). L’agent peut décider d’appeler ce tool (ou non) quand il a besoin d’idées de vocabulaire.\nCeci est simplement un test, je l’ai montré pour exemple à une vraie utilisatrice mais je ne suis pas allée jusqu’à déployer une application Shiny."
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html#pré-requis",
+    "href": "blog/posts/2025-12-19-agent-romance.html#pré-requis",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "Pré-requis",
+    "text": "Pré-requis\nInstalle les packages :\n\n\nCode\ninstall.packages(c(\"shiny\", \"bslib\", \"shinychat\", \"ellmer\", \"httr2\", \"jsonlite\", \"bsicons\" ))"
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html#clé-api-variable-denvironnement-simple",
+    "href": "blog/posts/2025-12-19-agent-romance.html#clé-api-variable-denvironnement-simple",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "Clé API : variable d’environnement (simple)",
+    "text": "Clé API : variable d’environnement (simple)\nOn part sur un principe clair : la clé API n’est pas dans le code. Elle est lue depuis une variable d’environnement.\n\nOption 1 — Pour la session en cours\n\n\nCode\nSys.setenv(OPENAI_API_KEY = \"sk-...\")   # à faire AVANT de lancer l’app Sys.getenv(\"OPENAI_API_KEY\") \n\n\n\n\nOption 2 — Persistant (recommandé)\nOn ajoute dans le fichier ~/.Renviron : (à ne pas commiter sur Git)\n\n\nCode\nOPENAI_API_KEY=sk-... \n\n\nPuis on redémarre R / RStudio et on vérifie :\n\n\nCode\nSys.getenv(\"OPENAI_API_KEY\")"
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html#étape-1-créer-le-tool-datamuse-vocabulaire",
+    "href": "blog/posts/2025-12-19-agent-romance.html#étape-1-créer-le-tool-datamuse-vocabulaire",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "Étape 1 — Créer le tool Datamuse (vocabulaire)",
+    "text": "Étape 1 — Créer le tool Datamuse (vocabulaire)\n\n\nCode\nlibrary(httr2)\nlibrary(jsonlite)\n\ndatamuse_mots &lt;- function(\n  `_intent` = \"Chercher du vocabulaire\",\n  graine,\n  strategie = c(\n    \"sens_proche\",          # ml=\n    \"synonymes\",            # rel_syn=\n    \"associes\",             # rel_trg=\n    \"adjectifs_pour_nom\",   # rel_jjb=\n    \"noms_pour_adjectif\",   # rel_jja=\n    \"rimes\",                # rel_rhy=\n    \"son_proche\",           # sl=\n    \"orthographe_proche\"    # sp=\n  ),\n  max_resultats = 20,\n  topics = NULL\n) {\n  strategie &lt;- match.arg(strategie)\n\n  param &lt;- switch(\n    strategie,\n    sens_proche         = \"ml\",\n    synonymes           = \"rel_syn\",\n    associes            = \"rel_trg\",\n    adjectifs_pour_nom  = \"rel_jjb\",\n    noms_pour_adjectif  = \"rel_jja\",\n    rimes               = \"rel_rhy\",\n    son_proche          = \"sl\",\n    orthographe_proche  = \"sp\"\n  )\n\n  req &lt;- request(\"https://api.datamuse.com/words\") |&gt;\n    req_url_query(!!param := graine) |&gt;\n    req_url_query(max = max_resultats)\n\n  if (!is.null(topics) && nzchar(topics)) {\n    req &lt;- req_url_query(req, topics = topics)\n  }\n\n  resp &lt;- req_perform(req)\n  dat  &lt;- fromJSON(resp_body_string(resp))\n\n  if (length(dat) == 0) {\n    return(data.frame(mot = character(), score = numeric(), stringsAsFactors = FALSE))\n  }\n\n  data.frame(\n    mot   = dat$word,\n    score = if (!is.null(dat$score)) dat$score else NA_real_,\n    stringsAsFactors = FALSE\n  )\n}"
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html#étape-2-transformer-la-fonction-en-tool-ellmer",
+    "href": "blog/posts/2025-12-19-agent-romance.html#étape-2-transformer-la-fonction-en-tool-ellmer",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "Étape 2 — Transformer la fonction en “tool” ellmer",
+    "text": "Étape 2 — Transformer la fonction en “tool” ellmer\n\n\nCode\nlibrary(ellmer)\nlibrary(bsicons)\n\ntool_datamuse &lt;- tool(\n  datamuse_mots,\n  name = \"datamuse_mots\",\n  description = paste(\n    \"Outil de vocabulaire via Datamuse.\",\n    \"Utile pour: synonymes, mots associés, adjectifs, noms, rimes, sons proches.\",\n    \"Note: Datamuse renvoie souvent des mots en anglais; l'assistant doit adapter en français.\"\n  ),\n  arguments = list(\n    `_intent` = type_string(\"Raison affichée à l'utilisateur (optionnel).\"),\n    graine = type_string(\"Mot ou courte expression (ex: 'slow burn', 'jealousy', 'campus').\"),\n    strategie = type_enum(\n      \"Type de suggestions.\",\n      values = c(\n        \"sens_proche\", \"synonymes\", \"associes\",\n        \"adjectifs_pour_nom\", \"noms_pour_adjectif\",\n        \"rimes\", \"son_proche\", \"orthographe_proche\"\n      ),\n      required = FALSE\n    ),\n    max_resultats = type_integer(\"Nombre max de résultats (10-50).\", required = FALSE),\n    topics = type_string(\"Optionnel: thèmes (ex: 'romance,paris').\", required = FALSE)\n  ),\n  annotations = tool_annotations(\n    title = \"Lexique (Datamuse)\",\n    icon = bs_icon(\"alphabet\")\n  )\n)"
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html#étape-3-créer-lagent-assistante-éditoriale-en-français",
+    "href": "blog/posts/2025-12-19-agent-romance.html#étape-3-créer-lagent-assistante-éditoriale-en-français",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "Étape 3 — Créer l’agent “assistante éditoriale” (en français)",
+    "text": "Étape 3 — Créer l’agent “assistante éditoriale” (en français)\nIci, on utilise Sys.getenv(\"OPENAI_API_KEY\").\nSi la variable n’est pas définie, on affiche alors une erreur claire.\n\n\nCode\nmake_editorial_chat &lt;- function(model = \"gpt-4.1-nano\") {\n\n  api_key &lt;- Sys.getenv(\"OPENAI_API_KEY\")\n  if (!nzchar(api_key)) {\n    stop(\"OPENAI_API_KEY n'est pas définie. Ajoute-la dans ton environnement (Sys.setenv ou ~/.Renviron).\")\n  }\n\n  chat &lt;- chat_openai(\n    model = model,\n    api_key = api_key,\n    system_prompt = paste(\n      \"Tu es une assistante éditoriale spécialisée en New Romance et tu réponds toujours en français.\",\n      \"Tu aides à : titres, pitch, 4e de couverture, scènes, arcs émotionnels, tropes, style, cohérence POV.\",\n      \"\",\n      \"Règles :\",\n      \"- Sois concrète et actionnable (listes, exemples, variantes).\",\n      \"- Propose plusieurs options (au moins 5) quand c'est pertinent.\",\n      \"- Quand tu as besoin de vocabulaire (synonymes / champ lexical / adjectifs / rimes),\",\n      \"  appelle l'outil datamuse_mots plutôt que d'inventer.\",\n      \"- Datamuse renvoie souvent des mots en anglais : utilise-les comme matière brute puis adapte en français.\"\n    )\n  )\n\n  chat$register_tool(tool_datamuse)\n  chat\n}"
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html#étape-4-lapp-shiny",
+    "href": "blog/posts/2025-12-19-agent-romance.html#étape-4-lapp-shiny",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "Étape 4 — L’app Shiny",
+    "text": "Étape 4 — L’app Shiny\nL’app Shiny proposée est très simple. Elle suppose que OPENAI_API_KEY est déjà définie sur la machine qui exécute l’app.\n\napp.R complet\n\n\nCode\n# créer le fichier app.R\n# liste des packages nécessaires : install.packages(c(\"shiny\", \"bslib\", \"shinychat\", \"ellmer\", \"httr2\", \"jsonlite\", \"bsicons\"))\n\nlibrary(shiny)\nlibrary(bslib)\nlibrary(shinychat)\nlibrary(ellmer)\nlibrary(httr2)\nlibrary(jsonlite)\nlibrary(bsicons)\n\n# ---- Datamuse + tool (même code que plus haut) ----\ndatamuse_mots &lt;- function(\n  `_intent` = \"Chercher du vocabulaire\",\n  graine,\n  strategie = c(\"sens_proche\",\"synonymes\",\"associes\",\"adjectifs_pour_nom\",\"noms_pour_adjectif\",\"rimes\",\"son_proche\",\"orthographe_proche\"),\n  max_resultats = 20,\n  topics = NULL\n) {\n  strategie &lt;- match.arg(strategie)\n  param &lt;- switch(\n    strategie,\n    sens_proche=\"ml\", synonymes=\"rel_syn\", associes=\"rel_trg\",\n    adjectifs_pour_nom=\"rel_jjb\", noms_pour_adjectif=\"rel_jja\",\n    rimes=\"rel_rhy\", son_proche=\"sl\", orthographe_proche=\"sp\"\n  )\n\n  req &lt;- request(\"https://api.datamuse.com/words\") |&gt;\n    req_url_query(!!param := graine) |&gt;\n    req_url_query(max = max_resultats)\n\n  if (!is.null(topics) && nzchar(topics)) req &lt;- req_url_query(req, topics = topics)\n\n  resp &lt;- req_perform(req)\n  dat  &lt;- fromJSON(resp_body_string(resp))\n\n  if (length(dat) == 0) return(data.frame(mot = character(), score = numeric(), stringsAsFactors = FALSE))\n\n  data.frame(\n    mot   = dat$word,\n    score = if (!is.null(dat$score)) dat$score else NA_real_,\n    stringsAsFactors = FALSE\n  )\n}\n\ntool_datamuse &lt;- tool(\n  datamuse_mots,\n  name = \"datamuse_mots\",\n  description = \"Outil de vocabulaire via Datamuse (synonymes, mots associés, adjectifs, rimes...).\",\n  arguments = list(\n    `_intent` = type_string(\"Raison affichée à l'utilisateur (optionnel).\"),\n    graine = type_string(\"Mot ou courte expression (ex: 'slow burn', 'jealousy', 'campus').\"),\n    strategie = type_enum(\n      \"Type de suggestions.\",\n      values = c(\"sens_proche\",\"synonymes\",\"associes\",\"adjectifs_pour_nom\",\"noms_pour_adjectif\",\"rimes\",\"son_proche\",\"orthographe_proche\"),\n      required = FALSE\n    ),\n    max_resultats = type_integer(\"Nombre max de résultats (10-50).\", required = FALSE),\n    topics = type_string(\"Optionnel: thèmes (ex: 'romance,paris').\", required = FALSE)\n  ),\n  annotations = tool_annotations(title = \"Lexique (Datamuse)\", icon = bs_icon(\"alphabet\"))\n)\n\nmake_editorial_chat &lt;- function(model = \"gpt-4.1-nano\") {\n  api_key &lt;- Sys.getenv(\"OPENAI_API_KEY\")\n  if (!nzchar(api_key)) stop(\"OPENAI_API_KEY n'est pas définie. Fais Sys.setenv(...) ou ajoute-la à ~/.Renviron puis redémarre R.\")\n\n  chat &lt;- chat_openai(\n    model = model,\n    api_key = api_key,\n    system_prompt = paste(\n      \"Tu es une assistante éditoriale spécialisée en New Romance et tu réponds toujours en français.\",\n      \"Tu aides à : titres, pitch, 4e de couverture, scènes, arcs émotionnels, tropes, style, cohérence POV.\",\n      \"\",\n      \"Règles :\",\n      \"- Sois concrète et actionnable (listes, exemples, variantes).\",\n      \"- Propose plusieurs options (au moins 5) quand c'est pertinent.\",\n      \"- Quand tu as besoin de vocabulaire (synonymes / champ lexical / adjectifs / rimes),\",\n      \"  appelle l'outil datamuse_mots plutôt que d'inventer.\",\n      \"- Datamuse renvoie souvent des mots en anglais : utilise-les comme matière brute puis adapte en français.\"\n    )\n  )\n  chat$register_tool(tool_datamuse)\n  chat\n}\n\nui &lt;- page_fillable(\n  title = \"Assistante éditoriale (New Romance) — ellmer + Datamuse\",\n  theme = bs_theme(version = 5, bootswatch = \"minty\"),\n  layout_sidebar(\n    sidebar = sidebar(\n      width = 360,\n      h4(\"Configuration\"),\n      p(\"Cette app lit la clé OpenAI depuis la variable d’environnement OPENAI_API_KEY.\"),\n      hr(),\n      h5(\"Exemples de demandes\"),\n      tags$ul(\n        tags$li(\"Donne-moi 10 titres pour une romance campus à Paris (slow burn).\"),\n        tags$li(\"Écris 3 accroches de chapitre 1 + une chute cliffhanger.\"),\n        tags$li(\"Je veux un champ lexical pour une jalousie douce (utilise l’outil).\")\n      ),\n      hr(),\n      tags$small(class = \"text-muted\", \"Astuce : écris “utilise l’outil” si tu veux encourager l’appel Datamuse.\")\n    ),\n    chat_mod_ui(\"chat\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  chat &lt;- make_editorial_chat()\n  chat_mod_server(\"chat\", chat)\n}\n\nshinyApp(ui, server)"
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html#enfin-tester-en-local",
+    "href": "blog/posts/2025-12-19-agent-romance.html#enfin-tester-en-local",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "Enfin… tester en local",
+    "text": "Enfin… tester en local\nPour tester en local, il y a deux étapes :\n1 - Définir la clé :\n\n\nCode\nSys.setenv(OPENAI_API_KEY = \"sk-...\")\n\n\n2 - Lancer l’app :\n\n\nCode\nshiny::runApp()"
+  },
+  {
+    "objectID": "blog/index.html",
+    "href": "blog/index.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)\n\n\n\nR\n\nagentic-systems\n\nshiny\n\nellmer\n\nnew-romance\n\n\n\nUn chatbot Shiny simple pour aider une auteure de New Romance : titres, pitch, blurb… avec un seul tool-calling (Datamuse).\n\n\n\n19 déc. 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nComprendre la taxinomie des Agentic Systems\n\n\n\nagentic-systems\n\nIA\n\ncours\n\n\n\nRetour pédagogique et personnel sur les niveaux d’agents présentés dans le cours Introduction to Agents.\n\n\n\n22 nov. 2025\n\n\n\n\n\n\nAucun article correspondant"
+  },
+  {
+    "objectID": "roadmap/index.html",
+    "href": "roadmap/index.html",
+    "title": "Roadmap des architectures",
+    "section": "",
+    "text": "La progression des chapitres que je vais apprendre.4 architectures clés qui ont façonnées les LLMs.\n\nLes Transformers ont joué un rôle fondamental. Ils sont partout –&gt; brique à maîtriser\nMixture of Experts (MoE) route chaque token vers quelques experts pour gagner en capacité à coût de calcul maîtrisé\nMamba — un modèle à espace d’état — traite de très longs contextes avec une complexité linéaire sans attention\nMixture of Recursion (MoR) introduit une profondeur récursive par token avec un KV caching (mémoire d’attention) sélectif\n\nÀ chaque étape, je compilerai ici, expérimentations et retours d’expérience issus de mes propres essais\n\n\n\n\n\n\n\n\n\n\n\n\n2017 — Transformers\n\n\nLes bases de l’attention et l’architecture qui a tout changé.\n\n\n\n\n\n\n\n\n\n\n2021 — Mixture of Experts (MoE)\n\n\nRoutage des tokens vers des experts pour scaler efficacement.\n\n\n\n\n\n\n\n\n\n\n2023 — Mamba\n\n\nModèles séquentiels à états (SSM) orientés efficacité.\n\n\n\n\n\n\n\n\n\n\n2025 — Mixture of Recursion\n\n\nCombiner des mécanismes récursifs pour une expressivité accrue.\n\n\n\n\n\nAucun article correspondant"
   },
   {
     "objectID": "index.html",
@@ -77,11 +119,18 @@
     "text": "Les Types de LLM\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.\nDécouvrir la roadmap » Lire le blog »\n\n\n\nLLMOps\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.\nCycle LLMOps » Points d’attention » Lire le blog »"
   },
   {
-    "objectID": "roadmap/index.html",
-    "href": "roadmap/index.html",
-    "title": "Roadmap des architectures",
+    "objectID": "roadmap/2025-mixture-of-recursion.html",
+    "href": "roadmap/2025-mixture-of-recursion.html",
+    "title": "2025 — Mixture of Recursion",
     "section": "",
-    "text": "La progression des chapitres que je vais apprendre.4 architectures clés qui ont façonnées les LLMs.\n\nLes Transformers ont joué un rôle fondamental. Ils sont partout –&gt; brique à maîtriser\nMixture of Experts (MoE) route chaque token vers quelques experts pour gagner en capacité à coût de calcul maîtrisé\nMamba — un modèle à espace d’état — traite de très longs contextes avec une complexité linéaire sans attention\nMixture of Recursion (MoR) introduit une profondeur récursive par token avec un KV caching (mémoire d’attention) sélectif\n\nÀ chaque étape, je compilerai ici, expérimentations et retours d’expérience issus de mes propres essais\n\n\n\n\n\n\n\n\n\n\n\n\n2017 — Transformers\n\n\nLes bases de l’attention et l’architecture qui a tout changé.\n\n\n\n\n\n\n\n\n\n\n2021 — Mixture of Experts (MoE)\n\n\nRoutage des tokens vers des experts pour scaler efficacement.\n\n\n\n\n\n\n\n\n\n\n2023 — Mamba\n\n\nModèles séquentiels à états (SSM) orientés efficacité.\n\n\n\n\n\n\n\n\n\n\n2025 — Mixture of Recursion\n\n\nCombiner des mécanismes récursifs pour une expressivité accrue.\n\n\n\n\n\nAucun article correspondant"
+    "text": "&lt;– Contenu à venir –&gt;\n_(Différence d’esprit avec MoE : MoE augmente la “largeur” (quelques experts par token), MoR augmente la “profondeur dans le temps” (quelques passes supplémentaires pour les tokens difficiles)._"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "À propos",
+    "section": "",
+    "text": "About this site"
   },
   {
     "objectID": "blog/posts/2025-11-22-taxinomie.html",
@@ -138,5 +187,19 @@
     "title": "Comprendre la taxinomie des Agentic Systems",
     "section": "6. Déployer et sécuriser",
     "text": "6. Déployer et sécuriser\nAuthentification, autorisation, garde-fous, supervision."
+  },
+  {
+    "objectID": "llmops/run.html",
+    "href": "llmops/run.html",
+    "title": "LLMOps — Run",
+    "section": "",
+    "text": "⟵ Retour à LLMOps\n\nMonitoring\n\nLatence, taux d’erreur, coût par requête\nTaux de refus/safety, timeouts, saturation\n\n\n\nObservabilité\n\nTraces des prompts/contexte (avec masquage)\nJournaux de retrieval et diagnostics\nDashboards et alertes\n\n\n\nSécurité\n\nContrôles d’entrée/sortie (prompt injection, secrets)\nRBAC, journalisation, conformité (RGPD)\nGestion des clés et des secrets\n\n\n\nCoûts\n\nBudgets, quotas, droits par équipe/projet\nMise en cache, distillation, modèles plus petits\nOptimisations (batching, streaming)\n\n\n\nDéploiement\n\nEnvironnements (dev / staging / prod)\nStratégies (blue/green, canary)\nRollback, versionning prompts/modèles"
+  },
+  {
+    "objectID": "llmops/build.html",
+    "href": "llmops/build.html",
+    "title": "LLMOps — Build",
+    "section": "",
+    "text": "⟵ Retour à LLMOps\n\nChoisir le LLM\n\nCritères : langue, contexte, coûts, perfs, contraintes légales\nOuvert (OSS) vs hébergé (API) vs self-host\nBenchmarks ciblés (pas de score “général” sans contexte)\n\n\n\nFine-tuning\n\nQuand l’utiliser (style, nouveaux formats, robustesse)\nSFT, LoRA/QLoRA, jeux d’exemples, garde-fous\nSuivi des dérives et versionning des modèles\n\n\n\nRAG\n\nPipeline d’ingestion (chunking, embeddings, index)\nStratégies de retrieval (hybride, rerankers)\nObservabilité des requêtes et des réponses\n\n\n\nPrompting\n\nInstructions, rôles, schémas de sortie\nFew-shot, chain-of-thought (sans fuite d’infos)\nTemplates et variables d’app\n\n\n\nÉvaluation\n\nGolden sets, métriques (exact match, faithfulness, utilité)\nÉval offline/online, human-in-the-loop\nTests régression et canaris\n\n\n\nArchitecture applicative\n\nOrchestration (API, workers, queues)\nCaches, garde-fous, limites de taux\nSecrets, monitoring, CI/CD"
   }
 ]
