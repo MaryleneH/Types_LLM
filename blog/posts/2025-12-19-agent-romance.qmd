@@ -1,0 +1,363 @@
+---
+title: "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)"
+description: "Un chatbot Shiny simple pour aider une auteure de New Romance : titres, pitch, blurb… avec un seul tool-calling (Datamuse)."
+date: 2025-12-19
+categories: [R, agentic-systems, shiny, ellmer, new-romance]
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-copy: true
+---
+
+## L’idée
+
+Je voulais une **assistante éditoriale** en R pour une auteure de **New Romance**, capable d’aider à :
+
+-   proposer des **titres**
+
+-   améliorer un **pitch**
+
+-   écrire une **quatrième de couverture**
+
+-   trouver des **accroches** / idées de scènes
+
+-   enrichir le **vocabulaire** (synonymes, champs lexicaux, rimes…)
+
+Pour rendre l’exemple concret, j’ai voulu rester simple et j'ai ajouté un “tool” : une fonction R qui interroge **Datamuse** (API de suggestions de mots). L’agent peut décider d’appeler ce tool (ou non) quand il a besoin d’idées de vocabulaire.
+
+Ceci est simplement un test, je l'ai montré pour exemple à une vraie utilisatrice mais je ne suis pas allée jusqu'à déployer une application `Shiny`.
+
+## Pré-requis
+
+Installe les packages :
+
+```{r}
+#| eval: false  
+#| warning: false 
+#| echo: true    
+install.packages(c("shiny", "bslib", "shinychat", "ellmer", "httr2", "jsonlite", "bsicons" )) 
+```
+
+## Clé API : variable d’environnement (simple)
+
+On part sur un principe clair : **la clé API n’est pas dans le code**. Elle est lue depuis une variable d’environnement.
+
+### Option 1 — Pour la session en cours
+
+```{r}
+#| eval: false 
+#| warning: false 
+#| echo: true        
+Sys.setenv(OPENAI_API_KEY = "sk-...")   # à faire AVANT de lancer l’app Sys.getenv("OPENAI_API_KEY") 
+```
+
+### Option 2 — Persistant (recommandé)
+
+On ajoute dans le fichier `~/.Renviron` : (*à ne pas commiter sur Git*)
+
+```{r}
+#| eval: false  
+#| warning: false
+#| echo: true        
+OPENAI_API_KEY=sk-... 
+```
+
+Puis on **redémarre R / RStudio** et on vérifie :
+
+```{r}
+#| eval: false  
+#| warning: false
+#| echo: true         
+Sys.getenv("OPENAI_API_KEY") 
+```
+
+## Étape 1 — Créer le tool Datamuse (vocabulaire)
+
+```{r}
+#| eval: false  
+#| warning: false
+#| echo: true         
+library(httr2)
+library(jsonlite)
+
+datamuse_mots <- function(
+  `_intent` = "Chercher du vocabulaire",
+  graine,
+  strategie = c(
+    "sens_proche",          # ml=
+    "synonymes",            # rel_syn=
+    "associes",             # rel_trg=
+    "adjectifs_pour_nom",   # rel_jjb=
+    "noms_pour_adjectif",   # rel_jja=
+    "rimes",                # rel_rhy=
+    "son_proche",           # sl=
+    "orthographe_proche"    # sp=
+  ),
+  max_resultats = 20,
+  topics = NULL
+) {
+  strategie <- match.arg(strategie)
+
+  param <- switch(
+    strategie,
+    sens_proche         = "ml",
+    synonymes           = "rel_syn",
+    associes            = "rel_trg",
+    adjectifs_pour_nom  = "rel_jjb",
+    noms_pour_adjectif  = "rel_jja",
+    rimes               = "rel_rhy",
+    son_proche          = "sl",
+    orthographe_proche  = "sp"
+  )
+
+  req <- request("https://api.datamuse.com/words") |>
+    req_url_query(!!param := graine) |>
+    req_url_query(max = max_resultats)
+
+  if (!is.null(topics) && nzchar(topics)) {
+    req <- req_url_query(req, topics = topics)
+  }
+
+  resp <- req_perform(req)
+  dat  <- fromJSON(resp_body_string(resp))
+
+  if (length(dat) == 0) {
+    return(data.frame(mot = character(), score = numeric(), stringsAsFactors = FALSE))
+  }
+
+  data.frame(
+    mot   = dat$word,
+    score = if (!is.null(dat$score)) dat$score else NA_real_,
+    stringsAsFactors = FALSE
+  )
+}
+
+```
+
+## Étape 2 — Transformer la fonction en “tool” ellmer
+
+```{r}
+#| eval: false  
+#| warning: false
+#| echo: true         
+library(ellmer)
+library(bsicons)
+
+tool_datamuse <- tool(
+  datamuse_mots,
+  name = "datamuse_mots",
+  description = paste(
+    "Outil de vocabulaire via Datamuse.",
+    "Utile pour: synonymes, mots associés, adjectifs, noms, rimes, sons proches.",
+    "Note: Datamuse renvoie souvent des mots en anglais; l'assistant doit adapter en français."
+  ),
+  arguments = list(
+    `_intent` = type_string("Raison affichée à l'utilisateur (optionnel)."),
+    graine = type_string("Mot ou courte expression (ex: 'slow burn', 'jealousy', 'campus')."),
+    strategie = type_enum(
+      "Type de suggestions.",
+      values = c(
+        "sens_proche", "synonymes", "associes",
+        "adjectifs_pour_nom", "noms_pour_adjectif",
+        "rimes", "son_proche", "orthographe_proche"
+      ),
+      required = FALSE
+    ),
+    max_resultats = type_integer("Nombre max de résultats (10-50).", required = FALSE),
+    topics = type_string("Optionnel: thèmes (ex: 'romance,paris').", required = FALSE)
+  ),
+  annotations = tool_annotations(
+    title = "Lexique (Datamuse)",
+    icon = bs_icon("alphabet")
+  )
+)
+
+```
+
+## Étape 3 — Créer l’agent “assistante éditoriale” (en français)
+
+Ici, on utilise `Sys.getenv("OPENAI_API_KEY")`.\
+Si la variable n’est pas définie, on affiche alors une erreur claire.
+
+```{r}
+#| eval: false  
+#| warning: false
+#| echo: true          
+make_editorial_chat <- function(model = "gpt-4.1-nano") {
+
+  api_key <- Sys.getenv("OPENAI_API_KEY")
+  if (!nzchar(api_key)) {
+    stop("OPENAI_API_KEY n'est pas définie. Ajoute-la dans ton environnement (Sys.setenv ou ~/.Renviron).")
+  }
+
+  chat <- chat_openai(
+    model = model,
+    api_key = api_key,
+    system_prompt = paste(
+      "Tu es une assistante éditoriale spécialisée en New Romance et tu réponds toujours en français.",
+      "Tu aides à : titres, pitch, 4e de couverture, scènes, arcs émotionnels, tropes, style, cohérence POV.",
+      "",
+      "Règles :",
+      "- Sois concrète et actionnable (listes, exemples, variantes).",
+      "- Propose plusieurs options (au moins 5) quand c'est pertinent.",
+      "- Quand tu as besoin de vocabulaire (synonymes / champ lexical / adjectifs / rimes),",
+      "  appelle l'outil datamuse_mots plutôt que d'inventer.",
+      "- Datamuse renvoie souvent des mots en anglais : utilise-les comme matière brute puis adapte en français."
+    )
+  )
+
+  chat$register_tool(tool_datamuse)
+  chat
+}
+ 
+```
+
+## Étape 4 — L’app Shiny 
+
+L'app `Shiny` proposée est très simple. Elle suppose que `OPENAI_API_KEY` est déjà définie sur la machine qui exécute l’app.
+
+### `app.R` complet
+
+```{r}
+#| eval: false  
+#| warning: false
+#| echo: true 
+         
+# créer le fichier app.R
+# liste des packages nécessaires : install.packages(c("shiny", "bslib", "shinychat", "ellmer", "httr2", "jsonlite", "bsicons"))
+
+library(shiny)
+library(bslib)
+library(shinychat)
+library(ellmer)
+library(httr2)
+library(jsonlite)
+library(bsicons)
+
+# ---- Datamuse + tool (même code que plus haut) ----
+datamuse_mots <- function(
+  `_intent` = "Chercher du vocabulaire",
+  graine,
+  strategie = c("sens_proche","synonymes","associes","adjectifs_pour_nom","noms_pour_adjectif","rimes","son_proche","orthographe_proche"),
+  max_resultats = 20,
+  topics = NULL
+) {
+  strategie <- match.arg(strategie)
+  param <- switch(
+    strategie,
+    sens_proche="ml", synonymes="rel_syn", associes="rel_trg",
+    adjectifs_pour_nom="rel_jjb", noms_pour_adjectif="rel_jja",
+    rimes="rel_rhy", son_proche="sl", orthographe_proche="sp"
+  )
+
+  req <- request("https://api.datamuse.com/words") |>
+    req_url_query(!!param := graine) |>
+    req_url_query(max = max_resultats)
+
+  if (!is.null(topics) && nzchar(topics)) req <- req_url_query(req, topics = topics)
+
+  resp <- req_perform(req)
+  dat  <- fromJSON(resp_body_string(resp))
+
+  if (length(dat) == 0) return(data.frame(mot = character(), score = numeric(), stringsAsFactors = FALSE))
+
+  data.frame(
+    mot   = dat$word,
+    score = if (!is.null(dat$score)) dat$score else NA_real_,
+    stringsAsFactors = FALSE
+  )
+}
+
+tool_datamuse <- tool(
+  datamuse_mots,
+  name = "datamuse_mots",
+  description = "Outil de vocabulaire via Datamuse (synonymes, mots associés, adjectifs, rimes...).",
+  arguments = list(
+    `_intent` = type_string("Raison affichée à l'utilisateur (optionnel)."),
+    graine = type_string("Mot ou courte expression (ex: 'slow burn', 'jealousy', 'campus')."),
+    strategie = type_enum(
+      "Type de suggestions.",
+      values = c("sens_proche","synonymes","associes","adjectifs_pour_nom","noms_pour_adjectif","rimes","son_proche","orthographe_proche"),
+      required = FALSE
+    ),
+    max_resultats = type_integer("Nombre max de résultats (10-50).", required = FALSE),
+    topics = type_string("Optionnel: thèmes (ex: 'romance,paris').", required = FALSE)
+  ),
+  annotations = tool_annotations(title = "Lexique (Datamuse)", icon = bs_icon("alphabet"))
+)
+
+make_editorial_chat <- function(model = "gpt-4.1-nano") {
+  api_key <- Sys.getenv("OPENAI_API_KEY")
+  if (!nzchar(api_key)) stop("OPENAI_API_KEY n'est pas définie. Fais Sys.setenv(...) ou ajoute-la à ~/.Renviron puis redémarre R.")
+
+  chat <- chat_openai(
+    model = model,
+    api_key = api_key,
+    system_prompt = paste(
+      "Tu es une assistante éditoriale spécialisée en New Romance et tu réponds toujours en français.",
+      "Tu aides à : titres, pitch, 4e de couverture, scènes, arcs émotionnels, tropes, style, cohérence POV.",
+      "",
+      "Règles :",
+      "- Sois concrète et actionnable (listes, exemples, variantes).",
+      "- Propose plusieurs options (au moins 5) quand c'est pertinent.",
+      "- Quand tu as besoin de vocabulaire (synonymes / champ lexical / adjectifs / rimes),",
+      "  appelle l'outil datamuse_mots plutôt que d'inventer.",
+      "- Datamuse renvoie souvent des mots en anglais : utilise-les comme matière brute puis adapte en français."
+    )
+  )
+  chat$register_tool(tool_datamuse)
+  chat
+}
+
+ui <- page_fillable(
+  title = "Assistante éditoriale (New Romance) — ellmer + Datamuse",
+  theme = bs_theme(version = 5, bootswatch = "minty"),
+  layout_sidebar(
+    sidebar = sidebar(
+      width = 360,
+      h4("Configuration"),
+      p("Cette app lit la clé OpenAI depuis la variable d’environnement OPENAI_API_KEY."),
+      hr(),
+      h5("Exemples de demandes"),
+      tags$ul(
+        tags$li("Donne-moi 10 titres pour une romance campus à Paris (slow burn)."),
+        tags$li("Écris 3 accroches de chapitre 1 + une chute cliffhanger."),
+        tags$li("Je veux un champ lexical pour une jalousie douce (utilise l’outil).")
+      ),
+      hr(),
+      tags$small(class = "text-muted", "Astuce : écris “utilise l’outil” si tu veux encourager l’appel Datamuse.")
+    ),
+    chat_mod_ui("chat")
+  )
+)
+
+server <- function(input, output, session) {
+  chat <- make_editorial_chat()
+  chat_mod_server("chat", chat)
+}
+
+shinyApp(ui, server)
+
+```
+
+## Enfin... tester en local
+
+Pour tester en local, il y a deux étapes :
+
+1 - Définir la clé :
+```{r}
+#| eval: false  
+#| warning: false
+#| echo: true 
+Sys.setenv(OPENAI_API_KEY = "sk-...")
+```
+
+2 - Lancer l’app :
+```{r}
+#| eval: false  
+#| warning: false
+#| echo: true 
+shiny::runApp()
+```

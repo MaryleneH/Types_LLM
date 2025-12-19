@@ -13,7 +13,7 @@ format:
 
 # Introduction
 
-Depuis quelques jours, je suis (tant bien que mal 😊) le cours [**_5-Day AI Agents Intensive Course Kaggle/Google_**](https://www.kaggle.com/learn-guide/5-day-agents) (Google, 2025), qui propose une vision structurée — et franchement éclairante — de la montée en complexité des systèmes agentiques.  
+Depuis quelques jours, je suis (tant bien que mal 😊) le cours [***5-Day AI Agents Intensive Course Kaggle/Google***](https://www.kaggle.com/learn-guide/5-day-agents) (Google, 2025), qui propose une vision structurée — et franchement éclairante — de la montée en complexité des systèmes agentiques.\
 Ce billet est autant un résumé qu’un retour personnel : une manière de fixer ce que j’ai appris, de mettre en perspective les concepts, et d’éclairer ma propre démarche de développement d’agents.
 
 Le document source propose une **taxinomie en cinq niveaux**, du plus simple (un modèle isolé) au plus avancé (un système capable de s’auto-évoluer). Les illustrations du PDF — notamment la pyramide de la page 14 présentant les niveaux de 0 à 4 — donnent une bonne intuition : plus on monte, plus on augmente la capacité d’un système à raisonner, agir, s’adapter et orchestrer d’autres agents.
@@ -39,49 +39,49 @@ flowchart LR
 
 # Niveau 0 — Le *Core Reasoning System*
 
-Le niveau 0 représente la brique la plus brute :  
-un **modèle de langage isolé**, sans mémoire, sans outils, sans perception du monde réel.  
+Le niveau 0 représente la brique la plus brute :\
+un **modèle de langage isolé**, sans mémoire, sans outils, sans perception du monde réel.\
 Il raisonne uniquement depuis son corpus pré-entraîné.
 
 Cela signifie que :
 
-- il peut expliquer très bien les règles du baseball,  
-- mais pas vous donner le score du match d’hier.
+-   il peut expliquer très bien les règles du baseball,\
+-   mais pas vous donner le score du match d’hier.
 
-Autrement dit, c’est une **intelligence statique**.  
+Autrement dit, c’est une **intelligence statique**.\
 Un cerveau brillant, mais enfermé dans une bibliothèque sans porte de sortie.
 
 # Niveau 1 — Le *Connected Problem Solver*
 
-Le niveau 1 introduit une rupture majeure : l’accès aux **outils**.  
+Le niveau 1 introduit une rupture majeure : l’accès aux **outils**.\
 Recherche web, RAG, API, base de données, exécution de code… l’agent peut enfin interagir avec le monde.
 
-Le cycle *Think → Act → Observe* apparaît ici dans toute sa pertinence :  
-- *Think* : le modèle décide quel outil utiliser,  
-- *Act* : l’outil est exécuté,  
+Le cycle *Think → Act → Observe* apparaît ici dans toute sa pertinence :\
+- *Think* : le modèle décide quel outil utiliser,\
+- *Act* : l’outil est exécuté,\
 - *Observe* : l’agent analyse le résultat et poursuit.
 
 Un **agent véritable** émerge. Ce niveau correspond selon moi à 80 % des besoins concrets en entreprise aujourd’hui.
 
 # Niveau 2 — Le *Strategic Problem Solver*
 
-Le niveau 2 amène l’agent dans une nouvelle dimension :  
+Le niveau 2 amène l’agent dans une nouvelle dimension :\
 il ne résout plus des tâches ponctuelles, **il planifie**.
 
 L’agent devient stratège :
 
-1. il découpe le problème,  
-2. il décide dans quel ordre avancer,  
-3. il fabrique des appels d’API de plus en plus affinés au fur et à mesure qu’il observe les résultats.
+1.  il découpe le problème,\
+2.  il décide dans quel ordre avancer,\
+3.  il fabrique des appels d’API de plus en plus affinés au fur et à mesure qu’il observe les résultats.
 
 C’est le niveau des assistants vraiment utiles au quotidien.
 
 # Niveau 3 — Le *Collaborative Multi-Agent System*
 
-Le niveau 3, c’est l’idée que **plusieurs agents spécialisés collaborent**, souvent sous la direction d’un agent coordinateur.  
+Le niveau 3, c’est l’idée que **plusieurs agents spécialisés collaborent**, souvent sous la direction d’un agent coordinateur.\
 Le document donne l’exemple d’un *Project Manager Agent* qui délègue à un agent marketing, un agent web, un agent de recherche, etc.
 
-Le point clé :  
+Le point clé :\
 **les agents deviennent des outils les uns pour les autres.**
 
 Pour un développeur, cela signifie : modularité, robustesse, réutilisabilité et orchestration de processus entiers.
@@ -94,50 +94,56 @@ Par exemple : un agent constate qu’aucun outil ne permet de suivre un buzz sur
 
 C’est une logique de **méta-raisonnement**.
 
----
+------------------------------------------------------------------------
 
 # Pourquoi ces niveaux sont utiles pour un développeur aujourd’hui
 
 Cette taxinomie change la manière d’aborder le développement agentique :
 
-- Elle **clarifie les ambitions**.
-- Elle fournit un **vocabulaire commun**.
-- Elle sert de **grille de maturité**.
-- Elle pousse à réfléchir en termes d’**orchestration**, pas seulement de prompting.
-- Elle aide à évaluer la **responsabilité et la sécurité**.
+-   Elle **clarifie les ambitions**.
+-   Elle fournit un **vocabulaire commun**.
+-   Elle sert de **grille de maturité**.
+-   Elle pousse à réfléchir en termes d’**orchestration**, pas seulement de prompting.
+-   Elle aide à évaluer la **responsabilité et la sécurité**.
 
 # Ce que j’en retire pour mes propres projets
 
 Dans mes expérimentations, cette classification m’a aidé à :
 
-- mieux **décomposer mes agents**,  
-- identifier que mes besoins actuels sont niveau 1 et 2,  
-- comprendre que mes limites venaient souvent de l’**ingénierie du contexte**,  
-- imaginer une transition vers du multi-agents (niveau 3).
+-   mieux **décomposer mes agents**,\
+-   identifier que mes besoins actuels sont niveau 1 et 2,\
+-   comprendre que mes limites venaient souvent de l’**ingénierie du contexte**,\
+-   imaginer une transition vers du multi-agents (niveau 3).
 
 Elle permet aussi de relativiser : les niveaux 1 et 2 couvrent déjà énormément de cas utiles.
 
 # Comment commencer à construire un agent
 
-## 1. Définir l’objectif de l’agent  
+## 1. Définir l’objectif de l’agent
+
 Quel résultat ? Quel périmètre ? Quel niveau viser ?
 
-## 2. Choisir le modèle  
+## 2. Choisir le modèle
+
 Pas forcément le plus gros : coût, latence, capacité de raisonnement, capacité à utiliser des outils.
 
-## 3. Ajouter des outils  
+## 3. Ajouter des outils
+
 Outils d’information (RAG, SQL…), d’action (API, code execution), ou HITL.
 
-## 4. Concevoir l’orchestration  
+## 4. Concevoir l’orchestration
+
 Le *Think → Act → Observe* doit être géré proprement.
 
-## 5. Instrumenter et évaluer  
+## 5. Instrumenter et évaluer
+
 Traces, évaluation, LM-judge, logique de test.
 
-## 6. Déployer et sécuriser  
+## 6. Déployer et sécuriser
+
 Authentification, autorisation, garde-fous, supervision.
 
----
+------------------------------------------------------------------------
 
 # Conclusion
 
