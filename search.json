@@ -1,129 +1,10 @@
 [
   {
-    "objectID": "llmops/plan.html",
-    "href": "llmops/plan.html",
-    "title": "LLMOps — Plan",
-    "section": "",
-    "text": "⟵ Retour à LLMOps"
-  },
-  {
-    "objectID": "llmops/plan.html#roi",
-    "href": "llmops/plan.html#roi",
-    "title": "LLMOps — Plan",
-    "section": "ROI",
-    "text": "ROI\n\nHypothèses de gain (temps, qualité, satisfaction)\nCoût total (infra, LLM, données, humains)\nMéthode d’estimation (baseline → pilote → prod)"
-  },
-  {
-    "objectID": "llmops/plan.html#risques",
-    "href": "llmops/plan.html#risques",
-    "title": "LLMOps — Plan",
-    "section": "Risques",
-    "text": "Risques\n\nHallucinations, biais, confidentialité, conformité (RGPD)\nRisques opérationnels (latence, coûts variables)\nMesures de mitigation (garde-fous, évaluation continue)"
-  },
-  {
-    "objectID": "llmops/plan.html#donnees",
-    "href": "llmops/plan.html#donnees",
-    "title": "LLMOps — Plan",
-    "section": "Données",
-    "text": "Données\n\nInventaire des sources (docs, bases, APIs)\nQualité, droits d’usage, rétention\nStratégie d’accès (RAG, cache, anonymisation)"
-  },
-  {
-    "objectID": "llmops/cycle.html",
-    "href": "llmops/cycle.html",
-    "title": "LLMOps — Plan • Build • Run",
-    "section": "",
-    "text": "🧭 Plan\n\n1/ Trouver les cas d’usage (Identify a single problem to solve)\n\n\nCas d’usage ROI Risques Données\n\nAller à Plan\n\n\n🏗️ Build\n\n2/ Choose the LLM\n\n3/ Customize the LLM\n\n4/ Set up the application’s architecture\n\n\nChoisir le LLM Fine-tuning RAG Prompting Évaluation Architecture\n\nAller à Build\n\n\n🚀 Run\n\n\nMonitoring Observabilité Sécurité Coûts Déploiement\n\nAller à Run"
-  },
-  {
-    "objectID": "blog/posts/2025-12-19-agent-romance.html",
-    "href": "blog/posts/2025-12-19-agent-romance.html",
-    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
-    "section": "",
-    "text": "Je voulais une assistante éditoriale en R pour une auteure de New Romance, capable d’aider à :\n\nproposer des titres\naméliorer un pitch\nécrire une quatrième de couverture\ntrouver des accroches / idées de scènes\nenrichir le vocabulaire (synonymes, champs lexicaux, rimes…)\n\nPour rendre l’exemple concret, j’ai voulu rester simple et j’ai ajouté un “tool” : une fonction R qui interroge Datamuse (API de suggestions de mots). L’agent peut décider d’appeler ce tool (ou non) quand il a besoin d’idées de vocabulaire.\nCeci est simplement un test, je l’ai montré pour exemple à une vraie utilisatrice mais je ne suis pas allée jusqu’à déployer une application Shiny."
-  },
-  {
-    "objectID": "blog/posts/2025-12-19-agent-romance.html#lidée",
-    "href": "blog/posts/2025-12-19-agent-romance.html#lidée",
-    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
-    "section": "",
-    "text": "Je voulais une assistante éditoriale en R pour une auteure de New Romance, capable d’aider à :\n\nproposer des titres\naméliorer un pitch\nécrire une quatrième de couverture\ntrouver des accroches / idées de scènes\nenrichir le vocabulaire (synonymes, champs lexicaux, rimes…)\n\nPour rendre l’exemple concret, j’ai voulu rester simple et j’ai ajouté un “tool” : une fonction R qui interroge Datamuse (API de suggestions de mots). L’agent peut décider d’appeler ce tool (ou non) quand il a besoin d’idées de vocabulaire.\nCeci est simplement un test, je l’ai montré pour exemple à une vraie utilisatrice mais je ne suis pas allée jusqu’à déployer une application Shiny."
-  },
-  {
-    "objectID": "blog/posts/2025-12-19-agent-romance.html#pré-requis",
-    "href": "blog/posts/2025-12-19-agent-romance.html#pré-requis",
-    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
-    "section": "Pré-requis",
-    "text": "Pré-requis\nInstalle les packages :\n\n\nCode\ninstall.packages(c(\"shiny\", \"bslib\", \"shinychat\", \"ellmer\", \"httr2\", \"jsonlite\", \"bsicons\" ))"
-  },
-  {
-    "objectID": "blog/posts/2025-12-19-agent-romance.html#clé-api-variable-denvironnement-simple",
-    "href": "blog/posts/2025-12-19-agent-romance.html#clé-api-variable-denvironnement-simple",
-    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
-    "section": "Clé API : variable d’environnement (simple)",
-    "text": "Clé API : variable d’environnement (simple)\nOn part sur un principe clair : la clé API n’est pas dans le code. Elle est lue depuis une variable d’environnement.\n\nOption 1 — Pour la session en cours\n\n\nCode\nSys.setenv(OPENAI_API_KEY = \"sk-...\")   # à faire AVANT de lancer l’app Sys.getenv(\"OPENAI_API_KEY\") \n\n\n\n\nOption 2 — Persistant (recommandé)\nOn ajoute dans le fichier ~/.Renviron : (à ne pas commiter sur Git)\n\n\nCode\nOPENAI_API_KEY=sk-... \n\n\nPuis on redémarre R / RStudio et on vérifie :\n\n\nCode\nSys.getenv(\"OPENAI_API_KEY\")"
-  },
-  {
-    "objectID": "blog/posts/2025-12-19-agent-romance.html#étape-1-créer-le-tool-datamuse-vocabulaire",
-    "href": "blog/posts/2025-12-19-agent-romance.html#étape-1-créer-le-tool-datamuse-vocabulaire",
-    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
-    "section": "Étape 1 — Créer le tool Datamuse (vocabulaire)",
-    "text": "Étape 1 — Créer le tool Datamuse (vocabulaire)\n\n\nCode\nlibrary(httr2)\nlibrary(jsonlite)\n\ndatamuse_mots &lt;- function(\n  `_intent` = \"Chercher du vocabulaire\",\n  graine,\n  strategie = c(\n    \"sens_proche\",          # ml=\n    \"synonymes\",            # rel_syn=\n    \"associes\",             # rel_trg=\n    \"adjectifs_pour_nom\",   # rel_jjb=\n    \"noms_pour_adjectif\",   # rel_jja=\n    \"rimes\",                # rel_rhy=\n    \"son_proche\",           # sl=\n    \"orthographe_proche\"    # sp=\n  ),\n  max_resultats = 20,\n  topics = NULL\n) {\n  strategie &lt;- match.arg(strategie)\n\n  param &lt;- switch(\n    strategie,\n    sens_proche         = \"ml\",\n    synonymes           = \"rel_syn\",\n    associes            = \"rel_trg\",\n    adjectifs_pour_nom  = \"rel_jjb\",\n    noms_pour_adjectif  = \"rel_jja\",\n    rimes               = \"rel_rhy\",\n    son_proche          = \"sl\",\n    orthographe_proche  = \"sp\"\n  )\n\n  req &lt;- request(\"https://api.datamuse.com/words\") |&gt;\n    req_url_query(!!param := graine) |&gt;\n    req_url_query(max = max_resultats)\n\n  if (!is.null(topics) && nzchar(topics)) {\n    req &lt;- req_url_query(req, topics = topics)\n  }\n\n  resp &lt;- req_perform(req)\n  dat  &lt;- fromJSON(resp_body_string(resp))\n\n  if (length(dat) == 0) {\n    return(data.frame(mot = character(), score = numeric(), stringsAsFactors = FALSE))\n  }\n\n  data.frame(\n    mot   = dat$word,\n    score = if (!is.null(dat$score)) dat$score else NA_real_,\n    stringsAsFactors = FALSE\n  )\n}"
-  },
-  {
-    "objectID": "blog/posts/2025-12-19-agent-romance.html#étape-2-transformer-la-fonction-en-tool-ellmer",
-    "href": "blog/posts/2025-12-19-agent-romance.html#étape-2-transformer-la-fonction-en-tool-ellmer",
-    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
-    "section": "Étape 2 — Transformer la fonction en “tool” ellmer",
-    "text": "Étape 2 — Transformer la fonction en “tool” ellmer\n\n\nCode\nlibrary(ellmer)\nlibrary(bsicons)\n\ntool_datamuse &lt;- tool(\n  datamuse_mots,\n  name = \"datamuse_mots\",\n  description = paste(\n    \"Outil de vocabulaire via Datamuse.\",\n    \"Utile pour: synonymes, mots associés, adjectifs, noms, rimes, sons proches.\",\n    \"Note: Datamuse renvoie souvent des mots en anglais; l'assistant doit adapter en français.\"\n  ),\n  arguments = list(\n    `_intent` = type_string(\"Raison affichée à l'utilisateur (optionnel).\"),\n    graine = type_string(\"Mot ou courte expression (ex: 'slow burn', 'jealousy', 'campus').\"),\n    strategie = type_enum(\n      \"Type de suggestions.\",\n      values = c(\n        \"sens_proche\", \"synonymes\", \"associes\",\n        \"adjectifs_pour_nom\", \"noms_pour_adjectif\",\n        \"rimes\", \"son_proche\", \"orthographe_proche\"\n      ),\n      required = FALSE\n    ),\n    max_resultats = type_integer(\"Nombre max de résultats (10-50).\", required = FALSE),\n    topics = type_string(\"Optionnel: thèmes (ex: 'romance,paris').\", required = FALSE)\n  ),\n  annotations = tool_annotations(\n    title = \"Lexique (Datamuse)\",\n    icon = bs_icon(\"alphabet\")\n  )\n)"
-  },
-  {
-    "objectID": "blog/posts/2025-12-19-agent-romance.html#étape-3-créer-lagent-assistante-éditoriale-en-français",
-    "href": "blog/posts/2025-12-19-agent-romance.html#étape-3-créer-lagent-assistante-éditoriale-en-français",
-    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
-    "section": "Étape 3 — Créer l’agent “assistante éditoriale” (en français)",
-    "text": "Étape 3 — Créer l’agent “assistante éditoriale” (en français)\nIci, on utilise Sys.getenv(\"OPENAI_API_KEY\").\nSi la variable n’est pas définie, on affiche alors une erreur claire.\n\n\nCode\nmake_editorial_chat &lt;- function(model = \"gpt-4.1-nano\") {\n\n  api_key &lt;- Sys.getenv(\"OPENAI_API_KEY\")\n  if (!nzchar(api_key)) {\n    stop(\"OPENAI_API_KEY n'est pas définie. Ajoute-la dans ton environnement (Sys.setenv ou ~/.Renviron).\")\n  }\n\n  chat &lt;- chat_openai(\n    model = model,\n    api_key = api_key,\n    system_prompt = paste(\n      \"Tu es une assistante éditoriale spécialisée en New Romance et tu réponds toujours en français.\",\n      \"Tu aides à : titres, pitch, 4e de couverture, scènes, arcs émotionnels, tropes, style, cohérence POV.\",\n      \"\",\n      \"Règles :\",\n      \"- Sois concrète et actionnable (listes, exemples, variantes).\",\n      \"- Propose plusieurs options (au moins 5) quand c'est pertinent.\",\n      \"- Quand tu as besoin de vocabulaire (synonymes / champ lexical / adjectifs / rimes),\",\n      \"  appelle l'outil datamuse_mots plutôt que d'inventer.\",\n      \"- Datamuse renvoie souvent des mots en anglais : utilise-les comme matière brute puis adapte en français.\"\n    )\n  )\n\n  chat$register_tool(tool_datamuse)\n  chat\n}"
-  },
-  {
-    "objectID": "blog/posts/2025-12-19-agent-romance.html#étape-4-lapp-shiny",
-    "href": "blog/posts/2025-12-19-agent-romance.html#étape-4-lapp-shiny",
-    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
-    "section": "Étape 4 — L’app Shiny",
-    "text": "Étape 4 — L’app Shiny\nL’app Shiny proposée est très simple. Elle suppose que OPENAI_API_KEY est déjà définie sur la machine qui exécute l’app.\n\napp.R complet\n\n\nCode\n# créer le fichier app.R\n# liste des packages nécessaires : install.packages(c(\"shiny\", \"bslib\", \"shinychat\", \"ellmer\", \"httr2\", \"jsonlite\", \"bsicons\"))\n\nlibrary(shiny)\nlibrary(bslib)\nlibrary(shinychat)\nlibrary(ellmer)\nlibrary(httr2)\nlibrary(jsonlite)\nlibrary(bsicons)\n\n# ---- Datamuse + tool (même code que plus haut) ----\ndatamuse_mots &lt;- function(\n  `_intent` = \"Chercher du vocabulaire\",\n  graine,\n  strategie = c(\"sens_proche\",\"synonymes\",\"associes\",\"adjectifs_pour_nom\",\"noms_pour_adjectif\",\"rimes\",\"son_proche\",\"orthographe_proche\"),\n  max_resultats = 20,\n  topics = NULL\n) {\n  strategie &lt;- match.arg(strategie)\n  param &lt;- switch(\n    strategie,\n    sens_proche=\"ml\", synonymes=\"rel_syn\", associes=\"rel_trg\",\n    adjectifs_pour_nom=\"rel_jjb\", noms_pour_adjectif=\"rel_jja\",\n    rimes=\"rel_rhy\", son_proche=\"sl\", orthographe_proche=\"sp\"\n  )\n\n  req &lt;- request(\"https://api.datamuse.com/words\") |&gt;\n    req_url_query(!!param := graine) |&gt;\n    req_url_query(max = max_resultats)\n\n  if (!is.null(topics) && nzchar(topics)) req &lt;- req_url_query(req, topics = topics)\n\n  resp &lt;- req_perform(req)\n  dat  &lt;- fromJSON(resp_body_string(resp))\n\n  if (length(dat) == 0) return(data.frame(mot = character(), score = numeric(), stringsAsFactors = FALSE))\n\n  data.frame(\n    mot   = dat$word,\n    score = if (!is.null(dat$score)) dat$score else NA_real_,\n    stringsAsFactors = FALSE\n  )\n}\n\ntool_datamuse &lt;- tool(\n  datamuse_mots,\n  name = \"datamuse_mots\",\n  description = \"Outil de vocabulaire via Datamuse (synonymes, mots associés, adjectifs, rimes...).\",\n  arguments = list(\n    `_intent` = type_string(\"Raison affichée à l'utilisateur (optionnel).\"),\n    graine = type_string(\"Mot ou courte expression (ex: 'slow burn', 'jealousy', 'campus').\"),\n    strategie = type_enum(\n      \"Type de suggestions.\",\n      values = c(\"sens_proche\",\"synonymes\",\"associes\",\"adjectifs_pour_nom\",\"noms_pour_adjectif\",\"rimes\",\"son_proche\",\"orthographe_proche\"),\n      required = FALSE\n    ),\n    max_resultats = type_integer(\"Nombre max de résultats (10-50).\", required = FALSE),\n    topics = type_string(\"Optionnel: thèmes (ex: 'romance,paris').\", required = FALSE)\n  ),\n  annotations = tool_annotations(title = \"Lexique (Datamuse)\", icon = bs_icon(\"alphabet\"))\n)\n\nmake_editorial_chat &lt;- function(model = \"gpt-4.1-nano\") {\n  api_key &lt;- Sys.getenv(\"OPENAI_API_KEY\")\n  if (!nzchar(api_key)) stop(\"OPENAI_API_KEY n'est pas définie. Fais Sys.setenv(...) ou ajoute-la à ~/.Renviron puis redémarre R.\")\n\n  chat &lt;- chat_openai(\n    model = model,\n    api_key = api_key,\n    system_prompt = paste(\n      \"Tu es une assistante éditoriale spécialisée en New Romance et tu réponds toujours en français.\",\n      \"Tu aides à : titres, pitch, 4e de couverture, scènes, arcs émotionnels, tropes, style, cohérence POV.\",\n      \"\",\n      \"Règles :\",\n      \"- Sois concrète et actionnable (listes, exemples, variantes).\",\n      \"- Propose plusieurs options (au moins 5) quand c'est pertinent.\",\n      \"- Quand tu as besoin de vocabulaire (synonymes / champ lexical / adjectifs / rimes),\",\n      \"  appelle l'outil datamuse_mots plutôt que d'inventer.\",\n      \"- Datamuse renvoie souvent des mots en anglais : utilise-les comme matière brute puis adapte en français.\"\n    )\n  )\n  chat$register_tool(tool_datamuse)\n  chat\n}\n\nui &lt;- page_fillable(\n  title = \"Assistante éditoriale (New Romance) — ellmer + Datamuse\",\n  theme = bs_theme(version = 5, bootswatch = \"minty\"),\n  layout_sidebar(\n    sidebar = sidebar(\n      width = 360,\n      h4(\"Configuration\"),\n      p(\"Cette app lit la clé OpenAI depuis la variable d’environnement OPENAI_API_KEY.\"),\n      hr(),\n      h5(\"Exemples de demandes\"),\n      tags$ul(\n        tags$li(\"Donne-moi 10 titres pour une romance campus à Paris (slow burn).\"),\n        tags$li(\"Écris 3 accroches de chapitre 1 + une chute cliffhanger.\"),\n        tags$li(\"Je veux un champ lexical pour une jalousie douce (utilise l’outil).\")\n      ),\n      hr(),\n      tags$small(class = \"text-muted\", \"Astuce : écris “utilise l’outil” si tu veux encourager l’appel Datamuse.\")\n    ),\n    chat_mod_ui(\"chat\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  chat &lt;- make_editorial_chat()\n  chat_mod_server(\"chat\", chat)\n}\n\nshinyApp(ui, server)"
-  },
-  {
-    "objectID": "blog/posts/2025-12-19-agent-romance.html#enfin-tester-en-local",
-    "href": "blog/posts/2025-12-19-agent-romance.html#enfin-tester-en-local",
-    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
-    "section": "Enfin… tester en local",
-    "text": "Enfin… tester en local\nPour tester en local, il y a deux étapes :\n1 - Définir la clé :\n\n\nCode\nSys.setenv(OPENAI_API_KEY = \"sk-...\")\n\n\n2 - Lancer l’app :\n\n\nCode\nshiny::runApp()"
-  },
-  {
-    "objectID": "blog/index.html",
-    "href": "blog/index.html",
-    "title": "Blog",
-    "section": "",
-    "text": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)\n\n\n\nR\n\nagentic-systems\n\nshiny\n\nellmer\n\nnew-romance\n\n\n\nUn chatbot Shiny simple pour aider une auteure de New Romance : titres, pitch, blurb… avec un seul tool-calling (Datamuse).\n\n\n\n19 déc. 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nComprendre la taxinomie des Agentic Systems\n\n\n\nagentic-systems\n\nIA\n\ncours\n\n\n\nRetour pédagogique et personnel sur les niveaux d’agents présentés dans le cours Introduction to Agents.\n\n\n\n22 nov. 2025\n\n\n\n\n\n\nAucun article correspondant"
-  },
-  {
     "objectID": "roadmap/index.html",
     "href": "roadmap/index.html",
     "title": "Roadmap des architectures",
     "section": "",
     "text": "La progression des chapitres que je vais apprendre.4 architectures clés qui ont façonnées les LLMs.\n\nLes Transformers ont joué un rôle fondamental. Ils sont partout –&gt; brique à maîtriser\nMixture of Experts (MoE) route chaque token vers quelques experts pour gagner en capacité à coût de calcul maîtrisé\nMamba — un modèle à espace d’état — traite de très longs contextes avec une complexité linéaire sans attention\nMixture of Recursion (MoR) introduit une profondeur récursive par token avec un KV caching (mémoire d’attention) sélectif\n\nÀ chaque étape, je compilerai ici, expérimentations et retours d’expérience issus de mes propres essais\n\n\n\n\n\n\n\n\n\n\n\n\n2017 — Transformers\n\n\nLes bases de l’attention et l’architecture qui a tout changé.\n\n\n\n\n\n\n\n\n\n\n2021 — Mixture of Experts (MoE)\n\n\nRoutage des tokens vers des experts pour scaler efficacement.\n\n\n\n\n\n\n\n\n\n\n2023 — Mamba\n\n\nModèles séquentiels à états (SSM) orientés efficacité.\n\n\n\n\n\n\n\n\n\n\n2025 — Mixture of Recursion\n\n\nCombiner des mécanismes récursifs pour une expressivité accrue.\n\n\n\n\n\nAucun article correspondant"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Les LLM et leur mise en production",
-    "section": "",
-    "text": "Les Types de LLM\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.\nDécouvrir la roadmap » Lire le blog »\n\n\n\nLLMOps\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.\nCycle LLMOps » Points d’attention » Lire le blog »"
-  },
-  {
-    "objectID": "roadmap/2025-mixture-of-recursion.html",
-    "href": "roadmap/2025-mixture-of-recursion.html",
-    "title": "2025 — Mixture of Recursion",
-    "section": "",
-    "text": "&lt;– Contenu à venir –&gt;\n_(Différence d’esprit avec MoE : MoE augmente la “largeur” (quelques experts par token), MoR augmente la “profondeur dans le temps” (quelques passes supplémentaires pour les tokens difficiles)._"
   },
   {
     "objectID": "about.html",
@@ -189,6 +70,97 @@
     "text": "6. Déployer et sécuriser\nAuthentification, autorisation, garde-fous, supervision."
   },
   {
+    "objectID": "blog/posts/2026-01-22-highcharter.html#contexte",
+    "href": "blog/posts/2026-01-22-highcharter.html#contexte",
+    "title": "Highcharter en R : un graphique “macro → micro” avec mini-chart dans le tooltip",
+    "section": "Contexte",
+    "text": "Contexte\nUn graphique peut être parfaitement correct… et pourtant peu “actionnable”.\nDans la pratique, l’écart se joue souvent sur la hiérarchie de lecture et la gestion du détail : trop d’informations, et la scène peut devenir bruyante et difficile à comprendre ; pas assez, et la lecture reste superficielle.\nLe billet propose un pattern qui fonctionne bien en dataviz “produit” ✨ : une vue stable (macro), complétée par un zoom contextualisé (micro) accessible au survol. Cela a pour avantage de conserver une Gestalt claire (figure/fond) tout en offrant, à la demande, un niveau de granularité utile."
+  },
+  {
+    "objectID": "blog/posts/2026-01-22-highcharter.html#où-se-situe-highcharter-dans-lécosystème-dataviz-r",
+    "href": "blog/posts/2026-01-22-highcharter.html#où-se-situe-highcharter-dans-lécosystème-dataviz-r",
+    "title": "Highcharter en R : un graphique “macro → micro” avec mini-chart dans le tooltip",
+    "section": "Où se situe {highcharter} dans l’écosystème dataviz R",
+    "text": "Où se situe {highcharter} dans l’écosystème dataviz R\nDans R, la dataviz se structure souvent autour de trois familles :\n\nGrammaire graphique (statique ou quasi-statique)\n\n{ggplot2} reste un standard pour la reproductibilité, la composition et la cohérence graphique.\n\nInteractivité “ggplot-friendly” (SVG/htmlwidgets)\n\n{ggiraph} est une extension ggplot2 et un htmlwidget : l’interactivité est obtenue en exportant en SVG et en ajoutant des attributs aux éléments (tooltip, hover, click).\nDocumentation : https://davidgohel.github.io/ggiraph/\n\nInteractivité “widget / dashboard”\n\n{highcharter} est un wrapper R de Highcharts (librairie JavaScript) : nombreux types de graphiques, configuration riche, tooltips avancés, états au survol, etc.\nCRAN : https://cran.r-project.org/package=highcharter\n\n\n\nAvantages / inconvénients (retour “terrain”)\n\n\n\n\n\n\nNote\n\n\n\nQuand {highcharter} est très à l’aise\n\nIl est possible d’aller loin sur la couche interaction : tooltips riches, mini-graphiques, drilldown, “states”, etc.\nLe rendu est souvent très propre dans Quarto/Shiny grâce au format htmlwidget 📎\nLes patterns Highcharts sont documentés et réutilisables (series, plotOptions, formatter…).\n\n\n\n\n\n\n\n\n\nAstuce\n\n\n\nQuand {ggiraph} peut être préférable\n\nSi l’objectif est de rester dans la grammaire ggplot2 et un pipeline “tidy” de bout en bout.\nSi le rendu SVG est recherché (net, léger, très bon pour du “print-like”) 🔎\n\n\n\n\n\n\n\n\n\nAvertissement\n\n\n\nÀ propos de {plotly} en R\nPlotly a annoncé le retrait de la documentation R (ainsi que MATLAB/Julia/F#) et indique ne pas maintenir ces piles depuis plusieurs années (retrait annoncé pour début novembre 2025).\nAnnonce : https://community.plotly.com/t/retire-the-documentation-for-r-matlab-julia-and-f/94147"
+  },
+  {
+    "objectID": "blog/posts/2026-01-22-highcharter.html#licence-clarification-indispensable",
+    "href": "blog/posts/2026-01-22-highcharter.html#licence-clarification-indispensable",
+    "title": "Highcharter en R : un graphique “macro → micro” avec mini-chart dans le tooltip",
+    "section": "Licence : clarification indispensable",
+    "text": "Licence : clarification indispensable\nIl est important de distinguer :\n\nla licence du package R {highcharter}\nla licence de la librairie JS sous-jacente Highcharts\n\nLe site de {highcharter} indique explicitement que la licence highcharter n’implique pas une licence Highcharts, et qu’il faut vérifier les options de licence Highcharts avant usage.\nRéférence : https://jkunst.com/highcharter/\nHighcharts propose notamment une licence Education/Personal pour des projets non commerciaux, avec des termes détaillés.\nRéférences :\n- Conditions non-commerciales : https://shop.highcharts.com/license-non-comm\n- Page “Education” : https://www.highcharts.com/education/\n\n\n\n\n\n\nAvertissement\n\n\n\nCe billet est rédigé à des fins pédagogiques 🧾.\nSi l’usage est institutionnel, commercial, ou “production” (site public d’organisation, service interne, etc.), il est préférable de relire les termes Highcharts car il y a un usage payant."
+  },
+  {
+    "objectID": "blog/posts/2026-01-22-highcharter.html#pourquoi-ce-graphique-est-intéressant-côté-dataviz",
+    "href": "blog/posts/2026-01-22-highcharter.html#pourquoi-ce-graphique-est-intéressant-côté-dataviz",
+    "title": "Highcharter en R : un graphique “macro → micro” avec mini-chart dans le tooltip",
+    "section": "Pourquoi ce graphique est intéressant côté dataviz",
+    "text": "Pourquoi ce graphique est intéressant côté dataviz\nLe pattern visé s’appuie sur une idée simple :\n\nMacro : une barre par département → lecture immédiate, faible charge cognitive.\nMicro : au survol, un top 3 de communes → détail pertinent, contextualisé, sans bruit.\n\nCela a pour avantage : - d’éviter la “bar chart fatigue” (trop de barres) 🧩 - de préserver une hiérarchie perceptive claire (figure/fond) - de mettre en place une logique de progressive disclosure : le détail n’apparaît que lorsqu’il est demandé ⚙️"
+  },
+  {
+    "objectID": "blog/posts/2026-01-22-highcharter.html#décisions-de-design-et-pourquoi",
+    "href": "blog/posts/2026-01-22-highcharter.html#décisions-de-design-et-pourquoi",
+    "title": "Highcharter en R : un graphique “macro → micro” avec mini-chart dans le tooltip",
+    "section": "Décisions de design (et pourquoi)",
+    "text": "Décisions de design (et pourquoi)\n\n\n\n\n\n\nAstuce\n\n\n\nDécisions assumées (UX + perception)\n\nÉchelle fixe 0–30% : facilite la comparaison visuelle et évite l’illusion d’écarts “géants” sur de petites valeurs.\n\nTop 3 (pas top 10) : le tooltip reste lisible ; l’information est immédiatement actionnable.\n\nSurvol = mise en évidence : la barre survolée passe en bleu foncé, les autres restent en bleu de base → le focus est explicite sans “punir” le contexte.\n\nMini-chart horizontal : les libellés de communes s’alignent naturellement à gauche, lecture plus rapide.\n\n% jamais coupés : crop: false + overflow: 'allow' et une marge droite dédiée évitent les labels tronqués 🚦"
+  },
+  {
+    "objectID": "blog/posts/2026-01-22-highcharter.html#ce-qui-va-être-construit",
+    "href": "blog/posts/2026-01-22-highcharter.html#ce-qui-va-être-construit",
+    "title": "Highcharter en R : un graphique “macro → micro” avec mini-chart dans le tooltip",
+    "section": "Ce qui va être construit",
+    "text": "Ce qui va être construit\n\nDiagramme en barres verticales : part des 15–29 ans par département (échelle 0–30%)\nAu survol :\n\nla barre survolée devient bleu foncé\nune pop-up affiche un mini graphique horizontal (top 3 communes), barres vert-gris, avec le pourcentage toujours visible ✅"
+  },
+  {
+    "objectID": "blog/posts/2026-01-22-highcharter.html#données-dexemple",
+    "href": "blog/posts/2026-01-22-highcharter.html#données-dexemple",
+    "title": "Highcharter en R : un graphique “macro → micro” avec mini-chart dans le tooltip",
+    "section": "Données d’exemple",
+    "text": "Données d’exemple\nVoici les deux tables minimales (ici codées en dur) :\n\ndept_idf : 8 départements, une valeur de part (en %)\ntop3 : top 3 communes par département (les 3 communes ayant le taux de 15-29 ans le plus élevé)\n\n\n\n\n\n\n\nNote\n\n\n\nLes valeurs ci-dessous sont des exemples (cohérents avec une échelle 0–30%).\nIl est possible de remplacer ces tables par des tables calculées depuis la source Insee du RP2022. Cela ne changera pas le code de création du graphique 🔁\n\n\n\nlibrary(dplyr)\nlibrary(purrr)\nlibrary(tibble)\nlibrary(highcharter)\nlibrary(htmlwidgets)\n\n`%||%` &lt;- function(a, b) if (is.null(a)) b else a\n\ndept_idf &lt;- tribble(\n  ~DEP, ~label, ~share_1529_pct,\n  \"75\", \"75 – Paris\",             24.3,\n  \"77\", \"77 – Seine-et-Marne\",    18.6,\n  \"78\", \"78 – Yvelines\",          17.8,\n  \"91\", \"91 – Essonne\",           19.2,\n  \"92\", \"92 – Hauts-de-Seine\",    19.7,\n  \"93\", \"93 – Seine-Saint-Denis\", 20.4,\n  \"94\", \"94 – Val-de-Marne\",      20.3,\n  \"95\", \"95 – Val-d'Oise\",        19.2\n)\n\ntop3 &lt;- tribble(\n  ~DEP, ~commune, ~share_1529_pct,\n  \"75\", \"Paris 13e Arrondissement\", 29.4,\n  \"75\", \"Paris 19e Arrondissement\", 28.8,\n  \"75\", \"Paris 20e Arrondissement\", 28.1,\n\n  \"77\", \"Serris\",                   25.7,\n  \"77\", \"Bussy-Saint-Georges\",      24.9,\n  \"77\", \"Chessy\",                   24.3,\n\n  \"78\", \"Guyancourt\",               22.4,\n  \"78\", \"Voisins-le-Bretonneux\",    21.8,\n  \"78\", \"Montigny-le-Bretonneux\",   21.5,\n\n  \"91\", \"Palaiseau\",                22.1,\n  \"91\", \"Orsay\",                    21.7,\n  \"91\", \"Gif-sur-Yvette\",           21.3,\n\n  \"92\", \"Nanterre\",                 21.6,\n  \"92\", \"Gennevilliers\",            21.1,\n  \"92\", \"Colombes\",                 20.7,\n\n  \"93\", \"Saint-Denis\",              24.8,\n  \"93\", \"Aubervilliers\",            24.2,\n  \"93\", \"La Courneuve\",             23.9,\n\n  \"94\", \"Créteil\",                  22.2,\n  \"94\", \"Ivry-sur-Seine\",           21.9,\n  \"94\", \"Vitry-sur-Seine\",          21.6,\n\n  \"95\", \"Cergy\",                    23.1,\n  \"95\", \"Sarcelles\",                22.6,\n  \"95\", \"Garges-lès-Gonesse\",       22.1\n)"
+  },
+  {
+    "objectID": "blog/posts/2026-01-22-highcharter.html#préparer-les-structures-attendues-par-highcharts",
+    "href": "blog/posts/2026-01-22-highcharter.html#préparer-les-structures-attendues-par-highcharts",
+    "title": "Highcharter en R : un graphique “macro → micro” avec mini-chart dans le tooltip",
+    "section": "Préparer les structures attendues par Highcharts",
+    "text": "Préparer les structures attendues par Highcharts\n\nRegrouper le “top 3” par département\nLe top 3 correspond aux trois communes du département ayant la part de 15-29 ans la plus élevée.\n\ndetail_by_dep &lt;- top3 %&gt;%\n  group_by(DEP) %&gt;%\n  summarise(\n    detail = list(pmap(list(commune, share_1529_pct),\n                       \\(name, pct) list(name = name, y = pct))),\n    .groups = \"drop\"\n  )\n\n\n\nConstruire les “points” du graphique principal\n\nmain_points &lt;- dept_idf %&gt;%\n  left_join(detail_by_dep, by = \"DEP\") %&gt;%\n  mutate(\n    point = pmap(\n      list(label, share_1529_pct, DEP, detail),\n      \\(label, share_1529_pct, dep, detail) {\n        list(\n          name = label,\n          y = share_1529_pct,\n          id = dep,\n          custom = list(detail = detail %||% list())\n        )\n      }\n    )\n  ) %&gt;%\n  pull(point)"
+  },
+  {
+    "objectID": "blog/posts/2026-01-22-highcharter.html#définir-les-fonctions-dinteraction-dans-le-qmd",
+    "href": "blog/posts/2026-01-22-highcharter.html#définir-les-fonctions-dinteraction-dans-le-qmd",
+    "title": "Highcharter en R : un graphique “macro → micro” avec mini-chart dans le tooltip",
+    "section": "Définir les fonctions d’interaction (dans le QMD)",
+    "text": "Définir les fonctions d’interaction (dans le QMD)\nLe Javascript nécessaire peut être mis dans un fichier .html externe. Pour la rédaction de cet article, les fonctions JavaScript nécessaires (survol et tooltip) sont définies directement dans le QMD via JS(\"function(){...}\").\nCela permet de conserver un seul fichier source côté article 📌.\n\njs_highlight_selected &lt;- JS(\"\nfunction () {\n  var pts = this.series.points;\n\n  for (var i = 0; i &lt; pts.length; i++) {\n    if (pts[i].__origColor === undefined) {\n      pts[i].__origColor = (pts[i].color || this.series.color);\n    }\n  }\n\n  this.update({ color: '#0b2e59' }, false);\n\n  for (var j = 0; j &lt; pts.length; j++) {\n    if (pts[j] !== this) pts[j].update({ color: pts[j].__origColor }, false);\n  }\n\n  this.series.chart.redraw(false);\n}\n\")\n\njs_highlight_reset &lt;- JS(\"\nfunction () {\n  var pts = this.series.points;\n  for (var i = 0; i &lt; pts.length; i++) {\n    if (pts[i].__origColor !== undefined) pts[i].update({ color: pts[i].__origColor }, false);\n  }\n  this.series.chart.redraw(false);\n}\n\")\n\njs_mini_tooltip_formatter &lt;- JS(\"\nfunction () {\n  var p = this.point;\n  var chart = this.series.chart;\n  var divId = 'mini_bar_' + p.series.index + '_' + p.index;\n\n  var html =\n    '&lt;div style=\\\"width:560px\\\"&gt;' +\n      '&lt;div style=\\\"margin-bottom:8px\\\"&gt;' +\n        '&lt;div style=\\\"font-weight:600;font-size:13px\\\"&gt;' + (p.name || p.id) + '&lt;/div&gt;' +\n        '&lt;div style=\\\"opacity:.85\\\"&gt;Part 15–29 (département) : &lt;b&gt;' +\n          Highcharts.numberFormat(p.y, 1) + ' %&lt;/b&gt;&lt;/div&gt;' +\n        '&lt;div style=\\\"opacity:.75\\\"&gt;Top 3 communes&lt;/div&gt;' +\n      '&lt;/div&gt;' +\n      '&lt;div id=\\\"' + divId + '\\\" style=\\\"width:560px;height:180px\\\"&gt;&lt;/div&gt;' +\n    '&lt;/div&gt;';\n\n  if (chart.__mini && chart.__mini.destroy) {\n    chart.__mini.destroy();\n    chart.__mini = null;\n  }\n\n  setTimeout(function () {\n    var container = document.getElementById(divId);\n    if (!container) return;\n\n    var d = (p.custom && p.custom.detail) ? p.custom.detail : [];\n    if (!d || d.length === 0) {\n      container.innerHTML = '&lt;div style=\\\"opacity:.7\\\"&gt;(pas de détail)&lt;/div&gt;';\n      return;\n    }\n\n    var cats = d.map(function (o) { return o.name; });\n    var vals = d.map(function (o) { return o.y; });\n\n    var maxLen = 0;\n    for (var i = 0; i &lt; cats.length; i++) maxLen = Math.max(maxLen, (cats[i] || '').length);\n    var leftMargin = Math.min(340, Math.max(170, 7.5 * maxLen));\n\n    var seriesData = vals.map(function (v) {\n      var inside = v &gt;= 6;\n      return {\n        y: v,\n        dataLabels: {\n          inside: inside,\n          align: 'right',\n          x: inside ? -6 : 6\n        }\n      };\n    });\n\n    chart.__mini = Highcharts.chart(divId, {\n      chart: {\n        type: 'bar',\n        backgroundColor: 'transparent',\n        margin: [5, 55, 20, leftMargin],\n        spacing: [0, 0, 0, 0],\n        animation: false\n      },\n      title: { text: null },\n      credits: { enabled: false },\n      exporting: { enabled: false },\n      legend: { enabled: false },\n      tooltip: { enabled: false },\n\n      xAxis: {\n        categories: cats,\n        lineWidth: 0,\n        tickLength: 0,\n        labels: {\n          style: { fontSize: '11px' },\n          formatter: function () {\n            var s = this.value || '';\n            return s.length &gt; 42 ? (s.substring(0, 41) + '…') : s;\n          }\n        }\n      },\n\n      yAxis: {\n        min: 0,\n        max: 30,\n        gridLineWidth: 0,\n        title: { text: null },\n        labels: { enabled: false },\n        lineWidth: 0,\n        tickLength: 0\n      },\n\n      plotOptions: {\n        series: {\n          animation: false,\n          borderWidth: 0,\n          pointPadding: 0.18,\n          groupPadding: 0.06,\n          dataLabels: {\n            enabled: true,\n            crop: false,\n            overflow: 'allow',\n            formatter: function () {\n              return Highcharts.numberFormat(this.y, 1) + ' %';\n            },\n            style: { fontSize: '11px', textOutline: 'none' }\n          }\n        }\n      },\n\n      series: [{\n        name: 'Top 3',\n        color: '#6f8f7a',\n        data: seriesData\n      }]\n    });\n  }, 10);\n\n  return html;\n}\n\")"
+  },
+  {
+    "objectID": "blog/posts/2026-01-22-highcharter.html#construire-le-graphique",
+    "href": "blog/posts/2026-01-22-highcharter.html#construire-le-graphique",
+    "title": "Highcharter en R : un graphique “macro → micro” avec mini-chart dans le tooltip",
+    "section": "Construire le graphique",
+    "text": "Construire le graphique\n\nhc &lt;- highchart() %&gt;%\n  hc_chart(type = \"column\") %&gt;%\n  hc_title(text = \"Île-de-France — Part des 15–29 ans (exemple)\") %&gt;%\n  hc_subtitle(text = \"Survol : mini top 3 communes dans la pop-up\") %&gt;%\n  hc_xAxis(type = \"category\") %&gt;%\n  hc_yAxis(\n    title = list(text = \"Part des 15–29 ans (%)\"),\n    min = 0, max = 30,\n    labels = list(format = \"{value} %\")\n  ) %&gt;%\n  hc_colors(c(\"#2f7ed8\")) %&gt;%  # bleu “base”\n  hc_plotOptions(\n    series = list(\n      dataLabels = list(enabled = TRUE, format = \"{point.y:.1f} %\"),\n      point = list(\n        events = list(\n          mouseOver = js_highlight_selected,\n          mouseOut  = js_highlight_reset\n        )\n      )\n    )\n  ) %&gt;%\n  hc_add_series(name = \"Part 15–29 (%)\", data = main_points) %&gt;%\n  hc_tooltip(\n    useHTML = TRUE,\n    outside = TRUE,\n    borderWidth = 0,\n    shadow = TRUE,\n    padding = 12,\n    formatter = js_mini_tooltip_formatter\n  )\n\ninvisible(hc)"
+  },
+  {
+    "objectID": "blog/posts/2026-01-22-highcharter.html#afficher-le-graphique",
+    "href": "blog/posts/2026-01-22-highcharter.html#afficher-le-graphique",
+    "title": "Highcharter en R : un graphique “macro → micro” avec mini-chart dans le tooltip",
+    "section": "Afficher le graphique",
+    "text": "Afficher le graphique\n\nhc"
+  },
+  {
+    "objectID": "blog/posts/2026-01-22-highcharter.html#remarques-finales",
+    "href": "blog/posts/2026-01-22-highcharter.html#remarques-finales",
+    "title": "Highcharter en R : un graphique “macro → micro” avec mini-chart dans le tooltip",
+    "section": "Remarques finales",
+    "text": "Remarques finales\n\n\n\n\n\n\nAstuce\n\n\n\nCe pattern se généralise facilement, dès que l’on veut étudier un phénomène sur un secteur (et un sous-secteur) :\n\n“région → départements”,    \n“secteur → entreprises”,    \n“catégorie → produits”…      \n\nLa structure reste stable : une scène macro lisible + un zoom micro à la demande 📚"
+  },
+  {
+    "objectID": "llmops/cycle.html",
+    "href": "llmops/cycle.html",
+    "title": "LLMOps — Plan • Build • Run",
+    "section": "",
+    "text": "🧭 Plan\n\n1/ Trouver les cas d’usage (Identify a single problem to solve)\n\n\nCas d’usage ROI Risques Données\n\nAller à Plan\n\n\n🏗️ Build\n\n2/ Choose the LLM\n\n3/ Customize the LLM\n\n4/ Set up the application’s architecture\n\n\nChoisir le LLM Fine-tuning RAG Prompting Évaluation Architecture\n\nAller à Build\n\n\n🚀 Run\n\n\nMonitoring Observabilité Sécurité Coûts Déploiement\n\nAller à Run"
+  },
+  {
     "objectID": "llmops/run.html",
     "href": "llmops/run.html",
     "title": "LLMOps — Run",
@@ -201,5 +173,166 @@
     "title": "LLMOps — Build",
     "section": "",
     "text": "⟵ Retour à LLMOps\n\nChoisir le LLM\n\nCritères : langue, contexte, coûts, perfs, contraintes légales\nOuvert (OSS) vs hébergé (API) vs self-host\nBenchmarks ciblés (pas de score “général” sans contexte)\n\n\n\nFine-tuning\n\nQuand l’utiliser (style, nouveaux formats, robustesse)\nSFT, LoRA/QLoRA, jeux d’exemples, garde-fous\nSuivi des dérives et versionning des modèles\n\n\n\nRAG\n\nPipeline d’ingestion (chunking, embeddings, index)\nStratégies de retrieval (hybride, rerankers)\nObservabilité des requêtes et des réponses\n\n\n\nPrompting\n\nInstructions, rôles, schémas de sortie\nFew-shot, chain-of-thought (sans fuite d’infos)\nTemplates et variables d’app\n\n\n\nÉvaluation\n\nGolden sets, métriques (exact match, faithfulness, utilité)\nÉval offline/online, human-in-the-loop\nTests régression et canaris\n\n\n\nArchitecture applicative\n\nOrchestration (API, workers, queues)\nCaches, garde-fous, limites de taux\nSecrets, monitoring, CI/CD"
+  },
+  {
+    "objectID": "llmops/plan.html",
+    "href": "llmops/plan.html",
+    "title": "LLMOps — Plan",
+    "section": "",
+    "text": "⟵ Retour à LLMOps"
+  },
+  {
+    "objectID": "llmops/plan.html#roi",
+    "href": "llmops/plan.html#roi",
+    "title": "LLMOps — Plan",
+    "section": "ROI",
+    "text": "ROI\n\nHypothèses de gain (temps, qualité, satisfaction)\nCoût total (infra, LLM, données, humains)\nMéthode d’estimation (baseline → pilote → prod)"
+  },
+  {
+    "objectID": "llmops/plan.html#risques",
+    "href": "llmops/plan.html#risques",
+    "title": "LLMOps — Plan",
+    "section": "Risques",
+    "text": "Risques\n\nHallucinations, biais, confidentialité, conformité (RGPD)\nRisques opérationnels (latence, coûts variables)\nMesures de mitigation (garde-fous, évaluation continue)"
+  },
+  {
+    "objectID": "llmops/plan.html#donnees",
+    "href": "llmops/plan.html#donnees",
+    "title": "LLMOps — Plan",
+    "section": "Données",
+    "text": "Données\n\nInventaire des sources (docs, bases, APIs)\nQualité, droits d’usage, rétention\nStratégie d’accès (RAG, cache, anonymisation)"
+  },
+  {
+    "objectID": "blog/index.html",
+    "href": "blog/index.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Highcharter en R : un graphique “macro → micro” avec mini-chart dans le tooltip\n\n\n\nR\n\ndataviz\n\nhighcharter\n\nquarto\n\n\n\nSuite au Webinar de Charlotte Hadley donné deux fois (21 janvier et 26 janvier 2026). En m’inspirant…\n\n\n\n22 janv. 2026\n\n\n\n\n\n\n\n\n\n\n\n\n\nRelevance AI : aperçu, limites, et comparaison rapide avec n8n et Zapier\n\n\n\nAgents\n\nAutomatisation\n\nNo-code\n\n\n\nPremier test rapide de RelevanceAI pour le positionner par rapport à n8n ou Zapier.\n\n\n\n11 janv. 2026\n\n\n\n\n\n\n\n\n\n\n\n\n\nUne assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)\n\n\n\nR\n\nagentic-systems\n\nshiny\n\nellmer\n\nnew-romance\n\n\n\nUn chatbot Shiny simple pour aider une auteure de New Romance : titres, pitch, blurb… avec un seul tool-calling (Datamuse).\n\n\n\n19 déc. 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nComprendre la taxinomie des Agentic Systems\n\n\n\nagentic-systems\n\nIA\n\ncours\n\n\n\nRetour pédagogique et personnel sur les niveaux d’agents présentés dans le cours Introduction to Agents.\n\n\n\n22 nov. 2025\n\n\n\n\n\n\nAucun article correspondant"
+  },
+  {
+    "objectID": "blog/posts/2026-01-11-relevanceAI.html",
+    "href": "blog/posts/2026-01-11-relevanceAI.html",
+    "title": "Relevance AI : aperçu, limites, et comparaison rapide avec n8n et Zapier",
+    "section": "",
+    "text": "Relevance AI est une plateforme orientée agents IA : on décrit un objectif (ex. résumer, extraire, classer), on fournit des outils/sources, et l’agent enchaîne les étapes pour produire un résultat."
+  },
+  {
+    "objectID": "blog/posts/2026-01-11-relevanceAI.html#relevance-ai-en-bref",
+    "href": "blog/posts/2026-01-11-relevanceAI.html#relevance-ai-en-bref",
+    "title": "Relevance AI : aperçu, limites, et comparaison rapide avec n8n et Zapier",
+    "section": "",
+    "text": "Relevance AI est une plateforme orientée agents IA : on décrit un objectif (ex. résumer, extraire, classer), on fournit des outils/sources, et l’agent enchaîne les étapes pour produire un résultat."
+  },
+  {
+    "objectID": "blog/posts/2026-01-11-relevanceAI.html#avantages",
+    "href": "blog/posts/2026-01-11-relevanceAI.html#avantages",
+    "title": "Relevance AI : aperçu, limites, et comparaison rapide avec n8n et Zapier",
+    "section": "Avantages",
+    "text": "Avantages\n\nRapide à prototyper : interface no-code/low-code, logique centrée “objectif → résultat”.\nAdapté aux tâches peu déterministes : synthèse, tri, extraction de points clés, reformulation.\nIntégrable dans un écosystème d’automatisation : utile lorsque le besoin est de déclencher l’agent depuis d’autres outils."
+  },
+  {
+    "objectID": "blog/posts/2026-01-11-relevanceAI.html#inconvénients",
+    "href": "blog/posts/2026-01-11-relevanceAI.html#inconvénients",
+    "title": "Relevance AI : aperçu, limites, et comparaison rapide avec n8n et Zapier",
+    "section": "Inconvénients",
+    "text": "Inconvénients\n\nMoins prédictible qu’un workflow strict : la qualité dépend du modèle, des consignes (prompting) et des données d’entrée.\nCoûts variables selon l’usage"
+  },
+  {
+    "objectID": "blog/posts/2026-01-11-relevanceAI.html#positionnement-vs-n8n-et-zapier",
+    "href": "blog/posts/2026-01-11-relevanceAI.html#positionnement-vs-n8n-et-zapier",
+    "title": "Relevance AI : aperçu, limites, et comparaison rapide avec n8n et Zapier",
+    "section": "Positionnement vs n8n et Zapier",
+    "text": "Positionnement vs n8n et Zapier\n\nZapier : très orienté “connecter rapidement des apps” et automatiser des scénarios standard.\nn8n : orienté “workflows maîtrisés” (logique fine, conditions, self-hosting possible, extensibilité).\nRelevance AI : pertinent quand l’IA est le cœur du besoin (raisonnement/synthèse) et qu’on veut rester no-code."
+  },
+  {
+    "objectID": "blog/posts/2026-01-11-relevanceAI.html#retour-dexpérience-mini-agent-no-code",
+    "href": "blog/posts/2026-01-11-relevanceAI.html#retour-dexpérience-mini-agent-no-code",
+    "title": "Relevance AI : aperçu, limites, et comparaison rapide avec n8n et Zapier",
+    "section": "Retour d’expérience : mini-agent no-code",
+    "text": "Retour d’expérience : mini-agent no-code\nJ’ai construit un petit agent qui : 1. prend un PDF, 2. produit un résumé structuré, 3. extrait des points clés, 4. génère un schéma simple des idées.\nLa mise en place a été très simple, car l’essentiel se joue sur : - une consigne claire (structure attendue), - un outil de lecture/ingestion du PDF, - quelques tests sur plusieurs types de documents.\n\n\n\n\n\nflowchart TD\n  A[PDF] --&gt; B[Extraction du texte]\n  B --&gt; C[Résumé structuré]\n  B --&gt; D[Points clés]\n  C --&gt; E[Restitution]\n  D --&gt; E"
+  },
+  {
+    "objectID": "blog/posts/2026-01-11-relevanceAI.html#conclusion",
+    "href": "blog/posts/2026-01-11-relevanceAI.html#conclusion",
+    "title": "Relevance AI : aperçu, limites, et comparaison rapide avec n8n et Zapier",
+    "section": "Conclusion",
+    "text": "Conclusion\nSi vous cherchez un outil d’automatisation : Zapier/n8n sont souvent la base.\nSi vous cherchez un outil pour livrer un résultat piloté par l’IA (résumer, extraire, prioriser) en no-code, Relevance AI peut être une option intéressante — à condition de cadrer la sortie et de prévoir des garde-fous."
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html",
+    "href": "blog/posts/2025-12-19-agent-romance.html",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "",
+    "text": "Je voulais une assistante éditoriale en R pour une auteure de New Romance, capable d’aider à :\n\nproposer des titres\naméliorer un pitch\nécrire une quatrième de couverture\ntrouver des accroches / idées de scènes\nenrichir le vocabulaire (synonymes, champs lexicaux, rimes…)\n\nPour rendre l’exemple concret, j’ai voulu rester simple et j’ai ajouté un “tool” : une fonction R qui interroge Datamuse (API de suggestions de mots). L’agent peut décider d’appeler ce tool (ou non) quand il a besoin d’idées de vocabulaire.\nCeci est simplement un test, je l’ai montré pour exemple à une vraie utilisatrice mais je ne suis pas allée jusqu’à déployer une application Shiny."
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html#lidée",
+    "href": "blog/posts/2025-12-19-agent-romance.html#lidée",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "",
+    "text": "Je voulais une assistante éditoriale en R pour une auteure de New Romance, capable d’aider à :\n\nproposer des titres\naméliorer un pitch\nécrire une quatrième de couverture\ntrouver des accroches / idées de scènes\nenrichir le vocabulaire (synonymes, champs lexicaux, rimes…)\n\nPour rendre l’exemple concret, j’ai voulu rester simple et j’ai ajouté un “tool” : une fonction R qui interroge Datamuse (API de suggestions de mots). L’agent peut décider d’appeler ce tool (ou non) quand il a besoin d’idées de vocabulaire.\nCeci est simplement un test, je l’ai montré pour exemple à une vraie utilisatrice mais je ne suis pas allée jusqu’à déployer une application Shiny."
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html#pré-requis",
+    "href": "blog/posts/2025-12-19-agent-romance.html#pré-requis",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "Pré-requis",
+    "text": "Pré-requis\nInstalle les packages :\n\n\nCode\ninstall.packages(c(\"shiny\", \"bslib\", \"shinychat\", \"ellmer\", \"httr2\", \"jsonlite\", \"bsicons\" ))"
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html#clé-api-variable-denvironnement-simple",
+    "href": "blog/posts/2025-12-19-agent-romance.html#clé-api-variable-denvironnement-simple",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "Clé API : variable d’environnement (simple)",
+    "text": "Clé API : variable d’environnement (simple)\nOn part sur un principe clair : la clé API n’est pas dans le code. Elle est lue depuis une variable d’environnement.\n\nOption 1 — Pour la session en cours\n\n\nCode\nSys.setenv(OPENAI_API_KEY = \"sk-...\")   # à faire AVANT de lancer l’app Sys.getenv(\"OPENAI_API_KEY\") \n\n\n\n\nOption 2 — Persistant (recommandé)\nOn ajoute dans le fichier ~/.Renviron : (à ne pas commiter sur Git)\n\n\nCode\nOPENAI_API_KEY=sk-... \n\n\nPuis on redémarre R / RStudio et on vérifie :\n\n\nCode\nSys.getenv(\"OPENAI_API_KEY\")"
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html#étape-1-créer-le-tool-datamuse-vocabulaire",
+    "href": "blog/posts/2025-12-19-agent-romance.html#étape-1-créer-le-tool-datamuse-vocabulaire",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "Étape 1 — Créer le tool Datamuse (vocabulaire)",
+    "text": "Étape 1 — Créer le tool Datamuse (vocabulaire)\n\n\nCode\nlibrary(httr2)\nlibrary(jsonlite)\n\ndatamuse_mots &lt;- function(\n  `_intent` = \"Chercher du vocabulaire\",\n  graine,\n  strategie = c(\n    \"sens_proche\",          # ml=\n    \"synonymes\",            # rel_syn=\n    \"associes\",             # rel_trg=\n    \"adjectifs_pour_nom\",   # rel_jjb=\n    \"noms_pour_adjectif\",   # rel_jja=\n    \"rimes\",                # rel_rhy=\n    \"son_proche\",           # sl=\n    \"orthographe_proche\"    # sp=\n  ),\n  max_resultats = 20,\n  topics = NULL\n) {\n  strategie &lt;- match.arg(strategie)\n\n  param &lt;- switch(\n    strategie,\n    sens_proche         = \"ml\",\n    synonymes           = \"rel_syn\",\n    associes            = \"rel_trg\",\n    adjectifs_pour_nom  = \"rel_jjb\",\n    noms_pour_adjectif  = \"rel_jja\",\n    rimes               = \"rel_rhy\",\n    son_proche          = \"sl\",\n    orthographe_proche  = \"sp\"\n  )\n\n  req &lt;- request(\"https://api.datamuse.com/words\") |&gt;\n    req_url_query(!!param := graine) |&gt;\n    req_url_query(max = max_resultats)\n\n  if (!is.null(topics) && nzchar(topics)) {\n    req &lt;- req_url_query(req, topics = topics)\n  }\n\n  resp &lt;- req_perform(req)\n  dat  &lt;- fromJSON(resp_body_string(resp))\n\n  if (length(dat) == 0) {\n    return(data.frame(mot = character(), score = numeric(), stringsAsFactors = FALSE))\n  }\n\n  data.frame(\n    mot   = dat$word,\n    score = if (!is.null(dat$score)) dat$score else NA_real_,\n    stringsAsFactors = FALSE\n  )\n}"
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html#étape-2-transformer-la-fonction-en-tool-ellmer",
+    "href": "blog/posts/2025-12-19-agent-romance.html#étape-2-transformer-la-fonction-en-tool-ellmer",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "Étape 2 — Transformer la fonction en “tool” ellmer",
+    "text": "Étape 2 — Transformer la fonction en “tool” ellmer\n\n\nCode\nlibrary(ellmer)\nlibrary(bsicons)\n\ntool_datamuse &lt;- tool(\n  datamuse_mots,\n  name = \"datamuse_mots\",\n  description = paste(\n    \"Outil de vocabulaire via Datamuse.\",\n    \"Utile pour: synonymes, mots associés, adjectifs, noms, rimes, sons proches.\",\n    \"Note: Datamuse renvoie souvent des mots en anglais; l'assistant doit adapter en français.\"\n  ),\n  arguments = list(\n    `_intent` = type_string(\"Raison affichée à l'utilisateur (optionnel).\"),\n    graine = type_string(\"Mot ou courte expression (ex: 'slow burn', 'jealousy', 'campus').\"),\n    strategie = type_enum(\n      \"Type de suggestions.\",\n      values = c(\n        \"sens_proche\", \"synonymes\", \"associes\",\n        \"adjectifs_pour_nom\", \"noms_pour_adjectif\",\n        \"rimes\", \"son_proche\", \"orthographe_proche\"\n      ),\n      required = FALSE\n    ),\n    max_resultats = type_integer(\"Nombre max de résultats (10-50).\", required = FALSE),\n    topics = type_string(\"Optionnel: thèmes (ex: 'romance,paris').\", required = FALSE)\n  ),\n  annotations = tool_annotations(\n    title = \"Lexique (Datamuse)\",\n    icon = bs_icon(\"alphabet\")\n  )\n)"
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html#étape-3-créer-lagent-assistante-éditoriale-en-français",
+    "href": "blog/posts/2025-12-19-agent-romance.html#étape-3-créer-lagent-assistante-éditoriale-en-français",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "Étape 3 — Créer l’agent “assistante éditoriale” (en français)",
+    "text": "Étape 3 — Créer l’agent “assistante éditoriale” (en français)\nIci, on utilise Sys.getenv(\"OPENAI_API_KEY\").\nSi la variable n’est pas définie, on affiche alors une erreur claire.\n\n\nCode\nmake_editorial_chat &lt;- function(model = \"gpt-4.1-nano\") {\n\n  api_key &lt;- Sys.getenv(\"OPENAI_API_KEY\")\n  if (!nzchar(api_key)) {\n    stop(\"OPENAI_API_KEY n'est pas définie. Ajoute-la dans ton environnement (Sys.setenv ou ~/.Renviron).\")\n  }\n\n  chat &lt;- chat_openai(\n    model = model,\n    api_key = api_key,\n    system_prompt = paste(\n      \"Tu es une assistante éditoriale spécialisée en New Romance et tu réponds toujours en français.\",\n      \"Tu aides à : titres, pitch, 4e de couverture, scènes, arcs émotionnels, tropes, style, cohérence POV.\",\n      \"\",\n      \"Règles :\",\n      \"- Sois concrète et actionnable (listes, exemples, variantes).\",\n      \"- Propose plusieurs options (au moins 5) quand c'est pertinent.\",\n      \"- Quand tu as besoin de vocabulaire (synonymes / champ lexical / adjectifs / rimes),\",\n      \"  appelle l'outil datamuse_mots plutôt que d'inventer.\",\n      \"- Datamuse renvoie souvent des mots en anglais : utilise-les comme matière brute puis adapte en français.\"\n    )\n  )\n\n  chat$register_tool(tool_datamuse)\n  chat\n}"
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html#étape-4-lapp-shiny",
+    "href": "blog/posts/2025-12-19-agent-romance.html#étape-4-lapp-shiny",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "Étape 4 — L’app Shiny",
+    "text": "Étape 4 — L’app Shiny\nL’app Shiny proposée est très simple. Elle suppose que OPENAI_API_KEY est déjà définie sur la machine qui exécute l’app.\n\napp.R complet\n\n\nCode\n# créer le fichier app.R\n# liste des packages nécessaires : install.packages(c(\"shiny\", \"bslib\", \"shinychat\", \"ellmer\", \"httr2\", \"jsonlite\", \"bsicons\"))\n\nlibrary(shiny)\nlibrary(bslib)\nlibrary(shinychat)\nlibrary(ellmer)\nlibrary(httr2)\nlibrary(jsonlite)\nlibrary(bsicons)\n\n# ---- Datamuse + tool (même code que plus haut) ----\ndatamuse_mots &lt;- function(\n  `_intent` = \"Chercher du vocabulaire\",\n  graine,\n  strategie = c(\"sens_proche\",\"synonymes\",\"associes\",\"adjectifs_pour_nom\",\"noms_pour_adjectif\",\"rimes\",\"son_proche\",\"orthographe_proche\"),\n  max_resultats = 20,\n  topics = NULL\n) {\n  strategie &lt;- match.arg(strategie)\n  param &lt;- switch(\n    strategie,\n    sens_proche=\"ml\", synonymes=\"rel_syn\", associes=\"rel_trg\",\n    adjectifs_pour_nom=\"rel_jjb\", noms_pour_adjectif=\"rel_jja\",\n    rimes=\"rel_rhy\", son_proche=\"sl\", orthographe_proche=\"sp\"\n  )\n\n  req &lt;- request(\"https://api.datamuse.com/words\") |&gt;\n    req_url_query(!!param := graine) |&gt;\n    req_url_query(max = max_resultats)\n\n  if (!is.null(topics) && nzchar(topics)) req &lt;- req_url_query(req, topics = topics)\n\n  resp &lt;- req_perform(req)\n  dat  &lt;- fromJSON(resp_body_string(resp))\n\n  if (length(dat) == 0) return(data.frame(mot = character(), score = numeric(), stringsAsFactors = FALSE))\n\n  data.frame(\n    mot   = dat$word,\n    score = if (!is.null(dat$score)) dat$score else NA_real_,\n    stringsAsFactors = FALSE\n  )\n}\n\ntool_datamuse &lt;- tool(\n  datamuse_mots,\n  name = \"datamuse_mots\",\n  description = \"Outil de vocabulaire via Datamuse (synonymes, mots associés, adjectifs, rimes...).\",\n  arguments = list(\n    `_intent` = type_string(\"Raison affichée à l'utilisateur (optionnel).\"),\n    graine = type_string(\"Mot ou courte expression (ex: 'slow burn', 'jealousy', 'campus').\"),\n    strategie = type_enum(\n      \"Type de suggestions.\",\n      values = c(\"sens_proche\",\"synonymes\",\"associes\",\"adjectifs_pour_nom\",\"noms_pour_adjectif\",\"rimes\",\"son_proche\",\"orthographe_proche\"),\n      required = FALSE\n    ),\n    max_resultats = type_integer(\"Nombre max de résultats (10-50).\", required = FALSE),\n    topics = type_string(\"Optionnel: thèmes (ex: 'romance,paris').\", required = FALSE)\n  ),\n  annotations = tool_annotations(title = \"Lexique (Datamuse)\", icon = bs_icon(\"alphabet\"))\n)\n\nmake_editorial_chat &lt;- function(model = \"gpt-4.1-nano\") {\n  api_key &lt;- Sys.getenv(\"OPENAI_API_KEY\")\n  if (!nzchar(api_key)) stop(\"OPENAI_API_KEY n'est pas définie. Fais Sys.setenv(...) ou ajoute-la à ~/.Renviron puis redémarre R.\")\n\n  chat &lt;- chat_openai(\n    model = model,\n    api_key = api_key,\n    system_prompt = paste(\n      \"Tu es une assistante éditoriale spécialisée en New Romance et tu réponds toujours en français.\",\n      \"Tu aides à : titres, pitch, 4e de couverture, scènes, arcs émotionnels, tropes, style, cohérence POV.\",\n      \"\",\n      \"Règles :\",\n      \"- Sois concrète et actionnable (listes, exemples, variantes).\",\n      \"- Propose plusieurs options (au moins 5) quand c'est pertinent.\",\n      \"- Quand tu as besoin de vocabulaire (synonymes / champ lexical / adjectifs / rimes),\",\n      \"  appelle l'outil datamuse_mots plutôt que d'inventer.\",\n      \"- Datamuse renvoie souvent des mots en anglais : utilise-les comme matière brute puis adapte en français.\"\n    )\n  )\n  chat$register_tool(tool_datamuse)\n  chat\n}\n\nui &lt;- page_fillable(\n  title = \"Assistante éditoriale (New Romance) — ellmer + Datamuse\",\n  theme = bs_theme(version = 5, bootswatch = \"minty\"),\n  layout_sidebar(\n    sidebar = sidebar(\n      width = 360,\n      h4(\"Configuration\"),\n      p(\"Cette app lit la clé OpenAI depuis la variable d’environnement OPENAI_API_KEY.\"),\n      hr(),\n      h5(\"Exemples de demandes\"),\n      tags$ul(\n        tags$li(\"Donne-moi 10 titres pour une romance campus à Paris (slow burn).\"),\n        tags$li(\"Écris 3 accroches de chapitre 1 + une chute cliffhanger.\"),\n        tags$li(\"Je veux un champ lexical pour une jalousie douce (utilise l’outil).\")\n      ),\n      hr(),\n      tags$small(class = \"text-muted\", \"Astuce : écris “utilise l’outil” si tu veux encourager l’appel Datamuse.\")\n    ),\n    chat_mod_ui(\"chat\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  chat &lt;- make_editorial_chat()\n  chat_mod_server(\"chat\", chat)\n}\n\nshinyApp(ui, server)"
+  },
+  {
+    "objectID": "blog/posts/2025-12-19-agent-romance.html#enfin-tester-en-local",
+    "href": "blog/posts/2025-12-19-agent-romance.html#enfin-tester-en-local",
+    "title": "Une assistante éditoriale New Romance en R (ellmer + Shiny + Datamuse)",
+    "section": "Enfin… tester en local",
+    "text": "Enfin… tester en local\nPour tester en local, il y a deux étapes :\n1 - Définir la clé :\n\n\nCode\nSys.setenv(OPENAI_API_KEY = \"sk-...\")\n\n\n2 - Lancer l’app :\n\n\nCode\nshiny::runApp()"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Les LLM et leur mise en production",
+    "section": "",
+    "text": "Les Types de LLM\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.\nDécouvrir la roadmap » Lire le blog »\n\n\n\nLLMOps\nUn espace pour explorer les grandes familles d’architectures de LLM et suivre mes notes d’apprentissage. Ceci permet de partager les travaux effectués sur le sujet.\nCycle LLMOps » Points d’attention » Lire le blog »"
+  },
+  {
+    "objectID": "roadmap/2025-mixture-of-recursion.html",
+    "href": "roadmap/2025-mixture-of-recursion.html",
+    "title": "2025 — Mixture of Recursion",
+    "section": "",
+    "text": "&lt;– Contenu à venir –&gt;\n_(Différence d’esprit avec MoE : MoE augmente la “largeur” (quelques experts par token), MoR augmente la “profondeur dans le temps” (quelques passes supplémentaires pour les tokens difficiles)._"
   }
 ]
