@@ -1,0 +1,65 @@
+---
+title: "Relevance AI : aperçu, limites, et comparaison rapide avec n8n et Zapier"
+date: 2026-01-11
+description: "Premier test rapide de RelevanceAI pour le positionner par rapport à n8n ou Zapier."
+categories: [Agents, Automatisation, No-code]
+tags: [Relevance AI, agents, zapier, n8n, workflow]
+image: ../../images/blog/relevanceai.png 
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false
+execute:
+  freeze: auto
+---
+
+## Relevance AI en bref
+
+[Relevance AI](https://relevanceai.com/) est une plateforme orientée **agents IA** : on décrit un objectif (ex. résumer, extraire, classer), on fournit des outils/sources, et l’agent enchaîne les étapes pour produire un résultat.
+
+## Avantages
+
+- **Rapide à prototyper** : interface no-code/low-code, logique centrée “objectif → résultat”.
+- **Adapté aux tâches peu déterministes** : synthèse, tri, extraction de points clés, reformulation.
+- **Intégrable dans un écosystème d’automatisation** : utile lorsque le besoin est de déclencher l’agent depuis d’autres outils.
+
+## Inconvénients
+
+- **Moins prédictible qu’un workflow strict** : la qualité dépend du modèle, des consignes (prompting) et des données d’entrée.
+- **Coûts variables selon l’usage** 
+
+## Positionnement vs n8n et Zapier
+
+- **Zapier** : très orienté “connecter rapidement des apps” et automatiser des scénarios standard.
+- **n8n** : orienté “workflows maîtrisés” (logique fine, conditions, self-hosting possible, extensibilité).
+- **Relevance AI** : pertinent quand **l’IA est le cœur du besoin** (raisonnement/synthèse) et qu’on veut rester no-code.
+
+## Retour d’expérience : mini-agent no-code 
+
+J’ai construit un petit agent qui :
+1. prend un PDF,
+2. produit un **résumé structuré**,
+3. extrait des **points clés**,
+4. génère un **schéma** simple des idées.
+
+La mise en place a été très simple, car l’essentiel se joue sur :
+- une consigne claire (structure attendue),
+- un outil de lecture/ingestion du PDF,
+- quelques tests sur plusieurs types de documents.
+
+
+
+```{mermaid}
+flowchart TD
+  A[PDF] --> B[Extraction du texte]
+  B --> C[Résumé structuré]
+  B --> D[Points clés]
+  C --> E[Restitution]
+  D --> E
+```
+
+## Conclusion
+
+Si vous cherchez un **outil d’automatisation** : Zapier/n8n sont souvent la base.  
+Si vous cherchez un **outil pour livrer un résultat piloté par l’IA** (résumer, extraire, prioriser) en no-code, Relevance AI peut être une option intéressante — à condition de cadrer la sortie et de prévoir des garde-fous.

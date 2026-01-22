@@ -1,0 +1,456 @@
+---
+title: "Highcharter en R : un graphique “macro → micro” avec mini-chart dans le tooltip"
+description: "Suite au Webinar de [Charlotte Hadley](https://www.tickettailor.com/events/graphplotchartdatastory/2001826) donné deux fois (21 janvier et 26 janvier 2026). En m'inspirant de cette présentation, j'ai voulu produit un graphique en Barres par département qui au survol de la souris met en évidence une catégorie à travers un mini graphique barres horizontales (top 3 communes) dans la pop-up."
+author: "Marylene Henry"
+date: 2026-01-22
+categories: [R, dataviz, highcharter, quarto]
+image: ../../images/blog/Highcharter.png 
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-tools: true
+execute:
+  warning: false
+  message: false
+---
+
+<br></br>
+
+
+## Contexte
+
+Un graphique peut être **parfaitement correct**… et pourtant peu “actionnable”.  
+Dans la pratique, l’écart se joue souvent sur la **hiérarchie de lecture** et la **gestion du détail** : trop d’informations, et la scène peut devenir bruyante et difficile à comprendre ; pas assez, et la lecture reste superficielle.
+
+Le billet propose un pattern qui fonctionne bien en dataviz “produit” ✨ : une **vue stable (macro)**, complétée par un **zoom contextualisé (micro)** accessible au survol. Cela a pour avantage de conserver une Gestalt claire (figure/fond) tout en offrant, à la demande, un niveau de granularité utile.
+
+---
+
+## Où se situe {highcharter} dans l’écosystème dataviz R
+
+Dans R, la dataviz se structure souvent autour de trois familles :
+
+1) **Grammaire graphique (statique ou quasi-statique)**  
+   - **{ggplot2}** reste un standard pour la reproductibilité, la composition et la cohérence graphique.
+
+2) **Interactivité “ggplot-friendly” (SVG/htmlwidgets)**  
+   - **{ggiraph}** est une extension ggplot2 et un htmlwidget : l’interactivité est obtenue en exportant en **SVG** et en ajoutant des attributs aux éléments (tooltip, hover, click).  
+   Documentation : <https://davidgohel.github.io/ggiraph/>  
+
+3) **Interactivité “widget / dashboard”**  
+   - **{highcharter}** est un wrapper R de **Highcharts** (librairie JavaScript) : nombreux types de graphiques, configuration riche, tooltips avancés, états au survol, etc.  
+   CRAN : <https://cran.r-project.org/package=highcharter>
+
+### Avantages / inconvénients (retour “terrain”)
+
+::: {.callout-note}
+**Quand {highcharter} est très à l’aise**
+
+- Il est possible d’aller loin sur la couche interaction : tooltips riches, mini-graphiques, drilldown, “states”, etc.
+- Le rendu est souvent très propre dans Quarto/Shiny grâce au format htmlwidget 📎
+- Les patterns Highcharts sont documentés et réutilisables (series, plotOptions, formatter…).
+:::
+
+::: {.callout-tip}
+**Quand {ggiraph} peut être préférable**
+
+- Si l’objectif est de rester dans la grammaire ggplot2 et un pipeline “tidy” de bout en bout.
+- Si le rendu SVG est recherché (net, léger, très bon pour du “print-like”) 🔎
+:::
+
+::: {.callout-warning}
+**À propos de {plotly} en R**
+
+Plotly a annoncé le retrait de la documentation R (ainsi que MATLAB/Julia/F#) et indique ne pas maintenir ces piles depuis plusieurs années (retrait annoncé pour début novembre 2025).  
+Annonce : <https://community.plotly.com/t/retire-the-documentation-for-r-matlab-julia-and-f/94147>
+:::
+
+---
+
+## Licence : clarification indispensable
+
+Il est important de distinguer :
+
+- la licence du package R **{highcharter}**
+- la licence de la librairie JS sous-jacente **Highcharts**
+
+Le site de {highcharter} indique explicitement que la licence highcharter **n’implique pas** une licence Highcharts, et qu’il faut vérifier les options de licence Highcharts avant usage.  
+Référence : <https://jkunst.com/highcharter/>
+
+Highcharts propose notamment une licence **Education/Personal** pour des projets **non commerciaux**, avec des termes détaillés.  
+Références :  
+- Conditions non-commerciales : <https://shop.highcharts.com/license-non-comm>  
+- Page “Education” : <https://www.highcharts.com/education/>
+
+::: {.callout-warning}
+Ce billet est rédigé à des fins pédagogiques 🧾.  
+Si l’usage est institutionnel, commercial, ou “production” (site public d’organisation, service interne, etc.), il est préférable de relire les termes Highcharts car il y a un usage payant.
+:::
+
+---
+
+## Pourquoi ce graphique est intéressant côté dataviz
+
+Le pattern visé s’appuie sur une idée simple :
+
+- **Macro** : une barre par département → lecture immédiate, faible charge cognitive.
+- **Micro** : au survol, un top 3 de communes → détail pertinent, contextualisé, sans bruit.
+
+Cela a pour avantage :
+- d’éviter la “bar chart fatigue” (trop de barres) 🧩
+- de préserver une hiérarchie perceptive claire (figure/fond)
+- de mettre en place une logique de **progressive disclosure** : le détail n’apparaît que lorsqu’il est demandé ⚙️
+
+---
+
+## Décisions de design (et pourquoi)
+
+::: {.callout-tip}
+**Décisions assumées (UX + perception)**
+
+- **Échelle fixe 0–30%** : facilite la comparaison visuelle et évite l’illusion d’écarts “géants” sur de petites valeurs.  
+- **Top 3 (pas top 10)** : le tooltip reste lisible ; l’information est immédiatement actionnable.  
+- **Survol = mise en évidence** : la barre survolée passe en bleu foncé, les autres restent en bleu de base → le focus est explicite sans “punir” le contexte.  
+- **Mini-chart horizontal** : les libellés de communes s’alignent naturellement à gauche, lecture plus rapide.  
+- **% jamais coupés** : `crop: false` + `overflow: 'allow'` et une marge droite dédiée évitent les labels tronqués 🚦
+:::
+
+---
+
+## Ce qui va être construit
+
+- Diagramme en **barres verticales** : part des 15–29 ans par département (échelle 0–30%)
+- Au survol :
+  - la barre survolée devient bleu foncé
+  - une pop-up affiche un mini graphique **horizontal** (top 3 communes), barres vert-gris, avec le pourcentage toujours visible ✅
+
+---
+
+## Données d’exemple
+
+Voici les deux tables minimales (ici codées en dur) :
+
+- `dept_idf` : 8 départements, une valeur de part (en %)
+- `top3` : top 3 communes par département (les 3 communes ayant le taux de 15-29 ans le plus élevé)
+
+::: {.callout-note}
+Les valeurs ci-dessous sont des **exemples** (cohérents avec une échelle 0–30%).  
+Il est possible de remplacer ces tables par des tables calculées depuis la source Insee du RP2022. Cela ne changera pas le code de création du graphique 🔁
+:::
+
+```{r}
+library(dplyr)
+library(purrr)
+library(tibble)
+library(highcharter)
+library(htmlwidgets)
+
+`%||%` <- function(a, b) if (is.null(a)) b else a
+
+dept_idf <- tribble(
+  ~DEP, ~label, ~share_1529_pct,
+  "75", "75 – Paris",             24.3,
+  "77", "77 – Seine-et-Marne",    18.6,
+  "78", "78 – Yvelines",          17.8,
+  "91", "91 – Essonne",           19.2,
+  "92", "92 – Hauts-de-Seine",    19.7,
+  "93", "93 – Seine-Saint-Denis", 20.4,
+  "94", "94 – Val-de-Marne",      20.3,
+  "95", "95 – Val-d'Oise",        19.2
+)
+
+top3 <- tribble(
+  ~DEP, ~commune, ~share_1529_pct,
+  "75", "Paris 13e Arrondissement", 29.4,
+  "75", "Paris 19e Arrondissement", 28.8,
+  "75", "Paris 20e Arrondissement", 28.1,
+
+  "77", "Serris",                   25.7,
+  "77", "Bussy-Saint-Georges",      24.9,
+  "77", "Chessy",                   24.3,
+
+  "78", "Guyancourt",               22.4,
+  "78", "Voisins-le-Bretonneux",    21.8,
+  "78", "Montigny-le-Bretonneux",   21.5,
+
+  "91", "Palaiseau",                22.1,
+  "91", "Orsay",                    21.7,
+  "91", "Gif-sur-Yvette",           21.3,
+
+  "92", "Nanterre",                 21.6,
+  "92", "Gennevilliers",            21.1,
+  "92", "Colombes",                 20.7,
+
+  "93", "Saint-Denis",              24.8,
+  "93", "Aubervilliers",            24.2,
+  "93", "La Courneuve",             23.9,
+
+  "94", "Créteil",                  22.2,
+  "94", "Ivry-sur-Seine",           21.9,
+  "94", "Vitry-sur-Seine",          21.6,
+
+  "95", "Cergy",                    23.1,
+  "95", "Sarcelles",                22.6,
+  "95", "Garges-lès-Gonesse",       22.1
+)
+```
+
+---
+
+## Préparer les structures attendues par Highcharts
+
+### Regrouper le “top 3” par département
+
+Le top 3 correspond aux trois communes du département ayant la part de 15-29 ans la plus élevée.    
+
+```{r}
+detail_by_dep <- top3 %>%
+  group_by(DEP) %>%
+  summarise(
+    detail = list(pmap(list(commune, share_1529_pct),
+                       \(name, pct) list(name = name, y = pct))),
+    .groups = "drop"
+  )
+```
+
+### Construire les “points” du graphique principal
+
+```{r}
+main_points <- dept_idf %>%
+  left_join(detail_by_dep, by = "DEP") %>%
+  mutate(
+    point = pmap(
+      list(label, share_1529_pct, DEP, detail),
+      \(label, share_1529_pct, dep, detail) {
+        list(
+          name = label,
+          y = share_1529_pct,
+          id = dep,
+          custom = list(detail = detail %||% list())
+        )
+      }
+    )
+  ) %>%
+  pull(point)
+```
+
+---
+
+## Définir les fonctions d’interaction (dans le QMD)
+
+Le Javascript nécessaire peut être mis dans un fichier `.html` externe. Pour la rédaction de cet article, les fonctions JavaScript nécessaires (survol et tooltip) sont définies directement dans le QMD via `JS("function(){...}")`.  
+Cela permet de conserver un seul fichier source côté article 📌.
+
+```{r}
+js_highlight_selected <- JS("
+function () {
+  var pts = this.series.points;
+
+  for (var i = 0; i < pts.length; i++) {
+    if (pts[i].__origColor === undefined) {
+      pts[i].__origColor = (pts[i].color || this.series.color);
+    }
+  }
+
+  this.update({ color: '#0b2e59' }, false);
+
+  for (var j = 0; j < pts.length; j++) {
+    if (pts[j] !== this) pts[j].update({ color: pts[j].__origColor }, false);
+  }
+
+  this.series.chart.redraw(false);
+}
+")
+
+js_highlight_reset <- JS("
+function () {
+  var pts = this.series.points;
+  for (var i = 0; i < pts.length; i++) {
+    if (pts[i].__origColor !== undefined) pts[i].update({ color: pts[i].__origColor }, false);
+  }
+  this.series.chart.redraw(false);
+}
+")
+
+js_mini_tooltip_formatter <- JS("
+function () {
+  var p = this.point;
+  var chart = this.series.chart;
+  var divId = 'mini_bar_' + p.series.index + '_' + p.index;
+
+  var html =
+    '<div style=\"width:560px\">' +
+      '<div style=\"margin-bottom:8px\">' +
+        '<div style=\"font-weight:600;font-size:13px\">' + (p.name || p.id) + '</div>' +
+        '<div style=\"opacity:.85\">Part 15–29 (département) : <b>' +
+          Highcharts.numberFormat(p.y, 1) + ' %</b></div>' +
+        '<div style=\"opacity:.75\">Top 3 communes</div>' +
+      '</div>' +
+      '<div id=\"' + divId + '\" style=\"width:560px;height:180px\"></div>' +
+    '</div>';
+
+  if (chart.__mini && chart.__mini.destroy) {
+    chart.__mini.destroy();
+    chart.__mini = null;
+  }
+
+  setTimeout(function () {
+    var container = document.getElementById(divId);
+    if (!container) return;
+
+    var d = (p.custom && p.custom.detail) ? p.custom.detail : [];
+    if (!d || d.length === 0) {
+      container.innerHTML = '<div style=\"opacity:.7\">(pas de détail)</div>';
+      return;
+    }
+
+    var cats = d.map(function (o) { return o.name; });
+    var vals = d.map(function (o) { return o.y; });
+
+    var maxLen = 0;
+    for (var i = 0; i < cats.length; i++) maxLen = Math.max(maxLen, (cats[i] || '').length);
+    var leftMargin = Math.min(340, Math.max(170, 7.5 * maxLen));
+
+    var seriesData = vals.map(function (v) {
+      var inside = v >= 6;
+      return {
+        y: v,
+        dataLabels: {
+          inside: inside,
+          align: 'right',
+          x: inside ? -6 : 6
+        }
+      };
+    });
+
+    chart.__mini = Highcharts.chart(divId, {
+      chart: {
+        type: 'bar',
+        backgroundColor: 'transparent',
+        margin: [5, 55, 20, leftMargin],
+        spacing: [0, 0, 0, 0],
+        animation: false
+      },
+      title: { text: null },
+      credits: { enabled: false },
+      exporting: { enabled: false },
+      legend: { enabled: false },
+      tooltip: { enabled: false },
+
+      xAxis: {
+        categories: cats,
+        lineWidth: 0,
+        tickLength: 0,
+        labels: {
+          style: { fontSize: '11px' },
+          formatter: function () {
+            var s = this.value || '';
+            return s.length > 42 ? (s.substring(0, 41) + '…') : s;
+          }
+        }
+      },
+
+      yAxis: {
+        min: 0,
+        max: 30,
+        gridLineWidth: 0,
+        title: { text: null },
+        labels: { enabled: false },
+        lineWidth: 0,
+        tickLength: 0
+      },
+
+      plotOptions: {
+        series: {
+          animation: false,
+          borderWidth: 0,
+          pointPadding: 0.18,
+          groupPadding: 0.06,
+          dataLabels: {
+            enabled: true,
+            crop: false,
+            overflow: 'allow',
+            formatter: function () {
+              return Highcharts.numberFormat(this.y, 1) + ' %';
+            },
+            style: { fontSize: '11px', textOutline: 'none' }
+          }
+        }
+      },
+
+      series: [{
+        name: 'Top 3',
+        color: '#6f8f7a',
+        data: seriesData
+      }]
+    });
+  }, 10);
+
+  return html;
+}
+")
+```
+
+---
+
+## Construire le graphique
+
+```{r}
+hc <- highchart() %>%
+  hc_chart(type = "column") %>%
+  hc_title(text = "Île-de-France — Part des 15–29 ans (exemple)") %>%
+  hc_subtitle(text = "Survol : mini top 3 communes dans la pop-up") %>%
+  hc_xAxis(type = "category") %>%
+  hc_yAxis(
+    title = list(text = "Part des 15–29 ans (%)"),
+    min = 0, max = 30,
+    labels = list(format = "{value} %")
+  ) %>%
+  hc_colors(c("#2f7ed8")) %>%  # bleu “base”
+  hc_plotOptions(
+    series = list(
+      dataLabels = list(enabled = TRUE, format = "{point.y:.1f} %"),
+      point = list(
+        events = list(
+          mouseOver = js_highlight_selected,
+          mouseOut  = js_highlight_reset
+        )
+      )
+    )
+  ) %>%
+  hc_add_series(name = "Part 15–29 (%)", data = main_points) %>%
+  hc_tooltip(
+    useHTML = TRUE,
+    outside = TRUE,
+    borderWidth = 0,
+    shadow = TRUE,
+    padding = 12,
+    formatter = js_mini_tooltip_formatter
+  )
+
+invisible(hc)
+```
+
+---
+
+## Afficher le graphique
+
+```{r}
+hc
+```
+
+---
+
+## Remarques finales
+
+::: {.callout-tip}
+Ce pattern se généralise facilement, dès que l'on veut étudier un phénomène sur un secteur (et un sous-secteur) :     
+
+-     “région → départements”,    
+-     “secteur → entreprises”,    
+-     “catégorie → produits”…      
+
+La structure reste stable : une scène macro lisible + un zoom micro à la demande 📚
+:::
