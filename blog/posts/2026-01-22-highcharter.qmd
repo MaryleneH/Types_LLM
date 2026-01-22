@@ -1,6 +1,6 @@
 ---
 title: "Highcharter en R : un graphique “macro → micro” avec mini-chart dans le tooltip"
-description: "Suite au Webinar de [Charlotte Hadley](https://www.tickettailor.com/events/graphplotchartdatastory/2001826) donné deux fois (21 janvier et 26 janvier 2026). En m'inspirant de cette présentation, j'ai voulu produit un graphique en Barres par département qui au survol de la souris met en évidence une catégorie à travers un mini graphique barres horizontales (top 3 communes) dans la pop-up."
+description: "Suite au Webinar de [Charlotte Hadley](https://www.tickettailor.com/events/graphplotchartdatastory/2001826) donné deux fois (21 janvier et 26 janvier 2026). En m'inspirant de cette présentation, j'ai voulu produire un graphique en Barres par département qui au survol de la souris met en évidence une catégorie à travers un mini graphique barres horizontales (top 3 communes) dans la pop-up."
 author: "Marylene Henry"
 date: 2026-01-22
 categories: [R, dataviz, highcharter, quarto]
