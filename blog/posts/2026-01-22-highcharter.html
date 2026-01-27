@@ -80,9 +80,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-f40b41d8c672a4454c701a8dc79e9421.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-d87fd25b23ce41ba166b6f851ba8ac10.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-6bfd651064573ce615a1aa8f07fef861.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-d87fd25b23ce41ba166b6f851ba8ac10.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-fd3f8c4727407618a5a329f5a636b492.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-c3f1080513a8aa0d35cc3b424b1762ee.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-fd3f8c4727407618a5a329f5a636b492.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -775,119 +775,138 @@ Cela permet de conserver un seul fichier source côté article 📌.</p>
 <span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="st">function () {</span></span>
 <span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="st">  var p = this.point;</span></span>
 <span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="st">  var chart = this.series.chart;</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="st">  var divId = 'mini_bar_' + p.series.index + '_' + p.index;</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="st">  var html =</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="st">    '&lt;div style=</span><span class="sc">\"</span><span class="st">width:560px</span><span class="sc">\"</span><span class="st">&gt;' +</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="st">      '&lt;div style=</span><span class="sc">\"</span><span class="st">margin-bottom:8px</span><span class="sc">\"</span><span class="st">&gt;' +</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="st">        '&lt;div style=</span><span class="sc">\"</span><span class="st">font-weight:600;font-size:13px</span><span class="sc">\"</span><span class="st">&gt;' + (p.name || p.id) + '&lt;/div&gt;' +</span></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="st">        '&lt;div style=</span><span class="sc">\"</span><span class="st">opacity:.85</span><span class="sc">\"</span><span class="st">&gt;Part 15–29 (département) : &lt;b&gt;' +</span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="st">          Highcharts.numberFormat(p.y, 1) + ' %&lt;/b&gt;&lt;/div&gt;' +</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="st">        '&lt;div style=</span><span class="sc">\"</span><span class="st">opacity:.75</span><span class="sc">\"</span><span class="st">&gt;Top 3 communes&lt;/div&gt;' +</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="st">      '&lt;/div&gt;' +</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="st">      '&lt;div id=</span><span class="sc">\"</span><span class="st">' + divId + '</span><span class="sc">\"</span><span class="st"> style=</span><span class="sc">\"</span><span class="st">width:560px;height:180px</span><span class="sc">\"</span><span class="st">&gt;&lt;/div&gt;' +</span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="st">    '&lt;/div&gt;';</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="st">  // Largeur dispo (mobile-friendly)</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="st">  var vw = (Highcharts.win &amp;&amp; Highcharts.win.innerWidth) ? Highcharts.win.innerWidth : 360;</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="st">  var cw = chart &amp;&amp; chart.chartWidth ? chart.chartWidth : vw;</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="st">  // Tooltip width : on garde une marge, et on plafonne pour éviter un énorme tooltip sur desktop</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="st">  var w = Math.min(560, Math.floor(Math.min(vw, cw) * 0.95));</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="st">  // Hauteur du mini-chart : plus petite sur mobile</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="st">  var isMobile = vw &lt; 520;</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="st">  var h = isMobile ? 150 : 180;</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="st">  var divId = 'mini_bar_' + p.series.index + '_' + p.index;</span></span>
 <span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="st">  if (chart.__mini &amp;&amp; chart.__mini.destroy) {</span></span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="st">    chart.__mini.destroy();</span></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="st">    chart.__mini = null;</span></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="st">  setTimeout(function () {</span></span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="st">    var container = document.getElementById(divId);</span></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="st">    if (!container) return;</span></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="st">    var d = (p.custom &amp;&amp; p.custom.detail) ? p.custom.detail : [];</span></span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="st">    if (!d || d.length === 0) {</span></span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="st">      container.innerHTML = '&lt;div style=</span><span class="sc">\"</span><span class="st">opacity:.7</span><span class="sc">\"</span><span class="st">&gt;(pas de détail)&lt;/div&gt;';</span></span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="st">      return;</span></span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="st">    var cats = d.map(function (o) { return o.name; });</span></span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="st">    var vals = d.map(function (o) { return o.y; });</span></span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="st">    var maxLen = 0;</span></span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a><span class="st">    for (var i = 0; i &lt; cats.length; i++) maxLen = Math.max(maxLen, (cats[i] || '').length);</span></span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="st">    var leftMargin = Math.min(340, Math.max(170, 7.5 * maxLen));</span></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="st">    var seriesData = vals.map(function (v) {</span></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="st">      var inside = v &gt;= 6;</span></span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="st">      return {</span></span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="st">        y: v,</span></span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a><span class="st">        dataLabels: {</span></span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a><span class="st">          inside: inside,</span></span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a><span class="st">          align: 'right',</span></span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a><span class="st">          x: inside ? -6 : 6</span></span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a><span class="st">      };</span></span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a><span class="st">    });</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="st">  var html =</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="st">    '&lt;div style=</span><span class="sc">\"</span><span class="st">width:' + w + 'px; max-width:95vw</span><span class="sc">\"</span><span class="st">&gt;' +</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="st">      '&lt;div style=</span><span class="sc">\"</span><span class="st">margin-bottom:8px</span><span class="sc">\"</span><span class="st">&gt;' +</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="st">        '&lt;div style=</span><span class="sc">\"</span><span class="st">font-weight:600;font-size:13px</span><span class="sc">\"</span><span class="st">&gt;' + (p.name || p.id) + '&lt;/div&gt;' +</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="st">        '&lt;div style=</span><span class="sc">\"</span><span class="st">opacity:.85</span><span class="sc">\"</span><span class="st">&gt;Part 15–29 (département) : &lt;b&gt;' +</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="st">          Highcharts.numberFormat(p.y, 1) + ' %&lt;/b&gt;&lt;/div&gt;' +</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="st">        '&lt;div style=</span><span class="sc">\"</span><span class="st">opacity:.75</span><span class="sc">\"</span><span class="st">&gt;Top 3 communes&lt;/div&gt;' +</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="st">      '&lt;/div&gt;' +</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="st">      '&lt;div id=</span><span class="sc">\"</span><span class="st">' + divId + '</span><span class="sc">\"</span><span class="st"> style=</span><span class="sc">\"</span><span class="st">width:' + w + 'px; height:' + h + 'px</span><span class="sc">\"</span><span class="st">&gt;&lt;/div&gt;' +</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="st">    '&lt;/div&gt;';</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="st">  // Détruire l'ancien mini-chart</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="st">  if (chart.__mini &amp;&amp; chart.__mini.destroy) {</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="st">    chart.__mini.destroy();</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="st">    chart.__mini = null;</span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="st">  setTimeout(function () {</span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="st">    var container = document.getElementById(divId);</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a><span class="st">    if (!container) return;</span></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a><span class="st">    var d = (p.custom &amp;&amp; p.custom.detail) ? p.custom.detail : [];</span></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="st">    if (!d || d.length === 0) {</span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="st">      container.innerHTML = '&lt;div style=</span><span class="sc">\"</span><span class="st">opacity:.7</span><span class="sc">\"</span><span class="st">&gt;(pas de détail)&lt;/div&gt;';</span></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="st">      return;</span></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a><span class="st">    var cats = d.map(function (o) { return o.name; });</span></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a><span class="st">    var vals = d.map(function (o) { return o.y; });</span></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a><span class="st">    // Marges plus compactes sur mobile</span></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a><span class="st">    var maxLen = 0;</span></span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a><span class="st">    for (var i = 0; i &lt; cats.length; i++) maxLen = Math.max(maxLen, (cats[i] || '').length);</span></span>
 <span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a><span class="st">    chart.__mini = Highcharts.chart(divId, {</span></span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a><span class="st">      chart: {</span></span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a><span class="st">        type: 'bar',</span></span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a><span class="st">        backgroundColor: 'transparent',</span></span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a><span class="st">        margin: [5, 55, 20, leftMargin],</span></span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a><span class="st">        spacing: [0, 0, 0, 0],</span></span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a><span class="st">        animation: false</span></span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a><span class="st">      },</span></span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a><span class="st">      title: { text: null },</span></span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="st">      credits: { enabled: false },</span></span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a><span class="st">      exporting: { enabled: false },</span></span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a><span class="st">      legend: { enabled: false },</span></span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a><span class="st">      tooltip: { enabled: false },</span></span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a><span class="st">      xAxis: {</span></span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a><span class="st">        categories: cats,</span></span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a><span class="st">        lineWidth: 0,</span></span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a><span class="st">        tickLength: 0,</span></span>
-<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a><span class="st">        labels: {</span></span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a><span class="st">          style: { fontSize: '11px' },</span></span>
-<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a><span class="st">          formatter: function () {</span></span>
-<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a><span class="st">            var s = this.value || '';</span></span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a><span class="st">            return s.length &gt; 42 ? (s.substring(0, 41) + '…') : s;</span></span>
-<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a><span class="st">          }</span></span>
-<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a><span class="st">    // marge gauche dynamique mais bornée (sinon ça explose)</span></span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a><span class="st">    var leftMargin = Math.min(isMobile ? 160 : 260, Math.max(isMobile ? 110 : 150, 6.5 * maxLen));</span></span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a><span class="st">    // marge droite pour que les % respirent</span></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a><span class="st">    var rightMargin = isMobile ? 40 : 55;</span></span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a><span class="st">    var seriesData = vals.map(function (v) {</span></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a><span class="st">      var inside = v &gt;= 6;</span></span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a><span class="st">      return {</span></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a><span class="st">        y: v,</span></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="st">        dataLabels: {</span></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a><span class="st">          inside: inside,</span></span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a><span class="st">          align: 'right',</span></span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a><span class="st">          x: inside ? -6 : 6</span></span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a><span class="st">      };</span></span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a><span class="st">    });</span></span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a><span class="st">    chart.__mini = Highcharts.chart(divId, {</span></span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a><span class="st">      chart: {</span></span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a><span class="st">        type: 'bar',</span></span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a><span class="st">        backgroundColor: 'transparent',</span></span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a><span class="st">        margin: [5, rightMargin, 20, leftMargin],</span></span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a><span class="st">        spacing: [0, 0, 0, 0],</span></span>
+<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a><span class="st">        animation: false,</span></span>
+<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a><span class="st">        reflow: true</span></span>
 <span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a><span class="st">      },</span></span>
-<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a><span class="st">      yAxis: {</span></span>
-<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a><span class="st">        min: 0,</span></span>
-<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a><span class="st">        max: 30,</span></span>
-<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a><span class="st">        gridLineWidth: 0,</span></span>
-<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a><span class="st">        title: { text: null },</span></span>
-<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a><span class="st">        labels: { enabled: false },</span></span>
-<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a><span class="st">        lineWidth: 0,</span></span>
-<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a><span class="st">        tickLength: 0</span></span>
-<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a><span class="st">      },</span></span>
-<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a><span class="st">      plotOptions: {</span></span>
-<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a><span class="st">        series: {</span></span>
-<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a><span class="st">          animation: false,</span></span>
-<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a><span class="st">          borderWidth: 0,</span></span>
-<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a><span class="st">          pointPadding: 0.18,</span></span>
-<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a><span class="st">          groupPadding: 0.06,</span></span>
-<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a><span class="st">          dataLabels: {</span></span>
-<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a><span class="st">            enabled: true,</span></span>
-<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a><span class="st">            crop: false,</span></span>
-<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a><span class="st">            overflow: 'allow',</span></span>
-<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a><span class="st">            formatter: function () {</span></span>
-<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a><span class="st">              return Highcharts.numberFormat(this.y, 1) + ' %';</span></span>
-<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a><span class="st">            },</span></span>
-<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a><span class="st">            style: { fontSize: '11px', textOutline: 'none' }</span></span>
-<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a><span class="st">          }</span></span>
-<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
-<span id="cb4-135"><a href="#cb4-135" aria-hidden="true" tabindex="-1"></a><span class="st">      },</span></span>
-<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a><span class="st">      series: [{</span></span>
-<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a><span class="st">        name: 'Top 3',</span></span>
-<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a><span class="st">        color: '#6f8f7a',</span></span>
-<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a><span class="st">        data: seriesData</span></span>
-<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a><span class="st">      }]</span></span>
-<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a><span class="st">    });</span></span>
-<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a><span class="st">  }, 10);</span></span>
-<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a><span class="st">  return html;</span></span>
-<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a><span class="st">      title: { text: null },</span></span>
+<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a><span class="st">      credits: { enabled: false },</span></span>
+<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a><span class="st">      exporting: { enabled: false },</span></span>
+<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a><span class="st">      legend: { enabled: false },</span></span>
+<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a><span class="st">      tooltip: { enabled: false },</span></span>
+<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a><span class="st">      xAxis: {</span></span>
+<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a><span class="st">        categories: cats,</span></span>
+<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a><span class="st">        lineWidth: 0,</span></span>
+<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a><span class="st">        tickLength: 0,</span></span>
+<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a><span class="st">        labels: {</span></span>
+<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a><span class="st">          style: { fontSize: isMobile ? '10px' : '11px' },</span></span>
+<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a><span class="st">          formatter: function () {</span></span>
+<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a><span class="st">            var s = this.value || '';</span></span>
+<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a><span class="st">            var max = isMobile ? 28 : 42; // coupe plus agressive sur mobile</span></span>
+<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a><span class="st">            return s.length &gt; max ? (s.substring(0, max - 1) + '…') : s;</span></span>
+<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a><span class="st">          }</span></span>
+<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
+<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a><span class="st">      },</span></span>
+<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a><span class="st">      yAxis: {</span></span>
+<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a><span class="st">        min: 0,</span></span>
+<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a><span class="st">        max: 30,</span></span>
+<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a><span class="st">        gridLineWidth: 0,</span></span>
+<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a><span class="st">        title: { text: null },</span></span>
+<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a><span class="st">        labels: { enabled: false },</span></span>
+<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a><span class="st">        lineWidth: 0,</span></span>
+<span id="cb4-135"><a href="#cb4-135" aria-hidden="true" tabindex="-1"></a><span class="st">        tickLength: 0</span></span>
+<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a><span class="st">      },</span></span>
+<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a><span class="st">      plotOptions: {</span></span>
+<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a><span class="st">        series: {</span></span>
+<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a><span class="st">          animation: false,</span></span>
+<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a><span class="st">          borderWidth: 0,</span></span>
+<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a><span class="st">          pointPadding: 0.18,</span></span>
+<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a><span class="st">          groupPadding: 0.06,</span></span>
+<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a><span class="st">          dataLabels: {</span></span>
+<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a><span class="st">            enabled: true,</span></span>
+<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a><span class="st">            crop: false,</span></span>
+<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a><span class="st">            overflow: 'allow',</span></span>
+<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a><span class="st">            formatter: function () {</span></span>
+<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a><span class="st">              return Highcharts.numberFormat(this.y, 1) + ' %';</span></span>
+<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a><span class="st">            },</span></span>
+<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a><span class="st">            style: { fontSize: isMobile ? '10px' : '11px', textOutline: 'none' }</span></span>
+<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a><span class="st">          }</span></span>
+<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
+<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a><span class="st">      },</span></span>
+<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a><span class="st">      series: [{</span></span>
+<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a><span class="st">        name: 'Top 3',</span></span>
+<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a><span class="st">        color: '#6f8f7a',</span></span>
+<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a><span class="st">        data: seriesData</span></span>
+<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a><span class="st">      }]</span></span>
+<span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a><span class="st">    });</span></span>
+<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a><span class="st">  }, 10);</span></span>
+<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a><span class="st">  return html;</span></span>
+<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
 </section>
@@ -895,7 +914,7 @@ Cela permet de conserver un seul fichier source côté article 📌.</p>
 <h2 class="anchored" data-anchor-id="construire-le-graphique">Construire le graphique</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">highchart</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_chart</span>(<span class="at">type =</span> <span class="st">"column"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_chart</span>(<span class="at">type =</span> <span class="st">"column"</span>, <span class="at">reflow =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span>   <span class="co"># &lt;- important</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_title</span>(<span class="at">text =</span> <span class="st">"Île-de-France — Part des 15–29 ans (exemple)"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_subtitle</span>(<span class="at">text =</span> <span class="st">"Survol : mini top 3 communes dans la pop-up"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_xAxis</span>(<span class="at">type =</span> <span class="st">"category"</span>) <span class="sc">%&gt;%</span></span>
@@ -926,7 +945,19 @@ Cela permet de conserver un seul fichier source côté article 📌.</p>
 <span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">formatter =</span> js_mini_tooltip_formatter</span>
 <span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(hc)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> hc <span class="sc">%&gt;%</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_tooltip</span>(</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">useHTML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">outside =</span> <span class="cn">FALSE</span>,     <span class="co"># &lt;- mobile-friendly</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">constrain =</span> <span class="cn">TRUE</span>,    <span class="co"># &lt;- évite de sortir de l'écran</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">borderWidth =</span> <span class="dv">0</span>,</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">shadow =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">padding =</span> <span class="dv">12</span>,</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">formatter =</span> js_mini_tooltip_formatter</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(hc)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
 </section>
@@ -935,8 +966,8 @@ Cela permet de conserver un seul fichier source côté article 📌.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>hc</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="highchart html-widget html-fill-item" id="htmlwidget-da2d5b963c00cce5ff85" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-da2d5b963c00cce5ff85">{"x":{"hc_opts":{"chart":{"reflow":true,"type":"column"},"title":{"text":"Île-de-France — Part des 15–29 ans (exemple)"},"yAxis":{"title":{"text":"Part des 15–29 ans (%)"},"min":0,"max":30,"labels":{"format":"{value} %"}},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"dataLabels":{"enabled":true,"format":"{point.y:.1f} %"},"point":{"events":{"mouseOver":"\nfunction () {\n  var pts = this.series.points;\n\n  for (var i = 0; i < pts.length; i++) {\n    if (pts[i].__origColor === undefined) {\n      pts[i].__origColor = (pts[i].color || this.series.color);\n    }\n  }\n\n  this.update({ color: '#0b2e59' }, false);\n\n  for (var j = 0; j < pts.length; j++) {\n    if (pts[j] !== this) pts[j].update({ color: pts[j].__origColor }, false);\n  }\n\n  this.series.chart.redraw(false);\n}\n","mouseOut":"\nfunction () {\n  var pts = this.series.points;\n  for (var i = 0; i < pts.length; i++) {\n    if (pts[i].__origColor !== undefined) pts[i].update({ color: pts[i].__origColor }, false);\n  }\n  this.series.chart.redraw(false);\n}\n"}}},"treemap":{"layoutAlgorithm":"squarified"}},"subtitle":{"text":"Survol : mini top 3 communes dans la pop-up"},"xAxis":{"type":"category"},"colors":["#2f7ed8"],"series":[{"name":"Part 15–29 (%)","data":[{"name":"75 – Paris","y":24.3,"id":"75","custom":{"detail":[{"name":"Paris 13e Arrondissement","y":29.4},{"name":"Paris 19e Arrondissement","y":28.8},{"name":"Paris 20e Arrondissement","y":28.1}]}},{"name":"77 – Seine-et-Marne","y":18.6,"id":"77","custom":{"detail":[{"name":"Serris","y":25.7},{"name":"Bussy-Saint-Georges","y":24.9},{"name":"Chessy","y":24.3}]}},{"name":"78 – Yvelines","y":17.8,"id":"78","custom":{"detail":[{"name":"Guyancourt","y":22.4},{"name":"Voisins-le-Bretonneux","y":21.8},{"name":"Montigny-le-Bretonneux","y":21.5}]}},{"name":"91 – Essonne","y":19.2,"id":"91","custom":{"detail":[{"name":"Palaiseau","y":22.1},{"name":"Orsay","y":21.7},{"name":"Gif-sur-Yvette","y":21.3}]}},{"name":"92 – Hauts-de-Seine","y":19.7,"id":"92","custom":{"detail":[{"name":"Nanterre","y":21.6},{"name":"Gennevilliers","y":21.1},{"name":"Colombes","y":20.7}]}},{"name":"93 – Seine-Saint-Denis","y":20.4,"id":"93","custom":{"detail":[{"name":"Saint-Denis","y":24.8},{"name":"Aubervilliers","y":24.2},{"name":"La Courneuve","y":23.9}]}},{"name":"94 – Val-de-Marne","y":20.3,"id":"94","custom":{"detail":[{"name":"Créteil","y":22.2},{"name":"Ivry-sur-Seine","y":21.9},{"name":"Vitry-sur-Seine","y":21.6}]}},{"name":"95 – Val-d'Oise","y":19.2,"id":"95","custom":{"detail":[{"name":"Cergy","y":23.1},{"name":"Sarcelles","y":22.6},{"name":"Garges-lès-Gonesse","y":22.1}]}}]}],"tooltip":{"useHTML":true,"outside":true,"borderWidth":0,"shadow":true,"padding":12,"formatter":"\nfunction () {\n  var p = this.point;\n  var chart = this.series.chart;\n  var divId = 'mini_bar_' + p.series.index + '_' + p.index;\n\n  var html =\n    '<div style=\"width:560px\">' +\n      '<div style=\"margin-bottom:8px\">' +\n        '<div style=\"font-weight:600;font-size:13px\">' + (p.name || p.id) + '<\/div>' +\n        '<div style=\"opacity:.85\">Part 15–29 (département) : <b>' +\n          Highcharts.numberFormat(p.y, 1) + ' %<\/b><\/div>' +\n        '<div style=\"opacity:.75\">Top 3 communes<\/div>' +\n      '<\/div>' +\n      '<div id=\"' + divId + '\" style=\"width:560px;height:180px\"><\/div>' +\n    '<\/div>';\n\n  if (chart.__mini && chart.__mini.destroy) {\n    chart.__mini.destroy();\n    chart.__mini = null;\n  }\n\n  setTimeout(function () {\n    var container = document.getElementById(divId);\n    if (!container) return;\n\n    var d = (p.custom && p.custom.detail) ? p.custom.detail : [];\n    if (!d || d.length === 0) {\n      container.innerHTML = '<div style=\"opacity:.7\">(pas de détail)<\/div>';\n      return;\n    }\n\n    var cats = d.map(function (o) { return o.name; });\n    var vals = d.map(function (o) { return o.y; });\n\n    var maxLen = 0;\n    for (var i = 0; i < cats.length; i++) maxLen = Math.max(maxLen, (cats[i] || '').length);\n    var leftMargin = Math.min(340, Math.max(170, 7.5 * maxLen));\n\n    var seriesData = vals.map(function (v) {\n      var inside = v >= 6;\n      return {\n        y: v,\n        dataLabels: {\n          inside: inside,\n          align: 'right',\n          x: inside ? -6 : 6\n        }\n      };\n    });\n\n    chart.__mini = Highcharts.chart(divId, {\n      chart: {\n        type: 'bar',\n        backgroundColor: 'transparent',\n        margin: [5, 55, 20, leftMargin],\n        spacing: [0, 0, 0, 0],\n        animation: false\n      },\n      title: { text: null },\n      credits: { enabled: false },\n      exporting: { enabled: false },\n      legend: { enabled: false },\n      tooltip: { enabled: false },\n\n      xAxis: {\n        categories: cats,\n        lineWidth: 0,\n        tickLength: 0,\n        labels: {\n          style: { fontSize: '11px' },\n          formatter: function () {\n            var s = this.value || '';\n            return s.length > 42 ? (s.substring(0, 41) + '…') : s;\n          }\n        }\n      },\n\n      yAxis: {\n        min: 0,\n        max: 30,\n        gridLineWidth: 0,\n        title: { text: null },\n        labels: { enabled: false },\n        lineWidth: 0,\n        tickLength: 0\n      },\n\n      plotOptions: {\n        series: {\n          animation: false,\n          borderWidth: 0,\n          pointPadding: 0.18,\n          groupPadding: 0.06,\n          dataLabels: {\n            enabled: true,\n            crop: false,\n            overflow: 'allow',\n            formatter: function () {\n              return Highcharts.numberFormat(this.y, 1) + ' %';\n            },\n            style: { fontSize: '11px', textOutline: 'none' }\n          }\n        }\n      },\n\n      series: [{\n        name: 'Top 3',\n        color: '#6f8f7a',\n        data: seriesData\n      }]\n    });\n  }, 10);\n\n  return html;\n}\n"}},"theme":{"chart":{"backgroundColor":"transparent"},"colors":["#7cb5ec","#434348","#90ed7d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"]},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":["hc_opts.plotOptions.series.point.events.mouseOver","hc_opts.plotOptions.series.point.events.mouseOut","hc_opts.tooltip.formatter"],"jsHooks":[]}</script>
+<div class="highchart html-widget html-fill-item" id="htmlwidget-cb99cb81b11b8a612ff1" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-cb99cb81b11b8a612ff1">{"x":{"hc_opts":{"chart":{"reflow":true,"type":"column"},"title":{"text":"Île-de-France — Part des 15–29 ans (exemple)"},"yAxis":{"title":{"text":"Part des 15–29 ans (%)"},"min":0,"max":30,"labels":{"format":"{value} %"}},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"dataLabels":{"enabled":true,"format":"{point.y:.1f} %"},"point":{"events":{"mouseOver":"\nfunction () {\n  var pts = this.series.points;\n\n  for (var i = 0; i < pts.length; i++) {\n    if (pts[i].__origColor === undefined) {\n      pts[i].__origColor = (pts[i].color || this.series.color);\n    }\n  }\n\n  this.update({ color: '#0b2e59' }, false);\n\n  for (var j = 0; j < pts.length; j++) {\n    if (pts[j] !== this) pts[j].update({ color: pts[j].__origColor }, false);\n  }\n\n  this.series.chart.redraw(false);\n}\n","mouseOut":"\nfunction () {\n  var pts = this.series.points;\n  for (var i = 0; i < pts.length; i++) {\n    if (pts[i].__origColor !== undefined) pts[i].update({ color: pts[i].__origColor }, false);\n  }\n  this.series.chart.redraw(false);\n}\n"}}},"treemap":{"layoutAlgorithm":"squarified"}},"subtitle":{"text":"Survol : mini top 3 communes dans la pop-up"},"xAxis":{"type":"category"},"colors":["#2f7ed8"],"series":[{"name":"Part 15–29 (%)","data":[{"name":"75 – Paris","y":24.3,"id":"75","custom":{"detail":[{"name":"Paris 13e Arrondissement","y":29.4},{"name":"Paris 19e Arrondissement","y":28.8},{"name":"Paris 20e Arrondissement","y":28.1}]}},{"name":"77 – Seine-et-Marne","y":18.6,"id":"77","custom":{"detail":[{"name":"Serris","y":25.7},{"name":"Bussy-Saint-Georges","y":24.9},{"name":"Chessy","y":24.3}]}},{"name":"78 – Yvelines","y":17.8,"id":"78","custom":{"detail":[{"name":"Guyancourt","y":22.4},{"name":"Voisins-le-Bretonneux","y":21.8},{"name":"Montigny-le-Bretonneux","y":21.5}]}},{"name":"91 – Essonne","y":19.2,"id":"91","custom":{"detail":[{"name":"Palaiseau","y":22.1},{"name":"Orsay","y":21.7},{"name":"Gif-sur-Yvette","y":21.3}]}},{"name":"92 – Hauts-de-Seine","y":19.7,"id":"92","custom":{"detail":[{"name":"Nanterre","y":21.6},{"name":"Gennevilliers","y":21.1},{"name":"Colombes","y":20.7}]}},{"name":"93 – Seine-Saint-Denis","y":20.4,"id":"93","custom":{"detail":[{"name":"Saint-Denis","y":24.8},{"name":"Aubervilliers","y":24.2},{"name":"La Courneuve","y":23.9}]}},{"name":"94 – Val-de-Marne","y":20.3,"id":"94","custom":{"detail":[{"name":"Créteil","y":22.2},{"name":"Ivry-sur-Seine","y":21.9},{"name":"Vitry-sur-Seine","y":21.6}]}},{"name":"95 – Val-d'Oise","y":19.2,"id":"95","custom":{"detail":[{"name":"Cergy","y":23.1},{"name":"Sarcelles","y":22.6},{"name":"Garges-lès-Gonesse","y":22.1}]}}]}],"tooltip":{"useHTML":true,"outside":false,"borderWidth":0,"shadow":true,"padding":12,"formatter":"\nfunction () {\n  var p = this.point;\n  var chart = this.series.chart;\n\n  // Largeur dispo (mobile-friendly)\n  var vw = (Highcharts.win && Highcharts.win.innerWidth) ? Highcharts.win.innerWidth : 360;\n  var cw = chart && chart.chartWidth ? chart.chartWidth : vw;\n\n  // Tooltip width : on garde une marge, et on plafonne pour éviter un énorme tooltip sur desktop\n  var w = Math.min(560, Math.floor(Math.min(vw, cw) * 0.95));\n  // Hauteur du mini-chart : plus petite sur mobile\n  var isMobile = vw < 520;\n  var h = isMobile ? 150 : 180;\n\n  var divId = 'mini_bar_' + p.series.index + '_' + p.index;\n\n  var html =\n    '<div style=\"width:' + w + 'px; max-width:95vw\">' +\n      '<div style=\"margin-bottom:8px\">' +\n        '<div style=\"font-weight:600;font-size:13px\">' + (p.name || p.id) + '<\/div>' +\n        '<div style=\"opacity:.85\">Part 15–29 (département) : <b>' +\n          Highcharts.numberFormat(p.y, 1) + ' %<\/b><\/div>' +\n        '<div style=\"opacity:.75\">Top 3 communes<\/div>' +\n      '<\/div>' +\n      '<div id=\"' + divId + '\" style=\"width:' + w + 'px; height:' + h + 'px\"><\/div>' +\n    '<\/div>';\n\n  // Détruire l'ancien mini-chart\n  if (chart.__mini && chart.__mini.destroy) {\n    chart.__mini.destroy();\n    chart.__mini = null;\n  }\n\n  setTimeout(function () {\n    var container = document.getElementById(divId);\n    if (!container) return;\n\n    var d = (p.custom && p.custom.detail) ? p.custom.detail : [];\n    if (!d || d.length === 0) {\n      container.innerHTML = '<div style=\"opacity:.7\">(pas de détail)<\/div>';\n      return;\n    }\n\n    var cats = d.map(function (o) { return o.name; });\n    var vals = d.map(function (o) { return o.y; });\n\n    // Marges plus compactes sur mobile\n    var maxLen = 0;\n    for (var i = 0; i < cats.length; i++) maxLen = Math.max(maxLen, (cats[i] || '').length);\n\n    // marge gauche dynamique mais bornée (sinon ça explose)\n    var leftMargin = Math.min(isMobile ? 160 : 260, Math.max(isMobile ? 110 : 150, 6.5 * maxLen));\n    // marge droite pour que les % respirent\n    var rightMargin = isMobile ? 40 : 55;\n\n    var seriesData = vals.map(function (v) {\n      var inside = v >= 6;\n      return {\n        y: v,\n        dataLabels: {\n          inside: inside,\n          align: 'right',\n          x: inside ? -6 : 6\n        }\n      };\n    });\n\n    chart.__mini = Highcharts.chart(divId, {\n      chart: {\n        type: 'bar',\n        backgroundColor: 'transparent',\n        margin: [5, rightMargin, 20, leftMargin],\n        spacing: [0, 0, 0, 0],\n        animation: false,\n        reflow: true\n      },\n      title: { text: null },\n      credits: { enabled: false },\n      exporting: { enabled: false },\n      legend: { enabled: false },\n      tooltip: { enabled: false },\n\n      xAxis: {\n        categories: cats,\n        lineWidth: 0,\n        tickLength: 0,\n        labels: {\n          style: { fontSize: isMobile ? '10px' : '11px' },\n          formatter: function () {\n            var s = this.value || '';\n            var max = isMobile ? 28 : 42; // coupe plus agressive sur mobile\n            return s.length > max ? (s.substring(0, max - 1) + '…') : s;\n          }\n        }\n      },\n\n      yAxis: {\n        min: 0,\n        max: 30,\n        gridLineWidth: 0,\n        title: { text: null },\n        labels: { enabled: false },\n        lineWidth: 0,\n        tickLength: 0\n      },\n\n      plotOptions: {\n        series: {\n          animation: false,\n          borderWidth: 0,\n          pointPadding: 0.18,\n          groupPadding: 0.06,\n          dataLabels: {\n            enabled: true,\n            crop: false,\n            overflow: 'allow',\n            formatter: function () {\n              return Highcharts.numberFormat(this.y, 1) + ' %';\n            },\n            style: { fontSize: isMobile ? '10px' : '11px', textOutline: 'none' }\n          }\n        }\n      },\n\n      series: [{\n        name: 'Top 3',\n        color: '#6f8f7a',\n        data: seriesData\n      }]\n    });\n  }, 10);\n\n  return html;\n}\n","constrain":true}},"theme":{"chart":{"backgroundColor":"transparent"},"colors":["#7cb5ec","#434348","#90ed7d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"]},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":["hc_opts.plotOptions.series.point.events.mouseOver","hc_opts.plotOptions.series.point.events.mouseOut","hc_opts.tooltip.formatter"],"jsHooks":[]}</script>
 </div>
 </div>
 <hr>
@@ -1713,182 +1744,214 @@ Astuce
 <span id="cb10-286"><a href="#cb10-286" aria-hidden="true" tabindex="-1"></a><span class="st">function () {</span></span>
 <span id="cb10-287"><a href="#cb10-287" aria-hidden="true" tabindex="-1"></a><span class="st">  var p = this.point;</span></span>
 <span id="cb10-288"><a href="#cb10-288" aria-hidden="true" tabindex="-1"></a><span class="st">  var chart = this.series.chart;</span></span>
-<span id="cb10-289"><a href="#cb10-289" aria-hidden="true" tabindex="-1"></a><span class="st">  var divId = 'mini_bar_' + p.series.index + '_' + p.index;</span></span>
-<span id="cb10-290"><a href="#cb10-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-291"><a href="#cb10-291" aria-hidden="true" tabindex="-1"></a><span class="st">  var html =</span></span>
-<span id="cb10-292"><a href="#cb10-292" aria-hidden="true" tabindex="-1"></a><span class="st">    '&lt;div style=</span><span class="sc">\"</span><span class="st">width:560px</span><span class="sc">\"</span><span class="st">&gt;' +</span></span>
-<span id="cb10-293"><a href="#cb10-293" aria-hidden="true" tabindex="-1"></a><span class="st">      '&lt;div style=</span><span class="sc">\"</span><span class="st">margin-bottom:8px</span><span class="sc">\"</span><span class="st">&gt;' +</span></span>
-<span id="cb10-294"><a href="#cb10-294" aria-hidden="true" tabindex="-1"></a><span class="st">        '&lt;div style=</span><span class="sc">\"</span><span class="st">font-weight:600;font-size:13px</span><span class="sc">\"</span><span class="st">&gt;' + (p.name || p.id) + '&lt;/div&gt;' +</span></span>
-<span id="cb10-295"><a href="#cb10-295" aria-hidden="true" tabindex="-1"></a><span class="st">        '&lt;div style=</span><span class="sc">\"</span><span class="st">opacity:.85</span><span class="sc">\"</span><span class="st">&gt;Part 15–29 (département) : &lt;b&gt;' +</span></span>
-<span id="cb10-296"><a href="#cb10-296" aria-hidden="true" tabindex="-1"></a><span class="st">          Highcharts.numberFormat(p.y, 1) + ' %&lt;/b&gt;&lt;/div&gt;' +</span></span>
-<span id="cb10-297"><a href="#cb10-297" aria-hidden="true" tabindex="-1"></a><span class="st">        '&lt;div style=</span><span class="sc">\"</span><span class="st">opacity:.75</span><span class="sc">\"</span><span class="st">&gt;Top 3 communes&lt;/div&gt;' +</span></span>
-<span id="cb10-298"><a href="#cb10-298" aria-hidden="true" tabindex="-1"></a><span class="st">      '&lt;/div&gt;' +</span></span>
-<span id="cb10-299"><a href="#cb10-299" aria-hidden="true" tabindex="-1"></a><span class="st">      '&lt;div id=</span><span class="sc">\"</span><span class="st">' + divId + '</span><span class="sc">\"</span><span class="st"> style=</span><span class="sc">\"</span><span class="st">width:560px;height:180px</span><span class="sc">\"</span><span class="st">&gt;&lt;/div&gt;' +</span></span>
-<span id="cb10-300"><a href="#cb10-300" aria-hidden="true" tabindex="-1"></a><span class="st">    '&lt;/div&gt;';</span></span>
+<span id="cb10-289"><a href="#cb10-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-290"><a href="#cb10-290" aria-hidden="true" tabindex="-1"></a><span class="st">  // Largeur dispo (mobile-friendly)</span></span>
+<span id="cb10-291"><a href="#cb10-291" aria-hidden="true" tabindex="-1"></a><span class="st">  var vw = (Highcharts.win &amp;&amp; Highcharts.win.innerWidth) ? Highcharts.win.innerWidth : 360;</span></span>
+<span id="cb10-292"><a href="#cb10-292" aria-hidden="true" tabindex="-1"></a><span class="st">  var cw = chart &amp;&amp; chart.chartWidth ? chart.chartWidth : vw;</span></span>
+<span id="cb10-293"><a href="#cb10-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-294"><a href="#cb10-294" aria-hidden="true" tabindex="-1"></a><span class="st">  // Tooltip width : on garde une marge, et on plafonne pour éviter un énorme tooltip sur desktop</span></span>
+<span id="cb10-295"><a href="#cb10-295" aria-hidden="true" tabindex="-1"></a><span class="st">  var w = Math.min(560, Math.floor(Math.min(vw, cw) * 0.95));</span></span>
+<span id="cb10-296"><a href="#cb10-296" aria-hidden="true" tabindex="-1"></a><span class="st">  // Hauteur du mini-chart : plus petite sur mobile</span></span>
+<span id="cb10-297"><a href="#cb10-297" aria-hidden="true" tabindex="-1"></a><span class="st">  var isMobile = vw &lt; 520;</span></span>
+<span id="cb10-298"><a href="#cb10-298" aria-hidden="true" tabindex="-1"></a><span class="st">  var h = isMobile ? 150 : 180;</span></span>
+<span id="cb10-299"><a href="#cb10-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-300"><a href="#cb10-300" aria-hidden="true" tabindex="-1"></a><span class="st">  var divId = 'mini_bar_' + p.series.index + '_' + p.index;</span></span>
 <span id="cb10-301"><a href="#cb10-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-302"><a href="#cb10-302" aria-hidden="true" tabindex="-1"></a><span class="st">  if (chart.__mini &amp;&amp; chart.__mini.destroy) {</span></span>
-<span id="cb10-303"><a href="#cb10-303" aria-hidden="true" tabindex="-1"></a><span class="st">    chart.__mini.destroy();</span></span>
-<span id="cb10-304"><a href="#cb10-304" aria-hidden="true" tabindex="-1"></a><span class="st">    chart.__mini = null;</span></span>
-<span id="cb10-305"><a href="#cb10-305" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb10-306"><a href="#cb10-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-307"><a href="#cb10-307" aria-hidden="true" tabindex="-1"></a><span class="st">  setTimeout(function () {</span></span>
-<span id="cb10-308"><a href="#cb10-308" aria-hidden="true" tabindex="-1"></a><span class="st">    var container = document.getElementById(divId);</span></span>
-<span id="cb10-309"><a href="#cb10-309" aria-hidden="true" tabindex="-1"></a><span class="st">    if (!container) return;</span></span>
-<span id="cb10-310"><a href="#cb10-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-311"><a href="#cb10-311" aria-hidden="true" tabindex="-1"></a><span class="st">    var d = (p.custom &amp;&amp; p.custom.detail) ? p.custom.detail : [];</span></span>
-<span id="cb10-312"><a href="#cb10-312" aria-hidden="true" tabindex="-1"></a><span class="st">    if (!d || d.length === 0) {</span></span>
-<span id="cb10-313"><a href="#cb10-313" aria-hidden="true" tabindex="-1"></a><span class="st">      container.innerHTML = '&lt;div style=</span><span class="sc">\"</span><span class="st">opacity:.7</span><span class="sc">\"</span><span class="st">&gt;(pas de détail)&lt;/div&gt;';</span></span>
-<span id="cb10-314"><a href="#cb10-314" aria-hidden="true" tabindex="-1"></a><span class="st">      return;</span></span>
-<span id="cb10-315"><a href="#cb10-315" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb10-316"><a href="#cb10-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-317"><a href="#cb10-317" aria-hidden="true" tabindex="-1"></a><span class="st">    var cats = d.map(function (o) { return o.name; });</span></span>
-<span id="cb10-318"><a href="#cb10-318" aria-hidden="true" tabindex="-1"></a><span class="st">    var vals = d.map(function (o) { return o.y; });</span></span>
-<span id="cb10-319"><a href="#cb10-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-320"><a href="#cb10-320" aria-hidden="true" tabindex="-1"></a><span class="st">    var maxLen = 0;</span></span>
-<span id="cb10-321"><a href="#cb10-321" aria-hidden="true" tabindex="-1"></a><span class="st">    for (var i = 0; i &lt; cats.length; i++) maxLen = Math.max(maxLen, (cats[i] || '').length);</span></span>
-<span id="cb10-322"><a href="#cb10-322" aria-hidden="true" tabindex="-1"></a><span class="st">    var leftMargin = Math.min(340, Math.max(170, 7.5 * maxLen));</span></span>
-<span id="cb10-323"><a href="#cb10-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-324"><a href="#cb10-324" aria-hidden="true" tabindex="-1"></a><span class="st">    var seriesData = vals.map(function (v) {</span></span>
-<span id="cb10-325"><a href="#cb10-325" aria-hidden="true" tabindex="-1"></a><span class="st">      var inside = v &gt;= 6;</span></span>
-<span id="cb10-326"><a href="#cb10-326" aria-hidden="true" tabindex="-1"></a><span class="st">      return {</span></span>
-<span id="cb10-327"><a href="#cb10-327" aria-hidden="true" tabindex="-1"></a><span class="st">        y: v,</span></span>
-<span id="cb10-328"><a href="#cb10-328" aria-hidden="true" tabindex="-1"></a><span class="st">        dataLabels: {</span></span>
-<span id="cb10-329"><a href="#cb10-329" aria-hidden="true" tabindex="-1"></a><span class="st">          inside: inside,</span></span>
-<span id="cb10-330"><a href="#cb10-330" aria-hidden="true" tabindex="-1"></a><span class="st">          align: 'right',</span></span>
-<span id="cb10-331"><a href="#cb10-331" aria-hidden="true" tabindex="-1"></a><span class="st">          x: inside ? -6 : 6</span></span>
-<span id="cb10-332"><a href="#cb10-332" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
-<span id="cb10-333"><a href="#cb10-333" aria-hidden="true" tabindex="-1"></a><span class="st">      };</span></span>
-<span id="cb10-334"><a href="#cb10-334" aria-hidden="true" tabindex="-1"></a><span class="st">    });</span></span>
+<span id="cb10-302"><a href="#cb10-302" aria-hidden="true" tabindex="-1"></a><span class="st">  var html =</span></span>
+<span id="cb10-303"><a href="#cb10-303" aria-hidden="true" tabindex="-1"></a><span class="st">    '&lt;div style=</span><span class="sc">\"</span><span class="st">width:' + w + 'px; max-width:95vw</span><span class="sc">\"</span><span class="st">&gt;' +</span></span>
+<span id="cb10-304"><a href="#cb10-304" aria-hidden="true" tabindex="-1"></a><span class="st">      '&lt;div style=</span><span class="sc">\"</span><span class="st">margin-bottom:8px</span><span class="sc">\"</span><span class="st">&gt;' +</span></span>
+<span id="cb10-305"><a href="#cb10-305" aria-hidden="true" tabindex="-1"></a><span class="st">        '&lt;div style=</span><span class="sc">\"</span><span class="st">font-weight:600;font-size:13px</span><span class="sc">\"</span><span class="st">&gt;' + (p.name || p.id) + '&lt;/div&gt;' +</span></span>
+<span id="cb10-306"><a href="#cb10-306" aria-hidden="true" tabindex="-1"></a><span class="st">        '&lt;div style=</span><span class="sc">\"</span><span class="st">opacity:.85</span><span class="sc">\"</span><span class="st">&gt;Part 15–29 (département) : &lt;b&gt;' +</span></span>
+<span id="cb10-307"><a href="#cb10-307" aria-hidden="true" tabindex="-1"></a><span class="st">          Highcharts.numberFormat(p.y, 1) + ' %&lt;/b&gt;&lt;/div&gt;' +</span></span>
+<span id="cb10-308"><a href="#cb10-308" aria-hidden="true" tabindex="-1"></a><span class="st">        '&lt;div style=</span><span class="sc">\"</span><span class="st">opacity:.75</span><span class="sc">\"</span><span class="st">&gt;Top 3 communes&lt;/div&gt;' +</span></span>
+<span id="cb10-309"><a href="#cb10-309" aria-hidden="true" tabindex="-1"></a><span class="st">      '&lt;/div&gt;' +</span></span>
+<span id="cb10-310"><a href="#cb10-310" aria-hidden="true" tabindex="-1"></a><span class="st">      '&lt;div id=</span><span class="sc">\"</span><span class="st">' + divId + '</span><span class="sc">\"</span><span class="st"> style=</span><span class="sc">\"</span><span class="st">width:' + w + 'px; height:' + h + 'px</span><span class="sc">\"</span><span class="st">&gt;&lt;/div&gt;' +</span></span>
+<span id="cb10-311"><a href="#cb10-311" aria-hidden="true" tabindex="-1"></a><span class="st">    '&lt;/div&gt;';</span></span>
+<span id="cb10-312"><a href="#cb10-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-313"><a href="#cb10-313" aria-hidden="true" tabindex="-1"></a><span class="st">  // Détruire l'ancien mini-chart</span></span>
+<span id="cb10-314"><a href="#cb10-314" aria-hidden="true" tabindex="-1"></a><span class="st">  if (chart.__mini &amp;&amp; chart.__mini.destroy) {</span></span>
+<span id="cb10-315"><a href="#cb10-315" aria-hidden="true" tabindex="-1"></a><span class="st">    chart.__mini.destroy();</span></span>
+<span id="cb10-316"><a href="#cb10-316" aria-hidden="true" tabindex="-1"></a><span class="st">    chart.__mini = null;</span></span>
+<span id="cb10-317"><a href="#cb10-317" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb10-318"><a href="#cb10-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-319"><a href="#cb10-319" aria-hidden="true" tabindex="-1"></a><span class="st">  setTimeout(function () {</span></span>
+<span id="cb10-320"><a href="#cb10-320" aria-hidden="true" tabindex="-1"></a><span class="st">    var container = document.getElementById(divId);</span></span>
+<span id="cb10-321"><a href="#cb10-321" aria-hidden="true" tabindex="-1"></a><span class="st">    if (!container) return;</span></span>
+<span id="cb10-322"><a href="#cb10-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-323"><a href="#cb10-323" aria-hidden="true" tabindex="-1"></a><span class="st">    var d = (p.custom &amp;&amp; p.custom.detail) ? p.custom.detail : [];</span></span>
+<span id="cb10-324"><a href="#cb10-324" aria-hidden="true" tabindex="-1"></a><span class="st">    if (!d || d.length === 0) {</span></span>
+<span id="cb10-325"><a href="#cb10-325" aria-hidden="true" tabindex="-1"></a><span class="st">      container.innerHTML = '&lt;div style=</span><span class="sc">\"</span><span class="st">opacity:.7</span><span class="sc">\"</span><span class="st">&gt;(pas de détail)&lt;/div&gt;';</span></span>
+<span id="cb10-326"><a href="#cb10-326" aria-hidden="true" tabindex="-1"></a><span class="st">      return;</span></span>
+<span id="cb10-327"><a href="#cb10-327" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
+<span id="cb10-328"><a href="#cb10-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-329"><a href="#cb10-329" aria-hidden="true" tabindex="-1"></a><span class="st">    var cats = d.map(function (o) { return o.name; });</span></span>
+<span id="cb10-330"><a href="#cb10-330" aria-hidden="true" tabindex="-1"></a><span class="st">    var vals = d.map(function (o) { return o.y; });</span></span>
+<span id="cb10-331"><a href="#cb10-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-332"><a href="#cb10-332" aria-hidden="true" tabindex="-1"></a><span class="st">    // Marges plus compactes sur mobile</span></span>
+<span id="cb10-333"><a href="#cb10-333" aria-hidden="true" tabindex="-1"></a><span class="st">    var maxLen = 0;</span></span>
+<span id="cb10-334"><a href="#cb10-334" aria-hidden="true" tabindex="-1"></a><span class="st">    for (var i = 0; i &lt; cats.length; i++) maxLen = Math.max(maxLen, (cats[i] || '').length);</span></span>
 <span id="cb10-335"><a href="#cb10-335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-336"><a href="#cb10-336" aria-hidden="true" tabindex="-1"></a><span class="st">    chart.__mini = Highcharts.chart(divId, {</span></span>
-<span id="cb10-337"><a href="#cb10-337" aria-hidden="true" tabindex="-1"></a><span class="st">      chart: {</span></span>
-<span id="cb10-338"><a href="#cb10-338" aria-hidden="true" tabindex="-1"></a><span class="st">        type: 'bar',</span></span>
-<span id="cb10-339"><a href="#cb10-339" aria-hidden="true" tabindex="-1"></a><span class="st">        backgroundColor: 'transparent',</span></span>
-<span id="cb10-340"><a href="#cb10-340" aria-hidden="true" tabindex="-1"></a><span class="st">        margin: [5, 55, 20, leftMargin],</span></span>
-<span id="cb10-341"><a href="#cb10-341" aria-hidden="true" tabindex="-1"></a><span class="st">        spacing: [0, 0, 0, 0],</span></span>
-<span id="cb10-342"><a href="#cb10-342" aria-hidden="true" tabindex="-1"></a><span class="st">        animation: false</span></span>
-<span id="cb10-343"><a href="#cb10-343" aria-hidden="true" tabindex="-1"></a><span class="st">      },</span></span>
-<span id="cb10-344"><a href="#cb10-344" aria-hidden="true" tabindex="-1"></a><span class="st">      title: { text: null },</span></span>
-<span id="cb10-345"><a href="#cb10-345" aria-hidden="true" tabindex="-1"></a><span class="st">      credits: { enabled: false },</span></span>
-<span id="cb10-346"><a href="#cb10-346" aria-hidden="true" tabindex="-1"></a><span class="st">      exporting: { enabled: false },</span></span>
-<span id="cb10-347"><a href="#cb10-347" aria-hidden="true" tabindex="-1"></a><span class="st">      legend: { enabled: false },</span></span>
-<span id="cb10-348"><a href="#cb10-348" aria-hidden="true" tabindex="-1"></a><span class="st">      tooltip: { enabled: false },</span></span>
-<span id="cb10-349"><a href="#cb10-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-350"><a href="#cb10-350" aria-hidden="true" tabindex="-1"></a><span class="st">      xAxis: {</span></span>
-<span id="cb10-351"><a href="#cb10-351" aria-hidden="true" tabindex="-1"></a><span class="st">        categories: cats,</span></span>
-<span id="cb10-352"><a href="#cb10-352" aria-hidden="true" tabindex="-1"></a><span class="st">        lineWidth: 0,</span></span>
-<span id="cb10-353"><a href="#cb10-353" aria-hidden="true" tabindex="-1"></a><span class="st">        tickLength: 0,</span></span>
-<span id="cb10-354"><a href="#cb10-354" aria-hidden="true" tabindex="-1"></a><span class="st">        labels: {</span></span>
-<span id="cb10-355"><a href="#cb10-355" aria-hidden="true" tabindex="-1"></a><span class="st">          style: { fontSize: '11px' },</span></span>
-<span id="cb10-356"><a href="#cb10-356" aria-hidden="true" tabindex="-1"></a><span class="st">          formatter: function () {</span></span>
-<span id="cb10-357"><a href="#cb10-357" aria-hidden="true" tabindex="-1"></a><span class="st">            var s = this.value || '';</span></span>
-<span id="cb10-358"><a href="#cb10-358" aria-hidden="true" tabindex="-1"></a><span class="st">            return s.length &gt; 42 ? (s.substring(0, 41) + '…') : s;</span></span>
-<span id="cb10-359"><a href="#cb10-359" aria-hidden="true" tabindex="-1"></a><span class="st">          }</span></span>
-<span id="cb10-360"><a href="#cb10-360" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
+<span id="cb10-336"><a href="#cb10-336" aria-hidden="true" tabindex="-1"></a><span class="st">    // marge gauche dynamique mais bornée (sinon ça explose)</span></span>
+<span id="cb10-337"><a href="#cb10-337" aria-hidden="true" tabindex="-1"></a><span class="st">    var leftMargin = Math.min(isMobile ? 160 : 260, Math.max(isMobile ? 110 : 150, 6.5 * maxLen));</span></span>
+<span id="cb10-338"><a href="#cb10-338" aria-hidden="true" tabindex="-1"></a><span class="st">    // marge droite pour que les % respirent</span></span>
+<span id="cb10-339"><a href="#cb10-339" aria-hidden="true" tabindex="-1"></a><span class="st">    var rightMargin = isMobile ? 40 : 55;</span></span>
+<span id="cb10-340"><a href="#cb10-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-341"><a href="#cb10-341" aria-hidden="true" tabindex="-1"></a><span class="st">    var seriesData = vals.map(function (v) {</span></span>
+<span id="cb10-342"><a href="#cb10-342" aria-hidden="true" tabindex="-1"></a><span class="st">      var inside = v &gt;= 6;</span></span>
+<span id="cb10-343"><a href="#cb10-343" aria-hidden="true" tabindex="-1"></a><span class="st">      return {</span></span>
+<span id="cb10-344"><a href="#cb10-344" aria-hidden="true" tabindex="-1"></a><span class="st">        y: v,</span></span>
+<span id="cb10-345"><a href="#cb10-345" aria-hidden="true" tabindex="-1"></a><span class="st">        dataLabels: {</span></span>
+<span id="cb10-346"><a href="#cb10-346" aria-hidden="true" tabindex="-1"></a><span class="st">          inside: inside,</span></span>
+<span id="cb10-347"><a href="#cb10-347" aria-hidden="true" tabindex="-1"></a><span class="st">          align: 'right',</span></span>
+<span id="cb10-348"><a href="#cb10-348" aria-hidden="true" tabindex="-1"></a><span class="st">          x: inside ? -6 : 6</span></span>
+<span id="cb10-349"><a href="#cb10-349" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
+<span id="cb10-350"><a href="#cb10-350" aria-hidden="true" tabindex="-1"></a><span class="st">      };</span></span>
+<span id="cb10-351"><a href="#cb10-351" aria-hidden="true" tabindex="-1"></a><span class="st">    });</span></span>
+<span id="cb10-352"><a href="#cb10-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-353"><a href="#cb10-353" aria-hidden="true" tabindex="-1"></a><span class="st">    chart.__mini = Highcharts.chart(divId, {</span></span>
+<span id="cb10-354"><a href="#cb10-354" aria-hidden="true" tabindex="-1"></a><span class="st">      chart: {</span></span>
+<span id="cb10-355"><a href="#cb10-355" aria-hidden="true" tabindex="-1"></a><span class="st">        type: 'bar',</span></span>
+<span id="cb10-356"><a href="#cb10-356" aria-hidden="true" tabindex="-1"></a><span class="st">        backgroundColor: 'transparent',</span></span>
+<span id="cb10-357"><a href="#cb10-357" aria-hidden="true" tabindex="-1"></a><span class="st">        margin: [5, rightMargin, 20, leftMargin],</span></span>
+<span id="cb10-358"><a href="#cb10-358" aria-hidden="true" tabindex="-1"></a><span class="st">        spacing: [0, 0, 0, 0],</span></span>
+<span id="cb10-359"><a href="#cb10-359" aria-hidden="true" tabindex="-1"></a><span class="st">        animation: false,</span></span>
+<span id="cb10-360"><a href="#cb10-360" aria-hidden="true" tabindex="-1"></a><span class="st">        reflow: true</span></span>
 <span id="cb10-361"><a href="#cb10-361" aria-hidden="true" tabindex="-1"></a><span class="st">      },</span></span>
-<span id="cb10-362"><a href="#cb10-362" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-363"><a href="#cb10-363" aria-hidden="true" tabindex="-1"></a><span class="st">      yAxis: {</span></span>
-<span id="cb10-364"><a href="#cb10-364" aria-hidden="true" tabindex="-1"></a><span class="st">        min: 0,</span></span>
-<span id="cb10-365"><a href="#cb10-365" aria-hidden="true" tabindex="-1"></a><span class="st">        max: 30,</span></span>
-<span id="cb10-366"><a href="#cb10-366" aria-hidden="true" tabindex="-1"></a><span class="st">        gridLineWidth: 0,</span></span>
-<span id="cb10-367"><a href="#cb10-367" aria-hidden="true" tabindex="-1"></a><span class="st">        title: { text: null },</span></span>
-<span id="cb10-368"><a href="#cb10-368" aria-hidden="true" tabindex="-1"></a><span class="st">        labels: { enabled: false },</span></span>
-<span id="cb10-369"><a href="#cb10-369" aria-hidden="true" tabindex="-1"></a><span class="st">        lineWidth: 0,</span></span>
-<span id="cb10-370"><a href="#cb10-370" aria-hidden="true" tabindex="-1"></a><span class="st">        tickLength: 0</span></span>
-<span id="cb10-371"><a href="#cb10-371" aria-hidden="true" tabindex="-1"></a><span class="st">      },</span></span>
-<span id="cb10-372"><a href="#cb10-372" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-373"><a href="#cb10-373" aria-hidden="true" tabindex="-1"></a><span class="st">      plotOptions: {</span></span>
-<span id="cb10-374"><a href="#cb10-374" aria-hidden="true" tabindex="-1"></a><span class="st">        series: {</span></span>
-<span id="cb10-375"><a href="#cb10-375" aria-hidden="true" tabindex="-1"></a><span class="st">          animation: false,</span></span>
-<span id="cb10-376"><a href="#cb10-376" aria-hidden="true" tabindex="-1"></a><span class="st">          borderWidth: 0,</span></span>
-<span id="cb10-377"><a href="#cb10-377" aria-hidden="true" tabindex="-1"></a><span class="st">          pointPadding: 0.18,</span></span>
-<span id="cb10-378"><a href="#cb10-378" aria-hidden="true" tabindex="-1"></a><span class="st">          groupPadding: 0.06,</span></span>
-<span id="cb10-379"><a href="#cb10-379" aria-hidden="true" tabindex="-1"></a><span class="st">          dataLabels: {</span></span>
-<span id="cb10-380"><a href="#cb10-380" aria-hidden="true" tabindex="-1"></a><span class="st">            enabled: true,</span></span>
-<span id="cb10-381"><a href="#cb10-381" aria-hidden="true" tabindex="-1"></a><span class="st">            crop: false,</span></span>
-<span id="cb10-382"><a href="#cb10-382" aria-hidden="true" tabindex="-1"></a><span class="st">            overflow: 'allow',</span></span>
-<span id="cb10-383"><a href="#cb10-383" aria-hidden="true" tabindex="-1"></a><span class="st">            formatter: function () {</span></span>
-<span id="cb10-384"><a href="#cb10-384" aria-hidden="true" tabindex="-1"></a><span class="st">              return Highcharts.numberFormat(this.y, 1) + ' %';</span></span>
-<span id="cb10-385"><a href="#cb10-385" aria-hidden="true" tabindex="-1"></a><span class="st">            },</span></span>
-<span id="cb10-386"><a href="#cb10-386" aria-hidden="true" tabindex="-1"></a><span class="st">            style: { fontSize: '11px', textOutline: 'none' }</span></span>
-<span id="cb10-387"><a href="#cb10-387" aria-hidden="true" tabindex="-1"></a><span class="st">          }</span></span>
-<span id="cb10-388"><a href="#cb10-388" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
-<span id="cb10-389"><a href="#cb10-389" aria-hidden="true" tabindex="-1"></a><span class="st">      },</span></span>
-<span id="cb10-390"><a href="#cb10-390" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-391"><a href="#cb10-391" aria-hidden="true" tabindex="-1"></a><span class="st">      series: [{</span></span>
-<span id="cb10-392"><a href="#cb10-392" aria-hidden="true" tabindex="-1"></a><span class="st">        name: 'Top 3',</span></span>
-<span id="cb10-393"><a href="#cb10-393" aria-hidden="true" tabindex="-1"></a><span class="st">        color: '#6f8f7a',</span></span>
-<span id="cb10-394"><a href="#cb10-394" aria-hidden="true" tabindex="-1"></a><span class="st">        data: seriesData</span></span>
-<span id="cb10-395"><a href="#cb10-395" aria-hidden="true" tabindex="-1"></a><span class="st">      }]</span></span>
-<span id="cb10-396"><a href="#cb10-396" aria-hidden="true" tabindex="-1"></a><span class="st">    });</span></span>
-<span id="cb10-397"><a href="#cb10-397" aria-hidden="true" tabindex="-1"></a><span class="st">  }, 10);</span></span>
-<span id="cb10-398"><a href="#cb10-398" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-399"><a href="#cb10-399" aria-hidden="true" tabindex="-1"></a><span class="st">  return html;</span></span>
-<span id="cb10-400"><a href="#cb10-400" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb10-401"><a href="#cb10-401" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
-<span id="cb10-402"><a href="#cb10-402" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-403"><a href="#cb10-403" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-404"><a href="#cb10-404" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb10-405"><a href="#cb10-405" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-406"><a href="#cb10-406" aria-hidden="true" tabindex="-1"></a><span class="fu">## Construire le graphique</span></span>
-<span id="cb10-407"><a href="#cb10-407" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-410"><a href="#cb10-410" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-411"><a href="#cb10-411" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">highchart</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb10-412"><a href="#cb10-412" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_chart</span>(<span class="at">type =</span> <span class="st">"column"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-413"><a href="#cb10-413" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_title</span>(<span class="at">text =</span> <span class="st">"Île-de-France — Part des 15–29 ans (exemple)"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-414"><a href="#cb10-414" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_subtitle</span>(<span class="at">text =</span> <span class="st">"Survol : mini top 3 communes dans la pop-up"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-415"><a href="#cb10-415" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_xAxis</span>(<span class="at">type =</span> <span class="st">"category"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-416"><a href="#cb10-416" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_yAxis</span>(</span>
-<span id="cb10-417"><a href="#cb10-417" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">list</span>(<span class="at">text =</span> <span class="st">"Part des 15–29 ans (%)"</span>),</span>
-<span id="cb10-418"><a href="#cb10-418" aria-hidden="true" tabindex="-1"></a>    <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">30</span>,</span>
-<span id="cb10-419"><a href="#cb10-419" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">list</span>(<span class="at">format =</span> <span class="st">"{value} %"</span>)</span>
-<span id="cb10-420"><a href="#cb10-420" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb10-421"><a href="#cb10-421" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_colors</span>(<span class="fu">c</span>(<span class="st">"#2f7ed8"</span>)) <span class="sc">%&gt;%</span>  <span class="co"># bleu “base”</span></span>
-<span id="cb10-422"><a href="#cb10-422" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_plotOptions</span>(</span>
-<span id="cb10-423"><a href="#cb10-423" aria-hidden="true" tabindex="-1"></a>    <span class="at">series =</span> <span class="fu">list</span>(</span>
-<span id="cb10-424"><a href="#cb10-424" aria-hidden="true" tabindex="-1"></a>      <span class="at">dataLabels =</span> <span class="fu">list</span>(<span class="at">enabled =</span> <span class="cn">TRUE</span>, <span class="at">format =</span> <span class="st">"{point.y:.1f} %"</span>),</span>
-<span id="cb10-425"><a href="#cb10-425" aria-hidden="true" tabindex="-1"></a>      <span class="at">point =</span> <span class="fu">list</span>(</span>
-<span id="cb10-426"><a href="#cb10-426" aria-hidden="true" tabindex="-1"></a>        <span class="at">events =</span> <span class="fu">list</span>(</span>
-<span id="cb10-427"><a href="#cb10-427" aria-hidden="true" tabindex="-1"></a>          <span class="at">mouseOver =</span> js_highlight_selected,</span>
-<span id="cb10-428"><a href="#cb10-428" aria-hidden="true" tabindex="-1"></a>          <span class="at">mouseOut  =</span> js_highlight_reset</span>
-<span id="cb10-429"><a href="#cb10-429" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb10-430"><a href="#cb10-430" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb10-431"><a href="#cb10-431" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb10-432"><a href="#cb10-432" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb10-433"><a href="#cb10-433" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_add_series</span>(<span class="at">name =</span> <span class="st">"Part 15–29 (%)"</span>, <span class="at">data =</span> main_points) <span class="sc">%&gt;%</span></span>
-<span id="cb10-434"><a href="#cb10-434" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_tooltip</span>(</span>
-<span id="cb10-435"><a href="#cb10-435" aria-hidden="true" tabindex="-1"></a>    <span class="at">useHTML =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-436"><a href="#cb10-436" aria-hidden="true" tabindex="-1"></a>    <span class="at">outside =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-437"><a href="#cb10-437" aria-hidden="true" tabindex="-1"></a>    <span class="at">borderWidth =</span> <span class="dv">0</span>,</span>
-<span id="cb10-438"><a href="#cb10-438" aria-hidden="true" tabindex="-1"></a>    <span class="at">shadow =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-439"><a href="#cb10-439" aria-hidden="true" tabindex="-1"></a>    <span class="at">padding =</span> <span class="dv">12</span>,</span>
-<span id="cb10-440"><a href="#cb10-440" aria-hidden="true" tabindex="-1"></a>    <span class="at">formatter =</span> js_mini_tooltip_formatter</span>
-<span id="cb10-441"><a href="#cb10-441" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb10-442"><a href="#cb10-442" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-443"><a href="#cb10-443" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(hc)</span>
-<span id="cb10-444"><a href="#cb10-444" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-445"><a href="#cb10-445" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-446"><a href="#cb10-446" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb10-447"><a href="#cb10-447" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-448"><a href="#cb10-448" aria-hidden="true" tabindex="-1"></a><span class="fu">## Afficher le graphique</span></span>
-<span id="cb10-449"><a href="#cb10-449" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-452"><a href="#cb10-452" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-453"><a href="#cb10-453" aria-hidden="true" tabindex="-1"></a>hc</span>
-<span id="cb10-454"><a href="#cb10-454" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-455"><a href="#cb10-455" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-456"><a href="#cb10-456" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb10-457"><a href="#cb10-457" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-458"><a href="#cb10-458" aria-hidden="true" tabindex="-1"></a><span class="fu">## Remarques finales</span></span>
-<span id="cb10-459"><a href="#cb10-459" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-460"><a href="#cb10-460" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb10-461"><a href="#cb10-461" aria-hidden="true" tabindex="-1"></a>Ce pattern se généralise facilement, dès que l'on veut étudier un phénomène sur un secteur (et un sous-secteur) :     </span>
+<span id="cb10-362"><a href="#cb10-362" aria-hidden="true" tabindex="-1"></a><span class="st">      title: { text: null },</span></span>
+<span id="cb10-363"><a href="#cb10-363" aria-hidden="true" tabindex="-1"></a><span class="st">      credits: { enabled: false },</span></span>
+<span id="cb10-364"><a href="#cb10-364" aria-hidden="true" tabindex="-1"></a><span class="st">      exporting: { enabled: false },</span></span>
+<span id="cb10-365"><a href="#cb10-365" aria-hidden="true" tabindex="-1"></a><span class="st">      legend: { enabled: false },</span></span>
+<span id="cb10-366"><a href="#cb10-366" aria-hidden="true" tabindex="-1"></a><span class="st">      tooltip: { enabled: false },</span></span>
+<span id="cb10-367"><a href="#cb10-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-368"><a href="#cb10-368" aria-hidden="true" tabindex="-1"></a><span class="st">      xAxis: {</span></span>
+<span id="cb10-369"><a href="#cb10-369" aria-hidden="true" tabindex="-1"></a><span class="st">        categories: cats,</span></span>
+<span id="cb10-370"><a href="#cb10-370" aria-hidden="true" tabindex="-1"></a><span class="st">        lineWidth: 0,</span></span>
+<span id="cb10-371"><a href="#cb10-371" aria-hidden="true" tabindex="-1"></a><span class="st">        tickLength: 0,</span></span>
+<span id="cb10-372"><a href="#cb10-372" aria-hidden="true" tabindex="-1"></a><span class="st">        labels: {</span></span>
+<span id="cb10-373"><a href="#cb10-373" aria-hidden="true" tabindex="-1"></a><span class="st">          style: { fontSize: isMobile ? '10px' : '11px' },</span></span>
+<span id="cb10-374"><a href="#cb10-374" aria-hidden="true" tabindex="-1"></a><span class="st">          formatter: function () {</span></span>
+<span id="cb10-375"><a href="#cb10-375" aria-hidden="true" tabindex="-1"></a><span class="st">            var s = this.value || '';</span></span>
+<span id="cb10-376"><a href="#cb10-376" aria-hidden="true" tabindex="-1"></a><span class="st">            var max = isMobile ? 28 : 42; // coupe plus agressive sur mobile</span></span>
+<span id="cb10-377"><a href="#cb10-377" aria-hidden="true" tabindex="-1"></a><span class="st">            return s.length &gt; max ? (s.substring(0, max - 1) + '…') : s;</span></span>
+<span id="cb10-378"><a href="#cb10-378" aria-hidden="true" tabindex="-1"></a><span class="st">          }</span></span>
+<span id="cb10-379"><a href="#cb10-379" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
+<span id="cb10-380"><a href="#cb10-380" aria-hidden="true" tabindex="-1"></a><span class="st">      },</span></span>
+<span id="cb10-381"><a href="#cb10-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-382"><a href="#cb10-382" aria-hidden="true" tabindex="-1"></a><span class="st">      yAxis: {</span></span>
+<span id="cb10-383"><a href="#cb10-383" aria-hidden="true" tabindex="-1"></a><span class="st">        min: 0,</span></span>
+<span id="cb10-384"><a href="#cb10-384" aria-hidden="true" tabindex="-1"></a><span class="st">        max: 30,</span></span>
+<span id="cb10-385"><a href="#cb10-385" aria-hidden="true" tabindex="-1"></a><span class="st">        gridLineWidth: 0,</span></span>
+<span id="cb10-386"><a href="#cb10-386" aria-hidden="true" tabindex="-1"></a><span class="st">        title: { text: null },</span></span>
+<span id="cb10-387"><a href="#cb10-387" aria-hidden="true" tabindex="-1"></a><span class="st">        labels: { enabled: false },</span></span>
+<span id="cb10-388"><a href="#cb10-388" aria-hidden="true" tabindex="-1"></a><span class="st">        lineWidth: 0,</span></span>
+<span id="cb10-389"><a href="#cb10-389" aria-hidden="true" tabindex="-1"></a><span class="st">        tickLength: 0</span></span>
+<span id="cb10-390"><a href="#cb10-390" aria-hidden="true" tabindex="-1"></a><span class="st">      },</span></span>
+<span id="cb10-391"><a href="#cb10-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-392"><a href="#cb10-392" aria-hidden="true" tabindex="-1"></a><span class="st">      plotOptions: {</span></span>
+<span id="cb10-393"><a href="#cb10-393" aria-hidden="true" tabindex="-1"></a><span class="st">        series: {</span></span>
+<span id="cb10-394"><a href="#cb10-394" aria-hidden="true" tabindex="-1"></a><span class="st">          animation: false,</span></span>
+<span id="cb10-395"><a href="#cb10-395" aria-hidden="true" tabindex="-1"></a><span class="st">          borderWidth: 0,</span></span>
+<span id="cb10-396"><a href="#cb10-396" aria-hidden="true" tabindex="-1"></a><span class="st">          pointPadding: 0.18,</span></span>
+<span id="cb10-397"><a href="#cb10-397" aria-hidden="true" tabindex="-1"></a><span class="st">          groupPadding: 0.06,</span></span>
+<span id="cb10-398"><a href="#cb10-398" aria-hidden="true" tabindex="-1"></a><span class="st">          dataLabels: {</span></span>
+<span id="cb10-399"><a href="#cb10-399" aria-hidden="true" tabindex="-1"></a><span class="st">            enabled: true,</span></span>
+<span id="cb10-400"><a href="#cb10-400" aria-hidden="true" tabindex="-1"></a><span class="st">            crop: false,</span></span>
+<span id="cb10-401"><a href="#cb10-401" aria-hidden="true" tabindex="-1"></a><span class="st">            overflow: 'allow',</span></span>
+<span id="cb10-402"><a href="#cb10-402" aria-hidden="true" tabindex="-1"></a><span class="st">            formatter: function () {</span></span>
+<span id="cb10-403"><a href="#cb10-403" aria-hidden="true" tabindex="-1"></a><span class="st">              return Highcharts.numberFormat(this.y, 1) + ' %';</span></span>
+<span id="cb10-404"><a href="#cb10-404" aria-hidden="true" tabindex="-1"></a><span class="st">            },</span></span>
+<span id="cb10-405"><a href="#cb10-405" aria-hidden="true" tabindex="-1"></a><span class="st">            style: { fontSize: isMobile ? '10px' : '11px', textOutline: 'none' }</span></span>
+<span id="cb10-406"><a href="#cb10-406" aria-hidden="true" tabindex="-1"></a><span class="st">          }</span></span>
+<span id="cb10-407"><a href="#cb10-407" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
+<span id="cb10-408"><a href="#cb10-408" aria-hidden="true" tabindex="-1"></a><span class="st">      },</span></span>
+<span id="cb10-409"><a href="#cb10-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-410"><a href="#cb10-410" aria-hidden="true" tabindex="-1"></a><span class="st">      series: [{</span></span>
+<span id="cb10-411"><a href="#cb10-411" aria-hidden="true" tabindex="-1"></a><span class="st">        name: 'Top 3',</span></span>
+<span id="cb10-412"><a href="#cb10-412" aria-hidden="true" tabindex="-1"></a><span class="st">        color: '#6f8f7a',</span></span>
+<span id="cb10-413"><a href="#cb10-413" aria-hidden="true" tabindex="-1"></a><span class="st">        data: seriesData</span></span>
+<span id="cb10-414"><a href="#cb10-414" aria-hidden="true" tabindex="-1"></a><span class="st">      }]</span></span>
+<span id="cb10-415"><a href="#cb10-415" aria-hidden="true" tabindex="-1"></a><span class="st">    });</span></span>
+<span id="cb10-416"><a href="#cb10-416" aria-hidden="true" tabindex="-1"></a><span class="st">  }, 10);</span></span>
+<span id="cb10-417"><a href="#cb10-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-418"><a href="#cb10-418" aria-hidden="true" tabindex="-1"></a><span class="st">  return html;</span></span>
+<span id="cb10-419"><a href="#cb10-419" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb10-420"><a href="#cb10-420" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
+<span id="cb10-421"><a href="#cb10-421" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-422"><a href="#cb10-422" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-423"><a href="#cb10-423" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-424"><a href="#cb10-424" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb10-425"><a href="#cb10-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-426"><a href="#cb10-426" aria-hidden="true" tabindex="-1"></a><span class="fu">## Construire le graphique</span></span>
+<span id="cb10-427"><a href="#cb10-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-430"><a href="#cb10-430" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-431"><a href="#cb10-431" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">highchart</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb10-432"><a href="#cb10-432" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_chart</span>(<span class="at">type =</span> <span class="st">"column"</span>, <span class="at">reflow =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span>   <span class="co"># &lt;- important</span></span>
+<span id="cb10-433"><a href="#cb10-433" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_title</span>(<span class="at">text =</span> <span class="st">"Île-de-France — Part des 15–29 ans (exemple)"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-434"><a href="#cb10-434" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_subtitle</span>(<span class="at">text =</span> <span class="st">"Survol : mini top 3 communes dans la pop-up"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-435"><a href="#cb10-435" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_xAxis</span>(<span class="at">type =</span> <span class="st">"category"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-436"><a href="#cb10-436" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_yAxis</span>(</span>
+<span id="cb10-437"><a href="#cb10-437" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">list</span>(<span class="at">text =</span> <span class="st">"Part des 15–29 ans (%)"</span>),</span>
+<span id="cb10-438"><a href="#cb10-438" aria-hidden="true" tabindex="-1"></a>    <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">30</span>,</span>
+<span id="cb10-439"><a href="#cb10-439" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">list</span>(<span class="at">format =</span> <span class="st">"{value} %"</span>)</span>
+<span id="cb10-440"><a href="#cb10-440" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb10-441"><a href="#cb10-441" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_colors</span>(<span class="fu">c</span>(<span class="st">"#2f7ed8"</span>)) <span class="sc">%&gt;%</span>  <span class="co"># bleu “base”</span></span>
+<span id="cb10-442"><a href="#cb10-442" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_plotOptions</span>(</span>
+<span id="cb10-443"><a href="#cb10-443" aria-hidden="true" tabindex="-1"></a>    <span class="at">series =</span> <span class="fu">list</span>(</span>
+<span id="cb10-444"><a href="#cb10-444" aria-hidden="true" tabindex="-1"></a>      <span class="at">dataLabels =</span> <span class="fu">list</span>(<span class="at">enabled =</span> <span class="cn">TRUE</span>, <span class="at">format =</span> <span class="st">"{point.y:.1f} %"</span>),</span>
+<span id="cb10-445"><a href="#cb10-445" aria-hidden="true" tabindex="-1"></a>      <span class="at">point =</span> <span class="fu">list</span>(</span>
+<span id="cb10-446"><a href="#cb10-446" aria-hidden="true" tabindex="-1"></a>        <span class="at">events =</span> <span class="fu">list</span>(</span>
+<span id="cb10-447"><a href="#cb10-447" aria-hidden="true" tabindex="-1"></a>          <span class="at">mouseOver =</span> js_highlight_selected,</span>
+<span id="cb10-448"><a href="#cb10-448" aria-hidden="true" tabindex="-1"></a>          <span class="at">mouseOut  =</span> js_highlight_reset</span>
+<span id="cb10-449"><a href="#cb10-449" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb10-450"><a href="#cb10-450" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb10-451"><a href="#cb10-451" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-452"><a href="#cb10-452" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb10-453"><a href="#cb10-453" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_add_series</span>(<span class="at">name =</span> <span class="st">"Part 15–29 (%)"</span>, <span class="at">data =</span> main_points) <span class="sc">%&gt;%</span></span>
+<span id="cb10-454"><a href="#cb10-454" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_tooltip</span>(</span>
+<span id="cb10-455"><a href="#cb10-455" aria-hidden="true" tabindex="-1"></a>    <span class="at">useHTML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-456"><a href="#cb10-456" aria-hidden="true" tabindex="-1"></a>    <span class="at">outside =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-457"><a href="#cb10-457" aria-hidden="true" tabindex="-1"></a>    <span class="at">borderWidth =</span> <span class="dv">0</span>,</span>
+<span id="cb10-458"><a href="#cb10-458" aria-hidden="true" tabindex="-1"></a>    <span class="at">shadow =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-459"><a href="#cb10-459" aria-hidden="true" tabindex="-1"></a>    <span class="at">padding =</span> <span class="dv">12</span>,</span>
+<span id="cb10-460"><a href="#cb10-460" aria-hidden="true" tabindex="-1"></a>    <span class="at">formatter =</span> js_mini_tooltip_formatter</span>
+<span id="cb10-461"><a href="#cb10-461" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb10-462"><a href="#cb10-462" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-463"><a href="#cb10-463" aria-hidden="true" tabindex="-1"></a><span class="ss">-     </span>“région → départements”,    </span>
-<span id="cb10-464"><a href="#cb10-464" aria-hidden="true" tabindex="-1"></a><span class="ss">-     </span>“secteur → entreprises”,    </span>
-<span id="cb10-465"><a href="#cb10-465" aria-hidden="true" tabindex="-1"></a><span class="ss">-     </span>“catégorie → produits”…      </span>
-<span id="cb10-466"><a href="#cb10-466" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-467"><a href="#cb10-467" aria-hidden="true" tabindex="-1"></a>La structure reste stable : une scène macro lisible + un zoom micro à la demande 📚</span>
-<span id="cb10-468"><a href="#cb10-468" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb10-463"><a href="#cb10-463" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> hc <span class="sc">%&gt;%</span></span>
+<span id="cb10-464"><a href="#cb10-464" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hc_tooltip</span>(</span>
+<span id="cb10-465"><a href="#cb10-465" aria-hidden="true" tabindex="-1"></a>    <span class="at">useHTML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-466"><a href="#cb10-466" aria-hidden="true" tabindex="-1"></a>    <span class="at">outside =</span> <span class="cn">FALSE</span>,     <span class="co"># &lt;- mobile-friendly</span></span>
+<span id="cb10-467"><a href="#cb10-467" aria-hidden="true" tabindex="-1"></a>    <span class="at">constrain =</span> <span class="cn">TRUE</span>,    <span class="co"># &lt;- évite de sortir de l'écran</span></span>
+<span id="cb10-468"><a href="#cb10-468" aria-hidden="true" tabindex="-1"></a>    <span class="at">borderWidth =</span> <span class="dv">0</span>,</span>
+<span id="cb10-469"><a href="#cb10-469" aria-hidden="true" tabindex="-1"></a>    <span class="at">shadow =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-470"><a href="#cb10-470" aria-hidden="true" tabindex="-1"></a>    <span class="at">padding =</span> <span class="dv">12</span>,</span>
+<span id="cb10-471"><a href="#cb10-471" aria-hidden="true" tabindex="-1"></a>    <span class="at">formatter =</span> js_mini_tooltip_formatter</span>
+<span id="cb10-472"><a href="#cb10-472" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-473"><a href="#cb10-473" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-474"><a href="#cb10-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-475"><a href="#cb10-475" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(hc)</span>
+<span id="cb10-476"><a href="#cb10-476" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-477"><a href="#cb10-477" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-478"><a href="#cb10-478" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb10-479"><a href="#cb10-479" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-480"><a href="#cb10-480" aria-hidden="true" tabindex="-1"></a><span class="fu">## Afficher le graphique</span></span>
+<span id="cb10-481"><a href="#cb10-481" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-484"><a href="#cb10-484" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-485"><a href="#cb10-485" aria-hidden="true" tabindex="-1"></a>hc</span>
+<span id="cb10-486"><a href="#cb10-486" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-487"><a href="#cb10-487" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-488"><a href="#cb10-488" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb10-489"><a href="#cb10-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-490"><a href="#cb10-490" aria-hidden="true" tabindex="-1"></a><span class="fu">## Remarques finales</span></span>
+<span id="cb10-491"><a href="#cb10-491" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-492"><a href="#cb10-492" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb10-493"><a href="#cb10-493" aria-hidden="true" tabindex="-1"></a>Ce pattern se généralise facilement, dès que l'on veut étudier un phénomène sur un secteur (et un sous-secteur) :     </span>
+<span id="cb10-494"><a href="#cb10-494" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-495"><a href="#cb10-495" aria-hidden="true" tabindex="-1"></a><span class="ss">-     </span>“région → départements”,    </span>
+<span id="cb10-496"><a href="#cb10-496" aria-hidden="true" tabindex="-1"></a><span class="ss">-     </span>“secteur → entreprises”,    </span>
+<span id="cb10-497"><a href="#cb10-497" aria-hidden="true" tabindex="-1"></a><span class="ss">-     </span>“catégorie → produits”…      </span>
+<span id="cb10-498"><a href="#cb10-498" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-499"><a href="#cb10-499" aria-hidden="true" tabindex="-1"></a>La structure reste stable : une scène macro lisible + un zoom micro à la demande 📚</span>
+<span id="cb10-500"><a href="#cb10-500" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
