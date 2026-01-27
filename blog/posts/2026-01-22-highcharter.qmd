@@ -278,19 +278,31 @@ js_mini_tooltip_formatter <- JS("
 function () {
   var p = this.point;
   var chart = this.series.chart;
+
+  // Largeur dispo (mobile-friendly)
+  var vw = (Highcharts.win && Highcharts.win.innerWidth) ? Highcharts.win.innerWidth : 360;
+  var cw = chart && chart.chartWidth ? chart.chartWidth : vw;
+
+  // Tooltip width : on garde une marge, et on plafonne pour éviter un énorme tooltip sur desktop
+  var w = Math.min(560, Math.floor(Math.min(vw, cw) * 0.95));
+  // Hauteur du mini-chart : plus petite sur mobile
+  var isMobile = vw < 520;
+  var h = isMobile ? 150 : 180;
+
   var divId = 'mini_bar_' + p.series.index + '_' + p.index;
 
   var html =
-    '<div style=\"width:560px\">' +
+    '<div style=\"width:' + w + 'px; max-width:95vw\">' +
       '<div style=\"margin-bottom:8px\">' +
         '<div style=\"font-weight:600;font-size:13px\">' + (p.name || p.id) + '</div>' +
         '<div style=\"opacity:.85\">Part 15–29 (département) : <b>' +
           Highcharts.numberFormat(p.y, 1) + ' %</b></div>' +
         '<div style=\"opacity:.75\">Top 3 communes</div>' +
       '</div>' +
-      '<div id=\"' + divId + '\" style=\"width:560px;height:180px\"></div>' +
+      '<div id=\"' + divId + '\" style=\"width:' + w + 'px; height:' + h + 'px\"></div>' +
     '</div>';
 
+  // Détruire l'ancien mini-chart
   if (chart.__mini && chart.__mini.destroy) {
     chart.__mini.destroy();
     chart.__mini = null;
@@ -309,9 +321,14 @@ function () {
     var cats = d.map(function (o) { return o.name; });
     var vals = d.map(function (o) { return o.y; });
 
+    // Marges plus compactes sur mobile
     var maxLen = 0;
     for (var i = 0; i < cats.length; i++) maxLen = Math.max(maxLen, (cats[i] || '').length);
-    var leftMargin = Math.min(340, Math.max(170, 7.5 * maxLen));
+
+    // marge gauche dynamique mais bornée (sinon ça explose)
+    var leftMargin = Math.min(isMobile ? 160 : 260, Math.max(isMobile ? 110 : 150, 6.5 * maxLen));
+    // marge droite pour que les % respirent
+    var rightMargin = isMobile ? 40 : 55;
 
     var seriesData = vals.map(function (v) {
       var inside = v >= 6;
@@ -329,9 +346,10 @@ function () {
       chart: {
         type: 'bar',
         backgroundColor: 'transparent',
-        margin: [5, 55, 20, leftMargin],
+        margin: [5, rightMargin, 20, leftMargin],
         spacing: [0, 0, 0, 0],
-        animation: false
+        animation: false,
+        reflow: true
       },
       title: { text: null },
       credits: { enabled: false },
@@ -344,10 +362,11 @@ function () {
         lineWidth: 0,
         tickLength: 0,
         labels: {
-          style: { fontSize: '11px' },
+          style: { fontSize: isMobile ? '10px' : '11px' },
           formatter: function () {
             var s = this.value || '';
-            return s.length > 42 ? (s.substring(0, 41) + '…') : s;
+            var max = isMobile ? 28 : 42; // coupe plus agressive sur mobile
+            return s.length > max ? (s.substring(0, max - 1) + '…') : s;
           }
         }
       },
@@ -375,7 +394,7 @@ function () {
             formatter: function () {
               return Highcharts.numberFormat(this.y, 1) + ' %';
             },
-            style: { fontSize: '11px', textOutline: 'none' }
+            style: { fontSize: isMobile ? '10px' : '11px', textOutline: 'none' }
           }
         }
       },
@@ -391,6 +410,7 @@ function () {
   return html;
 }
 ")
+
 ```
 
 ---
@@ -399,7 +419,7 @@ function () {
 
 ```{r}
 hc <- highchart() %>%
-  hc_chart(type = "column") %>%
+  hc_chart(type = "column", reflow = TRUE) %>%   # <- important
   hc_title(text = "Île-de-France — Part des 15–29 ans (exemple)") %>%
   hc_subtitle(text = "Survol : mini top 3 communes dans la pop-up") %>%
   hc_xAxis(type = "category") %>%
@@ -429,6 +449,18 @@ hc <- highchart() %>%
     padding = 12,
     formatter = js_mini_tooltip_formatter
   )
+
+hc <- hc %>%
+  hc_tooltip(
+    useHTML = TRUE,
+    outside = FALSE,     # <- mobile-friendly
+    constrain = TRUE,    # <- évite de sortir de l'écran
+    borderWidth = 0,
+    shadow = TRUE,
+    padding = 12,
+    formatter = js_mini_tooltip_formatter
+  )
+
 
 invisible(hc)
 ```
