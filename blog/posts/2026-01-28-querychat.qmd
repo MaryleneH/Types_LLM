@@ -1,0 +1,402 @@
+---
+title: "QueryChat : passer du langage naturel au SQL… dans une app Shiny"
+date: 2026-01-28
+categories: [R, Shiny, LLM, QueryChat]
+image: ../../images/blog/hero-querychat.png
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Voir le code"
+    theme: cosmo
+    highlight-style: github
+execute:
+  warning: false
+  message: false
+---
+
+## Pourquoi QueryChat ?
+
+QueryChat (Posit) permet d’ajouter une couche “chat” à une application Shiny pour explorer un jeu de données en **langage naturel**.\
+L’idée est simple : l’utilisateur pose une question, le modèle propose une requête SQL, puis l’app exécute et met à jour les visuels.
+
+Ce que j’aime dans l’approche :
+
+-   **SQL explicite** (donc auditabilité / transparence)
+
+-   **UI Shiny classique** : on reste dans des composants maîtrisés
+
+-   **Démonstration immédiate** : en quelques lignes, on obtient une “data app” pilotée par le chat
+
+## Cas d’usage de démo (données anonymisées)
+
+Pour la démo, on utilise un dataset quotidien “boutique_insights” (stocks, demande, ventes, etc.).\
+L’objectif : permettre à un utilisateur métier de naviguer rapidement entre différentes vues :
+
+-   *“Où a-t-on de la demande mais plus de stock ?”*\
+-   *“Quels modèles sont sous tension sur les 7 derniers jours ?”*\
+-   *“Dans quel univers les ventes sont les plus fortes ?”*
+
+## Architecture de l’app
+
+L’app suit une logique simple :
+
+1.  `QueryChat$new(...)` branche le dataset et le modèle.
+2.  `qc$ui()` affiche l’interface chat dans la sidebar.
+3.  `qc_vals <- qc$server()` fournit les sorties réactives :
+    -   `qc_vals$df()` : le dataframe correspondant au résultat de la requête
+    -   `qc_vals$sql()` : la requête SQL générée
+4.  Les indicateurs, la table et les graphiques ne dépendent que de `qc_vals$df()`.
+
+## Code complet : app.R
+
+> Astuce : pour garder la démo, je force les réponses en français via un *system prompt* côté `ellmer` - mon code est un peu plus long.
+
+```{r}
+#| eval: true  
+#| warning: false
+#| echo: false
+
+library(gt)
+library(tibble)
+
+demo_df <- tribble(
+  ~date,       ~boutique,   ~ville, ~pays,   ~univers,      ~famille,             ~modele,            ~couleur,   ~prix_eur, ~stock_disponible, ~stock_reserve, ~delai_reassort_jours, ~liste_attente_clients, ~rendez_vous, ~segment_client,   ~ventes_unites, ~ventes_eur,
+  "2025-10-01", "Boutique A","Paris","France","Maroquinerie","Petite maroquinerie","Portefeuille Ligne","Bleu nuit", 763L,      6L,                0L,            25L,                  1L,                    1L,          "VIP",            6L,          4578L,
+  "2025-10-01", "Boutique A","Paris","France","Soie",       "Cravates",           "Cravate Trame",     "Noir",     189L,      4L,                1L,            24L,                  0L,                    0L,          "Client régulier", 4L,           756L,
+  "2025-10-01", "Boutique A","Paris","France","Parfums",    "Eaux de toilette",   "Toilette Citrus",   "Rouge",    103L,      12L,               1L,             3L,                  0L,                    1L,          "Nouveau client",  0L,             0L,
+  "2025-10-01", "Boutique A","Paris","France","Bijouterie", "Boucles d'oreilles", "Boucles Éclat",     "Rouge",   1565L,      3L,                1L,            14L,                  0L,                    2L,          "VIP",            4L,          6260L
+)
+
+demo_df |>
+  gt() |>
+  fmt_currency(columns = c(prix_eur, ventes_eur), currency = "EUR", decimals = 0) |>
+  cols_label(
+    prix_eur = "Prix (€)",
+    stock_disponible = "Stock dispo",
+    stock_reserve = "Stock réservé",
+    delai_reassort_jours = "Réassort (j)",
+    liste_attente_clients = "Liste d’attente",
+    rendez_vous = "RDV",
+    ventes_unites = "Ventes (u)",
+    ventes_eur = "Ventes (€)"
+  ) |>
+  tab_header(
+    title = "Extrait du dataset (4 lignes)",
+    subtitle = "Données anonymisées pour la démo QueryChat"
+  ) |>
+  tab_options(table.font.size = px(12))
+
+
+```
+
+```{r}
+#| eval: false  
+#| warning: false
+#| code-fold: true
+
+# app.R
+library(shiny)
+library(bslib)
+library(dplyr)
+library(ggplot2)
+library(ellmer)
+library(querychat)
+library(reactable)
+library(readr)
+library(shinybusy)
+library(bsicons)
+
+# -------------------------
+# Data
+# -------------------------
+data_raw <- readr::read_csv("boutique_insights.csv", show_col_types = FALSE) |>
+  mutate(date = as.Date(date))
+
+# -------------------------
+# Chat client (force FR)
+# -------------------------
+OPENAI_MODEL <- Sys.getenv("OPENAI_MODEL", unset = "gpt-4.1-mini")
+
+# IMPORTANT: selon versions ellmer, system_prompt ou system.
+# On fait un fallback automatique.
+chat_client <- try(
+  ellmer::chat_openai(
+    model = OPENAI_MODEL,
+    system_prompt = paste(
+      "Tu réponds uniquement en français.",
+      "Tu aides à explorer un tableau via SQL.",
+      "N'invente jamais de colonnes. Utilise uniquement celles du schéma.",
+      "Préférence: filtres et tris plutôt que des agrégations, sauf si demandé.",
+      sep = "\n"
+    )
+  ),
+  silent = TRUE
+)
+
+if (inherits(chat_client, "try-error")) {
+  chat_client <- ellmer::chat_openai(
+    model = OPENAI_MODEL,
+    system = paste(
+      "Tu réponds uniquement en français.",
+      "N'invente jamais de colonnes.",
+      "Fais surtout filtres et tris.",
+      sep = "\n"
+    )
+  )
+}
+
+# -------------------------
+# QueryChat (new API)
+# -------------------------
+greeting <- paste(
+  "Bonjour 👋",
+  "Posez une question en français (je traduis en SQL et j’exécute).",
+  "",
+  "Exemples :",
+  "• Où a-t-on de la demande mais plus de stock ?",
+  "• Sur les 7 derniers jours, quels modèles sont les plus sous tension ?",
+  "• Filtre sur une boutique, et trie par demande décroissante.",
+  sep = "\n"
+)
+
+qc <- QueryChat$new(
+  data_raw,
+  table_name = "boutique_insights",
+  client = chat_client,
+  greeting = greeting
+)
+
+# -------------------------
+# Helpers
+# -------------------------
+col_or <- function(d, candidates) {
+  for (nm in candidates) if (nm %in% names(d)) return(nm)
+  NULL
+}
+
+fmt_int <- function(x) format(round(x, 0), big.mark = " ", decimal.mark = ",")
+fmt_eur <- function(x) paste0(fmt_int(x), " €")
+
+# -------------------------
+# UI
+# -------------------------
+ui <- page_sidebar(
+  title = "Boutique Insights",
+  class = "bslib-page-dashboard",
+
+  shinybusy::add_busy_bar(height = "3px"),
+  shinybusy::add_busy_spinner(spin = "fading-circle", position = "bottom-right"),
+
+  sidebar = sidebar(
+    qc$ui(),
+    width = 420
+  ),
+
+  card(
+    fill = FALSE,
+    max_height = "420px",
+    full_screen = TRUE,
+    card_body(
+      padding = 0,
+      navset_card_underline(
+        nav_spacer(),
+        nav_panel("SQL", icon = bs_icon("terminal"), uiOutput("ui_sql")),
+        nav_panel("Table", icon = bs_icon("table"), reactableOutput("table"))
+      )
+    )
+  ),
+
+  layout_columns(
+    fill = FALSE,
+    value_box(
+      title = "Lignes (vue courante)",
+      value = textOutput("kpi_rows"),
+      showcase = bs_icon("database")
+    ),
+    value_box(
+      title = "CA (si présent)",
+      value = textOutput("kpi_sales"),
+      showcase = bs_icon("currency-euro")
+    ),
+    value_box(
+      title = "Tension max (si possible)",
+      value = textOutput("kpi_tension"),
+      showcase = bs_icon("exclamation-triangle")
+    )
+  ),
+
+  layout_columns(
+    min_height = "420px",
+    card(
+      full_screen = TRUE,
+      card_header("Tension par modèle (top 10)"),
+      plotOutput("plot_tension", height = 360)
+    ),
+    card(
+      full_screen = TRUE,
+      card_header("Ventes (si présent) par univers"),
+      plotOutput("plot_universe", height = 360)
+    )
+  )
+)
+
+# -------------------------
+# Server
+# -------------------------
+server <- function(input, output, session) {
+
+  qc_vals <- qc$server()
+
+  filtered_data <- reactive({
+    d <- qc_vals$df()
+    req(d)
+    d
+  })
+
+  output$ui_sql <- renderUI({
+    sql <- qc_vals$sql()
+    if (!isTruthy(sql)) sql <- "SELECT * FROM boutique_insights"
+    HTML(paste0("<pre><code>", htmltools::htmlEscape(sql), "</code></pre>"))
+  })
+
+  output$table <- renderReactable({
+    d <- filtered_data()
+    reactable(
+      d,
+      defaultPageSize = 20,
+      highlight = TRUE,
+      bordered = TRUE,
+      striped = TRUE,
+      searchable = TRUE,
+      filterable = TRUE
+    )
+  })
+
+  output$kpi_rows <- renderText({
+    d <- filtered_data()
+    format(nrow(d), big.mark = " ")
+  })
+
+  output$kpi_sales <- renderText({
+    d <- filtered_data()
+    sales_col <- col_or(d, c("sales_eur", "total_sales_eur"))
+    if (is.null(sales_col) || nrow(d) == 0) return("—")
+    fmt_eur(sum(d[[sales_col]], na.rm = TRUE))
+  })
+
+  output$kpi_tension <- renderText({
+    d <- filtered_data()
+    wait_c  <- col_or(d, c("waitlist_clients", "total_waitlist_clients"))
+    stock_c <- col_or(d, c("stock_available", "total_stock_available"))
+    if (is.null(wait_c) || is.null(stock_c) || nrow(d) == 0) return("—")
+    val <- max(pmax(d[[wait_c]] - d[[stock_c]], 0), na.rm = TRUE)
+    if (!is.finite(val)) "—" else fmt_int(val)
+  })
+
+  output$plot_tension <- renderPlot({
+    d <- filtered_data()
+    validate(need(nrow(d) > 0, "Aucune donnée."))
+
+    wait_c  <- col_or(d, c("waitlist_clients", "total_waitlist_clients"))
+    stock_c <- col_or(d, c("stock_available", "total_stock_available"))
+    validate(need("model" %in% names(d), "Demandez une sortie contenant la colonne 'model'."))
+    validate(need(!is.null(wait_c) && !is.null(stock_c),
+                  "Demandez une sortie contenant stock_available/total_stock_available et waitlist_clients/total_waitlist_clients."))
+
+    p <- d |>
+      mutate(tension = pmax(.data[[wait_c]] - .data[[stock_c]], 0)) |>
+      group_by(model) |>
+      summarise(tension = sum(tension, na.rm = TRUE), .groups = "drop") |>
+      arrange(desc(tension)) |>
+      slice_head(n = 10)
+
+    ggplot(p, aes(x = reorder(model, tension), y = tension)) +
+      geom_col() +
+      coord_flip() +
+      labs(x = NULL, y = "Tension (≈ demande - stock)") +
+      theme_minimal(base_size = 12)
+  })
+
+  output$plot_universe <- renderPlot({
+    d <- filtered_data()
+    validate(need(nrow(d) > 0, "Aucune donnée."))
+
+    sales_col <- col_or(d, c("sales_eur", "total_sales_eur"))
+    validate(need(!is.null(sales_col), "Demandez une sortie contenant 'sales_eur' (ou total_sales_eur)."))
+    validate(need("universe" %in% names(d), "Demandez une sortie contenant 'universe'."))
+
+    p <- d |>
+      group_by(universe) |>
+      summarise(sales = sum(.data[[sales_col]], na.rm = TRUE), .groups = "drop") |>
+      arrange(desc(sales)) |>
+      slice_head(n = 10)
+
+    ggplot(p, aes(x = reorder(universe, sales), y = sales)) +
+      geom_col() +
+      coord_flip() +
+      labs(x = NULL, y = "Ventes (€)") +
+      theme_minimal(base_size = 12)
+  })
+}
+
+shinyApp(ui, server)
+```
+
+Pour exécuter la démo
+
+**Définir la clé OpenAI (exemple) :**
+
+Dans cet exemple j'utilise OPENAI comme LLM.
+
+```{bash}
+#| eval: false  
+#| warning: false
+#| echo: TRUE
+
+export OPENAI_API_KEY="..."
+export OPENAI_MODEL="gpt-4.1-mini"
+```
+
+**Lancer l’application shiny :**
+
+```{bash}
+#| eval: false  
+#| warning: false
+#| echo: TRUE
+
+shiny::runApp("app.R", launch.browser = TRUE)
+```
+
+Quelques avantages
+
+La couche chat ne remplace pas Shiny : elle la pilote.
+
+Le SQL est un excellent “contrat” : visible, contrôlable, debuggable.
+
+Un même dashboard peut servir à différents profils : analyste, produit, opérations, etc.
+
+## Un exemple Shiny complet à explorer
+
+Si vous voulez voir l'application Shiny de [Ifeanyi Idiaye](https://www.linkedin.com/in/ifeanyi-idiaye-09523abb/)avec une mise en page dashboard et des visuels interactifs, je vous recommande d’aller jeter un œil à cet exemple :
+
+-   Dépôt GitHub : <https://github.com/Ifeanyi55/Gapminder-Dash/tree/main>
+
+Et voici un aperçu de l’application :
+
+![](https://raw.githubusercontent.com/Ifeanyi55/Gapminder-Dash/main/Gapminder-Dash.gif){fig-alt="Aperçu animé de l'application Gapminder-Dash" width="900"}
+
+## Pièges à connaître
+
+-   **Colonnes inventées** : le LLM peut proposer une colonne qui n’existe pas → erreur SQL, rien ne se met à jour.\
+    ➜ Affichez toujours le **SQL généré** dans l’app et rappelez “n’invente pas de colonnes” (schema explicite dans le greeting).
+
+-   **Agrégations qui cassent un graphique** : si la requête n’inclut plus une colonne clé (ex. `modele` ou `univers`), un visuel peut devenir impossible à calculer.\
+    ➜ Ajoutez des `validate(need(...))` avec un message clair : “pour ce graphique, j’ai besoin de X, Y, Z”.
+
+-   **Filtre trop strict = 0 ligne** : période trop courte + filtres multiples → table vide.\
+    ➜ Proposer “élargir la période” / “retirer un filtre” et donner des exemples du type “sur 7 jours”.
+
+-   **UX** : latence et coût quand le modèle réfléchit.\
+    ➜ Un indicateur de chargement (`shinybusy`) et une démo sur un périmètre raisonnable (ex. 90 jours).
