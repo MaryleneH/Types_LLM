@@ -1,0 +1,351 @@
+/* ========================================================================== */
+/* Article Parquet — styles spécifiques au billet                            */
+/* Ce fichier est chargé uniquement par 2026-08-25-parquet.qmd               */
+/* ========================================================================== */
+
+:root {
+  --pq-050: #f5f8f7;
+  --pq-100: #eaf1ee;
+  --pq-200: #d9e7e1;
+  --pq-300: #bfd5cb;
+  --pq-500: #789d8e;
+  --pq-600: #5f8174;
+  --pq-700: #49695e;
+  --pq-800: #334d45;
+  --pq-900: #243a33;
+  --pq-ink: #25312d;
+  --pq-muted: #66746f;
+  --pq-border: rgba(73, 105, 94, 0.18);
+  --pq-shadow: 0 10px 28px rgba(35, 58, 51, 0.08);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Hero                                                                       */
+/* -------------------------------------------------------------------------- */
+
+.parquet-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1.5rem, 3vw, 2.7rem);
+  margin: 0.8rem 0 1.25rem;
+  border: 1px solid var(--pq-border);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 90% 12%, rgba(120, 157, 142, 0.24), transparent 28%),
+    linear-gradient(135deg, #fbfdfc 0%, var(--pq-100) 100%);
+  box-shadow: var(--pq-shadow);
+}
+
+.parquet-hero::after {
+  content: "";
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  right: -70px;
+  bottom: -100px;
+  border: 22px solid rgba(73, 105, 94, 0.07);
+  border-radius: 50%;
+}
+
+.parquet-kicker {
+  display: inline-block;
+  margin-bottom: 0.8rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: var(--pq-700);
+  color: #fff;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.parquet-kicker p,
+.parquet-hero-title p {
+  margin: 0;
+}
+
+.parquet-hero-title {
+  max-width: 820px;
+  margin-bottom: 0.8rem;
+  color: var(--pq-900);
+  font-size: clamp(1.7rem, 4vw, 2.55rem);
+  line-height: 1.08;
+}
+
+.parquet-hero > p {
+  max-width: 850px;
+  margin-bottom: 0;
+  font-size: 1.04rem;
+  line-height: 1.65;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Cards de synthèse                                                          */
+/* -------------------------------------------------------------------------- */
+
+.parquet-metrics,
+.tool-grid,
+.format-compare,
+.decp-grid,
+.mistake-grid {
+  margin-top: 1.1rem;
+  margin-bottom: 1.4rem;
+}
+
+.parquet-metric,
+.tool-card,
+.format-card,
+.decp-card,
+.mistake-card {
+  height: 100%;
+  padding: 1rem 1.05rem;
+  border: 1px solid var(--pq-border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 4px 16px rgba(35, 58, 51, 0.05);
+}
+
+.parquet-metric p:last-child,
+.tool-card p:last-child,
+.format-card p:last-child,
+.decp-card p:last-child,
+.mistake-card p:last-child {
+  margin-bottom: 0;
+}
+
+.metric-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  margin-bottom: 0.65rem;
+  border-radius: 10px;
+  background: var(--pq-100);
+  color: var(--pq-700);
+  font-size: 1.1rem;
+}
+
+.tool-card {
+  position: relative;
+  padding-top: 1.2rem;
+}
+
+.tool-card h3,
+.format-card h3,
+.mistake-card h3 {
+  margin-top: 0.25rem;
+  color: var(--pq-800);
+}
+
+.tool-number {
+  color: var(--pq-500);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.format-card-csv {
+  border-top: 4px solid #8a9792;
+}
+
+.format-card-parquet {
+  border-top: 4px solid var(--pq-600);
+}
+
+/* -------------------------------------------------------------------------- */
+/* DECP                                                                       */
+/* -------------------------------------------------------------------------- */
+
+.decp-card {
+  padding: 1.25rem;
+}
+
+.decp-card-parquet {
+  background: linear-gradient(145deg, rgba(234, 241, 238, 0.9), rgba(255,255,255,0.92));
+  border-color: rgba(73, 105, 94, 0.28);
+}
+
+.decp-label {
+  display: inline-block;
+  color: var(--pq-muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.decp-number {
+  margin: 0.15rem 0 0.35rem;
+  color: var(--pq-800);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Fiche réflexe                                                              */
+/* -------------------------------------------------------------------------- */
+
+.decision-list {
+  display: grid;
+  gap: 0.65rem;
+  margin: 1rem 0 1.4rem;
+}
+
+.decision-row {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 0.8rem;
+  align-items: start;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--pq-border);
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(234, 241, 238, 0.72), rgba(255,255,255,0.5));
+}
+
+.decision-row p {
+  margin: 0;
+}
+
+.decision-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 10px;
+  background: var(--pq-700);
+  color: #fff;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Callouts et onglets                                                        */
+/* -------------------------------------------------------------------------- */
+
+.callout {
+  border-radius: 12px;
+}
+
+.panel-tabset > .nav-tabs {
+  gap: 0.25rem;
+  border-bottom-color: var(--pq-border);
+}
+
+.panel-tabset > .nav-tabs .nav-link {
+  border-radius: 10px 10px 0 0;
+}
+
+.panel-tabset > .nav-tabs .nav-link.active {
+  color: var(--pq-800);
+  font-weight: 700;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Code                                                                       */
+/* -------------------------------------------------------------------------- */
+
+pre.sourceCode,
+pre {
+  border-radius: 10px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Conclusion                                                                 */
+/* -------------------------------------------------------------------------- */
+
+.parquet-final {
+  margin: 1.5rem 0 0.5rem;
+  padding: 1.15rem 1.25rem;
+  border-left: 5px solid var(--pq-600);
+  border-radius: 0 12px 12px 0;
+  background: var(--pq-100);
+  color: var(--pq-900);
+}
+
+.parquet-final p {
+  margin: 0;
+}
+
+.parquet-final .bi {
+  margin-right: 0.35rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Dark mode                                                                  */
+/* -------------------------------------------------------------------------- */
+
+html[data-bs-theme="dark"] .parquet-hero {
+  background:
+    radial-gradient(circle at 90% 12%, rgba(120, 157, 142, 0.16), transparent 28%),
+    linear-gradient(135deg, #18221f 0%, #111916 100%);
+  border-color: rgba(191, 213, 203, 0.16);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+}
+
+html[data-bs-theme="dark"] .parquet-hero-title,
+html[data-bs-theme="dark"] .decp-number,
+html[data-bs-theme="dark"] .tool-card h3,
+html[data-bs-theme="dark"] .format-card h3,
+html[data-bs-theme="dark"] .mistake-card h3 {
+  color: #e8f1ed;
+}
+
+html[data-bs-theme="dark"] .parquet-metric,
+html[data-bs-theme="dark"] .tool-card,
+html[data-bs-theme="dark"] .format-card,
+html[data-bs-theme="dark"] .decp-card,
+html[data-bs-theme="dark"] .mistake-card,
+html[data-bs-theme="dark"] .decision-row {
+  background: rgba(21, 31, 27, 0.76);
+  border-color: rgba(191, 213, 203, 0.15);
+  box-shadow: none;
+}
+
+html[data-bs-theme="dark"] .decp-card-parquet,
+html[data-bs-theme="dark"] .decision-row {
+  background: linear-gradient(145deg, rgba(40, 61, 53, 0.72), rgba(20, 30, 26, 0.82));
+}
+
+html[data-bs-theme="dark"] .metric-icon {
+  background: rgba(95, 129, 116, 0.24);
+  color: #cfe3da;
+}
+
+html[data-bs-theme="dark"] .parquet-final {
+  background: rgba(73, 105, 94, 0.22);
+  color: #e8f1ed;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Mobile                                                                     */
+/* -------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .parquet-hero {
+    padding: 1.2rem;
+    border-radius: 14px;
+  }
+
+  .parquet-hero-title {
+    font-size: 1.75rem;
+  }
+
+  .parquet-metric,
+  .tool-card,
+  .format-card,
+  .decp-card,
+  .mistake-card {
+    margin-bottom: 0.2rem;
+  }
+
+  .decision-row {
+    grid-template-columns: 2.2rem 1fr;
+    padding: 0.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+}

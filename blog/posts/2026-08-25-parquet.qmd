@@ -1,0 +1,991 @@
+---
+title: "Parquet : travailler avec des fichiers volumineux en R et Python"
+description: "CSV de plusieurs Go, dizaines de millions de lignes, fichiers qui ne tiennent plus confortablement en mémoire : quelques repères et recettes pratiques avec Arrow et DuckDB."
+author: "Marylene Henry"
+date: 2026-08-25
+categories: [R, Python, parquet, arrow, duckdb, données]
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    code-copy: true
+    code-overflow: scroll
+    code-tools: true
+    css: parquet.css
+execute:
+  enabled: false
+---
+
+:::: {.parquet-hero}
+::: {.parquet-kicker}
+<i class="bi bi-database"></i> DONNÉES VOLUMINEUSES
+:::
+
+::: {.parquet-hero-title}
+**Quand le CSV commence à devenir encombrant…**
+:::
+
+On peut très bien travailler avec un CSV de quelques milliers ou quelques centaines de milliers de lignes. Le problème apparaît lorsque les volumes augmentent : plusieurs Go sur disque, plusieurs dizaines de millions de lignes, des temps de lecture longs et parfois beaucoup de mémoire mobilisée pour ne finalement utiliser que quelques colonnes.
+
+L'idée de ce billet est simple : **voir ce que le format Parquet change concrètement**, puis regarder comment passer d'un CSV à Parquet en **R** et en **Python**, principalement avec **Arrow** et **DuckDB**.
+::::
+
+:::: {.grid .parquet-metrics}
+::: {.g-col-12 .g-col-md-4 .parquet-metric}
+<span class="metric-icon"><i class="bi bi-filetype-csv"></i></span>
+
+**CSV / TXT**
+
+Très simples à échanger, moins adaptés quand il faut relire souvent de gros volumes.
+:::
+
+::: {.g-col-12 .g-col-md-4 .parquet-metric}
+<span class="metric-icon"><i class="bi bi-columns-gap"></i></span>
+
+**Parquet**
+
+Format colonnaire, typé et compressé, pensé pour l'analyse de données.
+:::
+
+::: {.g-col-12 .g-col-md-4 .parquet-metric}
+<span class="metric-icon"><i class="bi bi-funnel"></i></span>
+
+**Le vrai gain**
+
+Ne lire que les colonnes — et parfois les groupes de lignes — réellement nécessaires.
+:::
+::::
+
+::: {.callout-tip icon="true"}
+## Ce billet n'est pas un plaidoyer « anti-CSV »
+
+Le CSV reste extrêmement pratique pour **échanger**, **inspecter rapidement** ou **diffuser une petite table**. L'enjeu est plutôt de savoir quand il cesse d'être le format de travail le plus confortable.
+:::
+
+---
+
+## Un cas très concret : SIRENE
+
+Le répertoire SIRENE est un bon exemple de ce changement d'échelle. L'Insee indique que l'API donne accès aux données concernant **près de 25 millions d'entreprises et 36 millions d'établissements enregistrés**.
+
+Pour les fichiers stock, [data.gouv.fr](https://www.data.gouv.fr/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret) diffuse désormais également du **Parquet** et annonce l'arrêt des livrables CSV **au cours du second semestre 2027**, au profit du format Parquet.
+
+C'est exactement le type de situation qui m'intéresse ici : une donnée tabulaire classique, mais dont le volume rend progressivement les habitudes « je lis tout dans R/Python puis je travaille » moins confortables.
+
+::: {.callout-note}
+## Dans la suite
+
+J'utilise des noms de fichiers du type `StockEtablissement_utf8.csv` pour garder les exemples lisibles. **Les URL exactes des fichiers SIRENE évoluent avec les millésimes** : je préfère donc renvoyer vers la page officielle du jeu de données plutôt que figer une URL de téléchargement qui deviendra rapidement obsolète.
+:::
+
+---
+
+## CSV et Parquet : ce qui change vraiment
+
+:::: {.grid .format-compare}
+::: {.g-col-12 .g-col-md-6 .format-card .format-card-csv}
+### CSV
+
+```text
+siret;siren;commune;effectif
+123...;123...;Paris;12
+456...;456...;Bourges;48
+789...;789...;Toulon;215
+```
+
+- stockage **ligne par ligne** ;
+- pas de type réellement stocké dans le fichier ;
+- il faut parser le texte à chaque lecture ;
+- sélectionner 5 colonnes sur 60 n'évite pas forcément de parcourir tout le fichier.
+:::
+
+::: {.g-col-12 .g-col-md-6 .format-card .format-card-parquet}
+### Parquet
+
+```text
+SIRET      SIREN      COMMUNE      EFFECTIF
+│          │          │            │
+▼          ▼          ▼            ▼
+colonne    colonne    colonne      colonne
+```
+
+- stockage **colonnaire** ;
+- schéma et types conservés ;
+- compression intégrée ;
+- les moteurs compatibles peuvent éviter de lire les colonnes inutiles.
+:::
+::::
+
+::: {.callout-important}
+## À retenir
+
+**Parquet n'est pas une base de données.** C'est un format de fichier. On peut ensuite l'interroger avec R, Python, DuckDB, Polars, Spark… sans passer par une base relationnelle classique.
+:::
+
+---
+
+## Parquet, Arrow et DuckDB : qui fait quoi ?
+
+Les trois noms sont souvent associés, mais ils ne désignent pas la même chose.
+
+:::: {.grid .tool-grid}
+::: {.g-col-12 .g-col-md-4 .tool-card}
+<div class="tool-number">01</div>
+
+### Parquet
+
+**Le format de stockage.**
+
+Il organise les données par colonnes et stocke notamment leur schéma et leurs métadonnées.
+:::
+
+::: {.g-col-12 .g-col-md-4 .tool-card}
+<div class="tool-number">02</div>
+
+### Arrow
+
+**Un écosystème colonnaire.**
+
+En R, `{arrow}` permet notamment de lire/écrire Parquet et de travailler avec des *datasets* sans ramener immédiatement toutes les données dans un `data.frame`.
+:::
+
+::: {.g-col-12 .g-col-md-4 .tool-card}
+<div class="tool-number">03</div>
+
+### DuckDB
+
+**Un moteur analytique SQL embarqué.**
+
+Il peut lire directement CSV et Parquet, filtrer, agréger et réécrire le résultat en Parquet — souvent sans étape intermédiaire dans un `data.frame` ou un `pandas.DataFrame`.
+:::
+::::
+
+::: {.callout-tip}
+## Ma règle pratique
+
+Pour une **conversion simple d'un très gros CSV**, DuckDB est souvent la voie la plus courte. Pour travailler ensuite avec un **dataset colonnaire depuis R ou Python**, Arrow est particulièrement naturel.
+:::
+
+---
+
+## Transformer un gros CSV en Parquet
+
+Je distingue deux situations :
+
+1. le fichier tient confortablement en mémoire : on peut lire puis écrire ;
+2. le fichier est vraiment volumineux : je préfère une méthode qui **évite de matérialiser toute la table en mémoire**.
+
+:::: {.panel-tabset}
+### R
+
+::: {.callout-note collapse="true" title="Option 1 — R + Arrow : mon objet tient déjà en mémoire"}
+
+C'est le cas le plus simple.
+
+```r
+library(arrow)
+
+# Lecture sous forme de Table Arrow (pas de data.frame intermédiaire)
+tab <- read_csv_arrow(
+  "data/StockEtablissement_utf8.csv",
+  as_data_frame = FALSE
+)
+
+# Écriture Parquet
+write_parquet(
+  tab,
+  "data/StockEtablissement.parquet",
+  compression = "zstd"
+)
+```
+
+Si le CSV est très volumineux, ce n'est pas forcément la stratégie que je choisirais : `tab` représente ici l'ensemble des données lues.
+:::
+
+::: {.callout-tip collapse="true" title="Option 2 — R + Arrow : convertir sans tout charger dans R"}
+
+Arrow permet aussi d'ouvrir un CSV comme un **Dataset**, puis de l'écrire en Parquet.
+
+```r
+library(arrow)
+
+sirene_csv <- open_dataset(
+  "data/StockEtablissement_utf8.csv",
+  format = "csv"
+)
+
+write_dataset(
+  sirene_csv,
+  path = "data/sirene_parquet",
+  format = "parquet",
+  compression = "zstd",
+  max_rows_per_file = 2_000_000,
+  existing_data_behavior = "overwrite"
+)
+```
+
+Le résultat est ici un **répertoire de fichiers Parquet** plutôt qu'un unique fichier géant.
+
+Pour des données très volumineuses, c'est souvent une bonne chose.
+:::
+
+::: {.callout-important collapse="true" title="Option 3 — R + DuckDB : la conversion la plus directe"}
+
+Avec DuckDB, inutile de créer d'abord un gros `data.frame`.
+
+```r
+library(DBI)
+library(duckdb)
+
+con <- dbConnect(duckdb(), dbdir = ":memory:")
+
+sql <- "
+COPY (
+  SELECT *
+  FROM read_csv(
+    'data/StockEtablissement_utf8.csv',
+    header = true,
+    auto_detect = true,
+    types = {
+      'siren': 'VARCHAR',
+      'siret': 'VARCHAR'
+    }
+  )
+)
+TO 'data/StockEtablissement.parquet'
+(FORMAT PARQUET, COMPRESSION ZSTD);
+"
+
+dbExecute(con, sql)
+dbDisconnect(con, shutdown = TRUE)
+```
+
+J'impose ici `siren` et `siret` comme chaînes de caractères. Pour des identifiants, je préfère éviter qu'une inférence automatique décide qu'il s'agit de nombres.
+:::
+
+### Python
+
+::: {.callout-note collapse="true" title="Option 1 — Python + PyArrow : la table tient en mémoire"}
+
+```python
+import pyarrow.csv as csv
+import pyarrow.parquet as pq
+
+# Lecture en Table Arrow
+table = csv.read_csv("data/StockEtablissement_utf8.csv")
+
+# Écriture Parquet
+pq.write_table(
+    table,
+    "data/StockEtablissement.parquet",
+    compression="zstd"
+)
+```
+
+Simple et efficace tant que la table peut être matérialisée en mémoire.
+:::
+
+::: {.callout-tip collapse="true" title="Option 2 — Python + PyArrow : lecture par lots"}
+
+Pour un fichier plus gros, `open_csv()` fournit un lecteur incrémental. On écrit alors les lots successifs dans le même fichier Parquet.
+
+```python
+import pyarrow as pa
+import pyarrow.csv as csv
+import pyarrow.parquet as pq
+
+reader = csv.open_csv(
+    "data/StockEtablissement_utf8.csv",
+    read_options=csv.ReadOptions(block_size=64 * 1024 * 1024),
+    convert_options=csv.ConvertOptions(
+        column_types={
+            "siren": pa.string(),
+            "siret": pa.string(),
+        }
+    )
+)
+
+writer = None
+
+try:
+    for batch in reader:
+        if writer is None:
+            writer = pq.ParquetWriter(
+                "data/StockEtablissement.parquet",
+                batch.schema,
+                compression="zstd"
+            )
+
+        writer.write_batch(batch)
+finally:
+    if writer is not None:
+        writer.close()
+```
+
+Sur un CSV complexe, je recommande de déclarer explicitement les types des variables sensibles. Avec le lecteur incrémental PyArrow, l'inférence est réalisée sur le premier bloc puis les types sont figés.
+:::
+
+::: {.callout-important collapse="true" title="Option 3 — Python + DuckDB : CSV → Parquet en quelques lignes"}
+
+```python
+import duckdb
+
+con = duckdb.connect()
+
+con.execute("""
+COPY (
+    SELECT *
+    FROM read_csv(
+        'data/StockEtablissement_utf8.csv',
+        header = true,
+        auto_detect = true,
+        types = {
+            'siren': 'VARCHAR',
+            'siret': 'VARCHAR'
+        }
+    )
+)
+TO 'data/StockEtablissement.parquet'
+(FORMAT PARQUET, COMPRESSION ZSTD)
+""")
+
+con.close()
+```
+
+C'est probablement l'exemple que je montrerais en premier à quelqu'un qui veut simplement convertir un gros fichier tabulaire.
+:::
+::::
+
+::: {.callout-warning}
+## Le point à surveiller : les types
+
+Le passage CSV → Parquet est aussi le moment où l'on **fige un schéma**. Une mauvaise inférence devient donc plus visible.
+
+Pour des données d'entreprises, je vérifie en particulier les identifiants (`SIREN`, `SIRET`), les codes géographiques, les dates et les variables susceptibles de contenir à la fois chiffres et texte.
+:::
+
+---
+
+## Le vrai intérêt : ne plus tout lire
+
+Une fois les données en Parquet, je n'ai pas forcément envie de récupérer toutes les colonnes ni toutes les lignes.
+
+Prenons un exemple simple avec SIRENE : je souhaite uniquement quelques variables sur les établissements actifs.
+
+:::: {.panel-tabset}
+### R + Arrow
+
+```r
+library(arrow)
+library(dplyr)
+
+sirene <- open_dataset("data/sirene_parquet")
+
+etablissements_actifs <- sirene |>
+  select(
+    siren,
+    siret,
+    etatAdministratifEtablissement,
+    activitePrincipaleEtablissement,
+    codePostalEtablissement
+  ) |>
+  filter(etatAdministratifEtablissement == "A")
+
+# collect() seulement au moment où j'ai vraiment besoin de l'objet en R
+resultat <- collect(etablissements_actifs)
+```
+
+### Python + DuckDB
+
+```python
+import duckdb
+
+resultat = duckdb.sql("""
+    SELECT
+        siren,
+        siret,
+        etatAdministratifEtablissement,
+        activitePrincipaleEtablissement,
+        codePostalEtablissement
+    FROM read_parquet('data/sirene_parquet/*.parquet')
+    WHERE etatAdministratifEtablissement = 'A'
+""").df()
+```
+::::
+
+::: {.callout-tip}
+## Ce qui change dans la pratique
+
+Avec Parquet, les moteurs compatibles peuvent appliquer de la **projection de colonnes** et du **predicate pushdown** : ils essaient de ne lire que ce qui est utile à la requête.
+
+C'est là que Parquet devient beaucoup plus intéressant qu'un simple « CSV compressé ».
+:::
+
+---
+
+## Un vrai exemple de volume : la commande publique
+
+Le jeu [Données essentielles de la commande publique consolidées](https://www.data.gouv.fr/datasets/donnees-essentielles-de-la-commande-publique-consolidees-format-tabulaire) est particulièrement parlant parce que **le même jeu est diffusé en CSV et en Parquet**.
+
+Au **25 août 2026**, data.gouv.fr indique :
+
+:::: {.grid .decp-grid}
+::: {.g-col-12 .g-col-md-6 .decp-card}
+<span class="decp-label">CSV</span>
+
+<div class="decp-number">2,4 Go</div>
+
+Le producteur précise que le fichier est trop volumineux pour être ouvert directement dans un tableur.
+:::
+
+::: {.g-col-12 .g-col-md-6 .decp-card .decp-card-parquet}
+<span class="decp-label">PARQUET</span>
+
+<div class="decp-number">232,5 Mo</div>
+
+Même jeu de données, mais dans un format beaucoup plus adapté aux traitements analytiques.
+:::
+::::
+
+Il ne faut pas en déduire que **tous** les fichiers seront systématiquement réduits dans les mêmes proportions : la compression dépend fortement des données. Mais l'exemple permet de voir très concrètement ce que peut changer le choix du format.
+
+::: {.callout-note collapse="true" title="Voir un exemple DuckDB directement sur le Parquet DECP"}
+
+La ressource data.gouv.fr dispose d'une URL stable qui redirige vers le fichier Parquet courant.
+
+```python
+import duckdb
+
+url = "https://www.data.gouv.fr/api/1/datasets/r/11cea8e8-df3e-4ed1-932b-781e2635e432"
+
+# Exemple : regarder le schéma sans convertir le fichier en CSV
+duckdb.sql(f"""
+    DESCRIBE
+    SELECT *
+    FROM read_parquet('{url}')
+""").show()
+```
+
+Selon l'environnement de travail, l'accès HTTP sortant peut évidemment être restreint. Dans ce cas, on télécharge d'abord le fichier puis on utilise exactement la même logique en local.
+:::
+
+::: {.callout-warning}
+## Attention à l'interprétation métier
+
+Les DECP sont utiles pour travailler sur la commande publique, les acheteurs et les titulaires. Cela ne signifie pas qu'un simple filtre textuel permet de reconstruire proprement un champ « entreprises de la défense ».
+
+Le format de fichier facilite le traitement ; **il ne remplace pas le travail de définition statistique du champ**.
+:::
+
+---
+
+## Un autre cas intéressant : le fichier est déjà en Parquet
+
+Le jeu [Données financières détaillées des entreprises](https://www.data.gouv.fr/datasets/donnees-financieres-detaillees-des-entreprises-format-parquet), produit par **Signaux Faibles** à partir de données de bilan INPI, est diffusé directement en Parquet. Le fichier disponible en février 2026 représente environ **2,6 Go**.
+
+Dans ce cas, mon premier réflexe ne serait surtout pas :
+
+```text
+Parquet → CSV → lecture dans R/Python
+```
+
+mais plutôt :
+
+```text
+Parquet → requête sur les colonnes/lignes utiles → objet de travail
+```
+
+::: {.callout-tip collapse="true" title="Exemple : inspecter un gros Parquet sans tout charger"}
+
+**DuckDB**
+
+```sql
+DESCRIBE SELECT * FROM 'data/BceInpiDetail.parquet';
+
+SELECT COUNT(*)
+FROM 'data/BceInpiDetail.parquet';
+```
+
+**R + Arrow**
+
+```r
+library(arrow)
+
+bilan <- open_dataset("data/BceInpiDetail.parquet")
+
+bilan
+# Le dataset est ouvert ; les données ne sont pas encore collectées en R.
+```
+:::
+
+---
+
+## Un fichier Parquet ou un dataset Parquet ?
+
+Pour une petite table, un fichier unique est très pratique.
+
+Pour plusieurs dizaines de millions de lignes ou plusieurs millésimes, je préfère souvent raisonner en **dataset** : un répertoire contenant plusieurs fichiers Parquet que les outils voient comme un ensemble cohérent.
+
+::: {.callout-note collapse="true" title="🧩 Aller plus loin — partitionner un dataset"}
+
+Imaginons une table pluriannuelle que l'on filtre très souvent par année.
+
+**R + Arrow**
+
+```r
+library(arrow)
+
+write_dataset(
+  donnees,
+  path = "data/marches_parquet",
+  format = "parquet",
+  partitioning = "annee",
+  compression = "zstd"
+)
+```
+
+On obtient par exemple :
+
+```text
+data/marches_parquet/
+├── annee=2024/
+│   └── part-0.parquet
+├── annee=2025/
+│   └── part-0.parquet
+└── annee=2026/
+    └── part-0.parquet
+```
+
+Une requête sur `annee == 2026` peut alors éviter de parcourir les partitions 2024 et 2025.
+
+**Python + PyArrow**
+
+```python
+import pyarrow.dataset as ds
+
+source = ds.dataset("data/marches_source", format="parquet")
+
+ds.write_dataset(
+    source,
+    base_dir="data/marches_partitionnes",
+    format="parquet",
+    partitioning=["annee"],
+    existing_data_behavior="overwrite_or_ignore"
+)
+```
+
+**À ne pas faire pour autant :** partitionner sur une variable presque unique comme `SIRET`. On créerait potentiellement une quantité énorme de minuscules fichiers, ce qui peut dégrader les performances au lieu de les améliorer.
+:::
+
+---
+
+## 🎁 Bonus — mon fichier est un `.txt`
+
+::: {.callout-tip collapse="true" title="Ouvrir le bonus TXT"}
+
+Un fichier `.txt` n'indique pas vraiment comment la table est structurée. Il peut être séparé par :
+
+- `;` ;
+- une tabulation ;
+- `|` ;
+- ou un autre caractère.
+
+Le point important est donc de **connaître le séparateur et l'encodage**, pas l'extension du fichier.
+
+### R + DuckDB
+
+Exemple avec un fichier séparé par `;` :
+
+```r
+library(DBI)
+library(duckdb)
+
+con <- dbConnect(duckdb(), dbdir = ":memory:")
+
+dbExecute(con, "
+COPY (
+  SELECT *
+  FROM read_csv(
+    'data/export_entreprises.txt',
+    delim = ';',
+    header = true,
+    auto_detect = true
+  )
+)
+TO 'data/export_entreprises.parquet'
+(FORMAT PARQUET, COMPRESSION ZSTD);
+")
+
+dbDisconnect(con, shutdown = TRUE)
+```
+
+### R + Arrow
+
+```r
+library(arrow)
+
+source_txt <- open_delim_dataset(
+  "data/export_entreprises.txt",
+  delim = ";"
+)
+
+write_dataset(
+  source_txt,
+  "data/export_entreprises_parquet",
+  format = "parquet",
+  compression = "zstd"
+)
+```
+
+### Python + DuckDB
+
+```python
+import duckdb
+
+duckdb.sql("""
+COPY (
+    SELECT *
+    FROM read_csv(
+        'data/export_entreprises.txt',
+        delim = ';',
+        header = true,
+        auto_detect = true
+    )
+)
+TO 'data/export_entreprises.parquet'
+(FORMAT PARQUET, COMPRESSION ZSTD)
+""")
+```
+
+### Python + PyArrow
+
+```python
+import pyarrow.csv as csv
+import pyarrow.parquet as pq
+
+reader = csv.open_csv(
+    "data/export_entreprises.txt",
+    parse_options=csv.ParseOptions(delimiter=";")
+)
+
+writer = None
+
+try:
+    for batch in reader:
+        if writer is None:
+            writer = pq.ParquetWriter(
+                "data/export_entreprises.parquet",
+                batch.schema,
+                compression="zstd"
+            )
+        writer.write_batch(batch)
+finally:
+    if writer is not None:
+        writer.close()
+```
+
+::: {.callout-warning}
+**Sur les vieux fichiers texte**, je vérifie avant conversion : encodage, séparateur, séparateur décimal, guillemets, valeurs manquantes et présence éventuelle de lignes parasites en début de fichier.
+:::
+:::
+
+---
+
+## 🎁 Bonus — mes données sont dans Excel
+
+::: {.callout-tip collapse="true" title="Ouvrir le bonus Excel"}
+
+Excel est très pratique pour consulter ou transmettre de petites tables. Ce n'est simplement pas le format que je choisirais pour stocker une table statistique massive.
+
+Microsoft fixe notamment la taille maximale d'une feuille à **1 048 576 lignes et 16 384 colonnes**.
+
+### `.xlsx` : DuckDB sait le lire directement
+
+DuckDB prend aujourd'hui en charge les fichiers `.xlsx` via `read_xlsx()`.
+
+**R**
+
+```r
+library(DBI)
+library(duckdb)
+
+con <- dbConnect(duckdb(), dbdir = ":memory:")
+
+dbExecute(con, "INSTALL excel;")
+dbExecute(con, "LOAD excel;")
+
+dbExecute(con, "
+COPY (
+  SELECT *
+  FROM read_xlsx(
+    'data/entreprises.xlsx',
+    sheet = 'Donnees'
+  )
+)
+TO 'data/entreprises.parquet'
+(FORMAT PARQUET, COMPRESSION ZSTD);
+")
+
+dbDisconnect(con, shutdown = TRUE)
+```
+
+**Python**
+
+```python
+import duckdb
+
+con = duckdb.connect()
+con.execute("INSTALL excel")
+con.execute("LOAD excel")
+
+con.execute("""
+COPY (
+    SELECT *
+    FROM read_xlsx(
+        'data/entreprises.xlsx',
+        sheet = 'Donnees'
+    )
+)
+TO 'data/entreprises.parquet'
+(FORMAT PARQUET, COMPRESSION ZSTD)
+""")
+
+con.close()
+```
+
+### Arrow : passer par un lecteur Excel
+
+Arrow ne lit pas directement un classeur Excel comme il lit un CSV ou un Parquet. Pour un fichier raisonnable, on peut donc utiliser `readxl` en R ou `pandas` en Python, puis écrire en Parquet.
+
+**R + readxl + Arrow**
+
+```r
+library(readxl)
+library(arrow)
+
+entreprises <- read_excel(
+  "data/entreprises.xlsx",
+  sheet = "Donnees"
+)
+
+write_parquet(
+  entreprises,
+  "data/entreprises.parquet",
+  compression = "zstd"
+)
+```
+
+**Python + pandas + PyArrow**
+
+```python
+import pandas as pd
+
+entreprises = pd.read_excel(
+    "data/entreprises.xlsx",
+    sheet_name="Donnees"
+)
+
+entreprises.to_parquet(
+    "data/entreprises.parquet",
+    engine="pyarrow",
+    compression="zstd",
+    index=False
+)
+```
+
+### Et les anciens `.xls` ?
+
+DuckDB ne prend pas en charge le format `.xls`. Dans ce cas, je passe par un lecteur dédié (`readxl` côté R, `pandas` avec le moteur adapté côté Python), puis je convertis le résultat.
+
+::: {.callout-note}
+**Excel n'est pas « mauvais ».** Il répond simplement à un autre usage. Pour une table de plusieurs dizaines de millions de lignes, le sujet n'est plus de choisir une meilleure feuille de calcul : il faut changer de format de stockage.
+:::
+:::
+
+---
+
+## Les erreurs que j'essaie d'éviter
+
+:::: {.grid .mistake-grid}
+::: {.g-col-12 .g-col-md-6 .mistake-card}
+### `SIREN` / `SIRET` en nombre
+
+Ce sont des **identifiants**, pas des mesures. Je les conserve en chaîne de caractères.
+:::
+
+::: {.g-col-12 .g-col-md-6 .mistake-card}
+### Faire `CSV → pandas → Parquet` par réflexe
+
+Si le CSV est énorme, DuckDB ou Arrow peuvent éviter cette matérialisation complète.
+:::
+
+::: {.g-col-12 .g-col-md-6 .mistake-card}
+### Créer 100 000 petits Parquet
+
+Le partitionnement doit répondre à de vrais filtres métier. Trop de petits fichiers peut coûter cher en I/O et en métadonnées.
+:::
+
+::: {.g-col-12 .g-col-md-6 .mistake-card}
+### Confondre stockage et définition statistique
+
+Passer en Parquet ne résout ni les problèmes de qualité, ni la définition du champ, ni les règles de gestion.
+:::
+::::
+
+---
+
+## « Je dois… » : la fiche réflexe
+
+:::: {.decision-list}
+::: {.decision-row}
+<span class="decision-icon"><i class="bi bi-file-earmark-arrow-down"></i></span>
+
+**Convertir un CSV de plusieurs Go**  
+→ Je commence par **DuckDB**.
+:::
+
+::: {.decision-row}
+<span class="decision-icon"><i class="bi bi-box"></i></span>
+
+**Écrire un objet déjà présent dans R/Python**  
+→ **Arrow / PyArrow** est très naturel.
+:::
+
+::: {.decision-row}
+<span class="decision-icon"><i class="bi bi-filter-circle"></i></span>
+
+**Ne lire que quelques colonnes / quelques lignes**  
+→ Je garde les données en **Parquet** et je filtre avant `collect()` / `.df()`.
+:::
+
+::: {.decision-row}
+<span class="decision-icon"><i class="bi bi-folder2-open"></i></span>
+
+**Gérer plusieurs années ou un très gros volume**  
+→ Je réfléchis à un **dataset Parquet**, éventuellement partitionné.
+:::
+
+::: {.decision-row}
+<span class="decision-icon"><i class="bi bi-file-earmark-excel"></i></span>
+
+**Partager un résultat avec quelqu'un qui travaille dans Excel**  
+→ Je produis si besoin un **extrait Excel**, plutôt que de transformer toute la base de travail en `.xlsx`.
+:::
+::::
+
+---
+
+## Cheat sheet
+
+:::: {.panel-tabset}
+### R
+
+::: {.callout-note collapse="true" title="Afficher les recettes R"}
+
+```r
+# ------------------------------------------------------------
+# ARROW — objet en mémoire -> Parquet
+# ------------------------------------------------------------
+library(arrow)
+write_parquet(mon_objet, "data/mon_fichier.parquet", compression = "zstd")
+
+# ------------------------------------------------------------
+# ARROW — gros CSV -> dataset Parquet
+# ------------------------------------------------------------
+ds <- open_dataset("data/mon_fichier.csv", format = "csv")
+write_dataset(ds, "data/mon_dataset", format = "parquet", compression = "zstd")
+
+# ------------------------------------------------------------
+# DUCKDB — gros CSV -> un Parquet
+# ------------------------------------------------------------
+library(DBI)
+library(duckdb)
+
+con <- dbConnect(duckdb(), dbdir = ":memory:")
+dbExecute(con, "
+  COPY (SELECT * FROM read_csv('data/mon_fichier.csv', header=true))
+  TO 'data/mon_fichier.parquet'
+  (FORMAT PARQUET, COMPRESSION ZSTD)
+")
+dbDisconnect(con, shutdown = TRUE)
+
+# ------------------------------------------------------------
+# LIRE SANS TOUT CHARGER
+# ------------------------------------------------------------
+ds <- open_dataset("data/mon_dataset")
+```
+:::
+
+### Python
+
+::: {.callout-note collapse="true" title="Afficher les recettes Python"}
+
+```python
+# ------------------------------------------------------------
+# PYARROW — Table -> Parquet
+# ------------------------------------------------------------
+import pyarrow.parquet as pq
+pq.write_table(table, "data/mon_fichier.parquet", compression="zstd")
+
+# ------------------------------------------------------------
+# DUCKDB — gros CSV -> Parquet
+# ------------------------------------------------------------
+import duckdb
+
+duckdb.sql("""
+    COPY (
+        SELECT *
+        FROM read_csv('data/mon_fichier.csv', header=true)
+    )
+    TO 'data/mon_fichier.parquet'
+    (FORMAT PARQUET, COMPRESSION ZSTD)
+""")
+
+# ------------------------------------------------------------
+# LIRE / FILTRER DIRECTEMENT UN PARQUET
+# ------------------------------------------------------------
+resultat = duckdb.sql("""
+    SELECT colonne_a, colonne_b
+    FROM 'data/mon_fichier.parquet'
+    WHERE colonne_c = 'A'
+""").df()
+```
+:::
+::::
+
+---
+
+## Pour aller plus loin
+
+::: {.callout-note collapse="true" title="Sources et documentation"}
+
+### Jeux de données utilisés dans ce billet
+
+- [Insee — Consulter et télécharger la base Sirene](https://www.insee.fr/fr/information/3591226)
+- [data.gouv.fr — Base Sirene des entreprises et de leurs établissements](https://www.data.gouv.fr/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret)
+- [data.gouv.fr — Données essentielles de la commande publique consolidées](https://www.data.gouv.fr/datasets/donnees-essentielles-de-la-commande-publique-consolidees-format-tabulaire)
+- [data.gouv.fr — Données financières détaillées des entreprises (format Parquet)](https://www.data.gouv.fr/datasets/donnees-financieres-detaillees-des-entreprises-format-parquet)
+
+### Documentation technique
+
+- [Apache Arrow R — Datasets](https://arrow.apache.org/docs/r/articles/dataset.html)
+- [Apache Arrow R — Référence](https://arrow.apache.org/docs/r/reference/index.html)
+- [PyArrow — CSV](https://arrow.apache.org/docs/python/csv.html)
+- [PyArrow — Parquet](https://arrow.apache.org/docs/python/parquet.html)
+- [DuckDB — Parquet](https://duckdb.org/docs/stable/data/parquet/overview)
+- [DuckDB — Excel](https://duckdb.org/docs/stable/guides/file_formats/excel_import)
+- [Microsoft — Limites d'une feuille Excel](https://support.microsoft.com/en-us/office/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3)
+
+### Côté Quarto
+
+- [Quarto — Callout blocks](https://quarto.org/docs/authoring/callouts.html)
+- [Quarto — HTML options et code folding](https://quarto.org/docs/reference/formats/html.html)
+
+:::
+
+::: {.parquet-final}
+<i class="bi bi-lightbulb"></i>
+
+**Le changement important n'est finalement pas seulement `csv` → `parquet`.**  
+C'est surtout de ne plus considérer qu'analyser une table signifie obligatoirement **la charger entièrement en mémoire avant de commencer à travailler**.
+:::
