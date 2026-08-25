@@ -11,7 +11,7 @@ format:
     code-copy: true
     code-overflow: scroll
     code-tools: true
-    css: parquet.css
+    css: ../../styles/parquet.css
 execute:
   enabled: false
 ---
