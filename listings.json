@@ -1,21 +1,22 @@
 [
   {
+    "listing": "/blog/index.html",
+    "items": [
+      "/blog/posts/2026-08-25-parquet.html",
+      "/blog/posts/2026-01-28-querychat.html",
+      "/blog/posts/2026-01-22-highcharter.html",
+      "/blog/posts/2026-01-11-relevanceAI.html",
+      "/blog/posts/2025-12-19-agent-romance.html",
+      "/blog/posts/2025-11-22-taxinomie.html"
+    ]
+  },
+  {
     "listing": "/roadmap/index.html",
     "items": [
       "/roadmap/2017-transformers.html",
       "/roadmap/2021-moe.html",
       "/roadmap/2023-mamba.html",
       "/roadmap/2025-mixture-of-recursion.html"
-    ]
-  },
-  {
-    "listing": "/blog/index.html",
-    "items": [
-      "/blog/posts/2026-01-28-querychat.html",
-      "/blog/posts/2026-01-22-highcharter.html",
-      "/blog/posts/2026-01-11-relevanceAI.html",
-      "/blog/posts/2025-12-19-agent-romance.html",
-      "/blog/posts/2025-11-22-taxinomie.html"
     ]
   }
 ]

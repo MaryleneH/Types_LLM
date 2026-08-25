@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>QueryChat : passer du langage naturel au SQL… dans une app Shiny – LLM / Agents</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -68,15 +71,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../assets/favicon-32.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-9c66c9e6548519882bce57ceeb88a3d2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d5bf6dfbd93b1e1492fe06496d21e266.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -256,23 +258,23 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
 </blockquote>
 <div class="cell">
 <div class="cell-output-display">
-<div id="gjeupebfvv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gjeupebfvv table {
+<div id="hkvgbutbrd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hkvgbutbrd table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gjeupebfvv thead, #gjeupebfvv tbody, #gjeupebfvv tfoot, #gjeupebfvv tr, #gjeupebfvv td, #gjeupebfvv th {
+#hkvgbutbrd thead, #hkvgbutbrd tbody, #hkvgbutbrd tfoot, #hkvgbutbrd tr, #hkvgbutbrd td, #hkvgbutbrd th {
   border-style: none;
 }
 
-#gjeupebfvv p {
+#hkvgbutbrd p {
   margin: 0;
   padding: 0;
 }
 
-#gjeupebfvv .gt_table {
+#hkvgbutbrd .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -298,12 +300,12 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   border-left-color: #D3D3D3;
 }
 
-#gjeupebfvv .gt_caption {
+#hkvgbutbrd .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gjeupebfvv .gt_title {
+#hkvgbutbrd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -315,7 +317,7 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   border-bottom-width: 0;
 }
 
-#gjeupebfvv .gt_subtitle {
+#hkvgbutbrd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -327,7 +329,7 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   border-top-width: 0;
 }
 
-#gjeupebfvv .gt_heading {
+#hkvgbutbrd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -339,13 +341,13 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   border-right-color: #D3D3D3;
 }
 
-#gjeupebfvv .gt_bottom_border {
+#hkvgbutbrd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gjeupebfvv .gt_col_headings {
+#hkvgbutbrd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -360,7 +362,7 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   border-right-color: #D3D3D3;
 }
 
-#gjeupebfvv .gt_col_heading {
+#hkvgbutbrd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -380,7 +382,7 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   overflow-x: hidden;
 }
 
-#gjeupebfvv .gt_column_spanner_outer {
+#hkvgbutbrd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -392,15 +394,15 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   padding-right: 4px;
 }
 
-#gjeupebfvv .gt_column_spanner_outer:first-child {
+#hkvgbutbrd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gjeupebfvv .gt_column_spanner_outer:last-child {
+#hkvgbutbrd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gjeupebfvv .gt_column_spanner {
+#hkvgbutbrd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -412,11 +414,11 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   width: 100%;
 }
 
-#gjeupebfvv .gt_spanner_row {
+#hkvgbutbrd .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gjeupebfvv .gt_group_heading {
+#hkvgbutbrd .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -442,7 +444,7 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   text-align: left;
 }
 
-#gjeupebfvv .gt_empty_group_heading {
+#hkvgbutbrd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -457,15 +459,15 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   vertical-align: middle;
 }
 
-#gjeupebfvv .gt_from_md > :first-child {
+#hkvgbutbrd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gjeupebfvv .gt_from_md > :last-child {
+#hkvgbutbrd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gjeupebfvv .gt_row {
+#hkvgbutbrd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -484,7 +486,7 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   overflow-x: hidden;
 }
 
-#gjeupebfvv .gt_stub {
+#hkvgbutbrd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -497,7 +499,7 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   padding-right: 5px;
 }
 
-#gjeupebfvv .gt_stub_row_group {
+#hkvgbutbrd .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -511,15 +513,15 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   vertical-align: top;
 }
 
-#gjeupebfvv .gt_row_group_first td {
+#hkvgbutbrd .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gjeupebfvv .gt_row_group_first th {
+#hkvgbutbrd .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gjeupebfvv .gt_summary_row {
+#hkvgbutbrd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -529,16 +531,16 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   padding-right: 5px;
 }
 
-#gjeupebfvv .gt_first_summary_row {
+#hkvgbutbrd .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gjeupebfvv .gt_first_summary_row.thick {
+#hkvgbutbrd .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gjeupebfvv .gt_last_summary_row {
+#hkvgbutbrd .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -548,7 +550,7 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   border-bottom-color: #D3D3D3;
 }
 
-#gjeupebfvv .gt_grand_summary_row {
+#hkvgbutbrd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -558,7 +560,7 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   padding-right: 5px;
 }
 
-#gjeupebfvv .gt_first_grand_summary_row {
+#hkvgbutbrd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -568,7 +570,7 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   border-top-color: #D3D3D3;
 }
 
-#gjeupebfvv .gt_last_grand_summary_row_top {
+#hkvgbutbrd .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -578,11 +580,11 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   border-bottom-color: #D3D3D3;
 }
 
-#gjeupebfvv .gt_striped {
+#hkvgbutbrd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gjeupebfvv .gt_table_body {
+#hkvgbutbrd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -591,7 +593,7 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   border-bottom-color: #D3D3D3;
 }
 
-#gjeupebfvv .gt_footnotes {
+#hkvgbutbrd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -605,7 +607,7 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   border-right-color: #D3D3D3;
 }
 
-#gjeupebfvv .gt_footnote {
+#hkvgbutbrd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -614,7 +616,7 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   padding-right: 5px;
 }
 
-#gjeupebfvv .gt_sourcenotes {
+#hkvgbutbrd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -628,7 +630,7 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   border-right-color: #D3D3D3;
 }
 
-#gjeupebfvv .gt_sourcenote {
+#hkvgbutbrd .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -636,72 +638,72 @@ L’objectif : permettre à un utilisateur métier de naviguer rapidement entre 
   padding-right: 5px;
 }
 
-#gjeupebfvv .gt_left {
+#hkvgbutbrd .gt_left {
   text-align: left;
 }
 
-#gjeupebfvv .gt_center {
+#hkvgbutbrd .gt_center {
   text-align: center;
 }
 
-#gjeupebfvv .gt_right {
+#hkvgbutbrd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gjeupebfvv .gt_font_normal {
+#hkvgbutbrd .gt_font_normal {
   font-weight: normal;
 }
 
-#gjeupebfvv .gt_font_bold {
+#hkvgbutbrd .gt_font_bold {
   font-weight: bold;
 }
 
-#gjeupebfvv .gt_font_italic {
+#hkvgbutbrd .gt_font_italic {
   font-style: italic;
 }
 
-#gjeupebfvv .gt_super {
+#hkvgbutbrd .gt_super {
   font-size: 65%;
 }
 
-#gjeupebfvv .gt_footnote_marks {
+#hkvgbutbrd .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gjeupebfvv .gt_asterisk {
+#hkvgbutbrd .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gjeupebfvv .gt_indent_1 {
+#hkvgbutbrd .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gjeupebfvv .gt_indent_2 {
+#hkvgbutbrd .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gjeupebfvv .gt_indent_3 {
+#hkvgbutbrd .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gjeupebfvv .gt_indent_4 {
+#hkvgbutbrd .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gjeupebfvv .gt_indent_5 {
+#hkvgbutbrd .gt_indent_5 {
   text-indent: 25px;
 }
 
-#gjeupebfvv .katex-display {
+#hkvgbutbrd .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#gjeupebfvv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#hkvgbutbrd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
