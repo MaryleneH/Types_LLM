@@ -1,14 +1,15 @@
 ---
 title: "Blog"
 description: "Articles, notes et retours d’expérience"
+
 listing:
   type: grid
   contents:
-    - posts/**
+    - "posts/*.qmd"
   sort: "date desc"
   grid-columns: 3
   image-height: 10rem
   fields: [image, title, description, date, categories]
 ---
 
-<!-- Les articles seront dans blog/posts/ -->
+<!-- Les articles sont dans blog/posts/ -->
